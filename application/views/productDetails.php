@@ -127,6 +127,7 @@
 								<span>Add to Cart</span>
 								<em>(Select Product)</em>							
 							   <input type="radio" required value="<?php echo $packages->id;?>" name="prescription">
+							   <!-- <input hidden type="radio" required value="<?php echo $packages->id;?>" name="prescription"> -->
 						</div>
 					
 					</div>
