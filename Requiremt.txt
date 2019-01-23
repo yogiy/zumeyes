@@ -1,7 +1,9 @@
 Hy Sir,
-        I have issue only in productdetail page. Inside the productdetail page there's priscription form. 
-        Form have input fields of left and right eyes.That field ,i want convert that field in to select 
-        field. In this page have packages of prescription.That priscription packages have button add to 
-        cart(select Product). I want to convert that button in to radio button. Only I required these 
-        things.
+        I have issue only in productdetail page. 
+        1. Inside the productdetail page there's priscription form. 
+           Form have input fields of left and right eyes.That field ,i want convert that field in to 
+           select field. 
+        2. In this page have packages of prescription.That priscription packages have button add to 
+           cart(select Product). I want to convert that button in to radio button. Only I required 
+           these things.
    Thanks

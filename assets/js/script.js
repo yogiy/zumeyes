@@ -283,11 +283,14 @@ $(function () {
 		$(this).addClass('active');
 	});
 
+	// THIS IS THE METHOD FOR HANDLING THE RADIO BTN CLICKING ON DESCRIPTION	
 	$('.lenseAddBlock  div.button').on('click', function(event){
-		// event.preventDefault();
-		console.log("btn clicked");
+		event.preventDefault();
+		$('.lenseAddBlock  div.button').removeClass('active');
+		$(this).addClass('active');
 		$(this).find('input').prop("checked", true);
 	});
+
 });
 
 // Tab Script

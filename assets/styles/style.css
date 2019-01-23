@@ -1840,6 +1840,9 @@ footer .copyrightBlock span{
 	left: 40px;
 	cursor: pointer;
 }
+.valueBlock .lenseAddBlock .lenseBox .box .button.active{
+	background: red;
+}
 .valueBlock .lenseAddBlock .lenseBox .box .button span{
 	font-size: 1.5em;
 	margin-bottom: 5px;
