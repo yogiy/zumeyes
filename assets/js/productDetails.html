@@ -1,0 +1,839 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Zumeyes</title>
+	<link href="styles/style.css" rel="stylesheet" type="text/css">
+	<link href="styles/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="styles/font.css" rel="stylesheet" type="text/css">
+	<link href="styles/slick.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<style type="text/css">
+    
+  </style>
+</head>
+
+<body>
+
+	<header id="header">
+		<div class="container-fluid">
+			<div class="logo"><a href="home.html"><img src="images/logo.png" alt="Zumeyes Logo"></a></div>
+
+			<div class="menu">
+
+				<ul class="parent">
+
+					<li id="slideDown"><a href="#">Men</a>
+
+						<ul class="child" id="slideUp">
+
+							<li><a href="#">Eyeglasses</a></li>
+							<li><a href="#">Sunglasses</a></li>
+							<li><a href="#">New Arrivals</a></li>
+							<li><a href="#">Best Seller</a></li>
+
+						</ul>
+
+					</li>
+					<li><a href="#">Woman</a>
+
+						<ul class="child">
+
+							<li><a href="#">Eyeglasses</a></li>
+							<li><a href="#">Sunglasses</a></li>
+							<li><a href="#">New Arrivals</a></li>
+							<li><a href="#">Best Seller</a></li>
+
+						</ul>
+
+					</li>
+					<li><a href="#">Kids</a>
+
+						<ul class="child">
+
+							<li><a href="#">Eyeglasses</a></li>
+							<li><a href="#">Sunglasses</a></li>
+							<li><a href="#">New Arrivals</a></li>
+							<li><a href="#">Best Seller</a></li>
+
+						</ul>
+
+					</li>
+					<li><a href="#">Blogs</a></li>
+
+				</ul>
+
+			</div>
+			<div class="toggle-btn" onclick="toggleSidebar(this);">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			
+			<div class="sidebar" id="sidebar">
+			
+				<ul class="parent">
+
+					<li id="slideDown"><a href="#">Men</a>
+
+						<ul class="child" id="slideUp">
+
+							<li><a href="#">Eyeglasses</a></li>
+							<li><a href="#">Sunglasses</a></li>
+							<li><a href="#">New Arrivals</a></li>
+							<li><a href="#">Best Seller</a></li>
+
+						</ul>
+
+					</li>
+					<li><a href="#">Woman</a>
+
+						<ul class="child">
+
+							<li><a href="#">Eyeglasses</a></li>
+							<li><a href="#">Sunglasses</a></li>
+							<li><a href="#">New Arrivals</a></li>
+							<li><a href="#">Best Seller</a></li>
+
+						</ul>
+
+					</li>
+					<li><a href="#">Kids</a>
+
+						<ul class="child">
+
+							<li><a href="#">Eyeglasses</a></li>
+							<li><a href="#">Sunglasses</a></li>
+							<li><a href="#">New Arrivals</a></li>
+							<li><a href="#">Best Seller</a></li>
+
+						</ul>
+
+					</li>
+					<li><a href="#">Blogs</a></li>
+
+				</ul>
+			
+			</div>
+			
+			<div class="overlay" id="overlay"></div>
+
+			<div class="multiSection clearfix">
+
+				<div class="search clearfix">
+
+					<form method="get">
+
+						<input type="search" name="search" id="search" placeholder="search">
+						<div id="searchIcon" class="icon"><i class="icon-search"></i></div>
+						
+						
+						
+					</form>
+
+				</div>
+
+				<div class="cart"><i class="icon-shopping-bag"></i></div>
+
+				<div class="userControl clearfix">
+
+					<div class="icon"><i class="icon-user"></i></div>
+					<a href="signIn_&_register.html" class="signIn">Sign In</a>
+					
+					<div class="userDrop1">
+						
+						<div class="head"><span>Narinder Singh</span><a href="#">test@gmail.com</a></div>
+						
+						<ul class="userActionList">
+						
+							<li><a href="">My Account</a></li>
+							<li><a href="">My Order</a></li>
+							<li><a href="">My Wishlist</a></li>
+							<li><a href="">Rewards</a></li>
+							<li><a href="">Notifications</a></li>
+							<li><a href="">Logout</a></li>
+						
+						</ul>
+					
+					</div>
+
+				</div>
+
+			</div>
+			
+		</div>
+		<div id="hidenSearchField" class="hideField">
+							<input type="search" name="search" id="search" placeholder="search">
+						</div>
+	</header>
+
+	
+	<section class="col-sm-12 clearfix proDetailsSection">
+	
+		<div class="center slider">
+			<div>
+			  <img src="images/pro_Img1.jpg" alt="Image1">
+			</div>
+			<div>
+			  <img src="images/pro_Img2.jpg" alt="Image2">
+			</div>
+			<div>
+			  <img src="images/pro_Img3.jpg" alt="Image3">
+			</div>
+   
+  		</div>
+		
+		<div class="row productDetails clearfix">
+		
+			<h3>Square-Eye Glasses</h3>
+			<em>$29.95</em>
+			<p>Starting at $95, including prescription lenses</p>
+			<div class="reviewRatingBar clearfix">
+			
+				<div class="rating clearfix">
+				
+					<i class="icon icon-star-full active"></i>
+					<i class="icon icon-star-full active"></i>
+					<i class="icon icon-star-full active"></i>
+					<i class="icon icon-star-full"></i>
+					<i class="icon icon-star-full"></i>
+				
+				</div>
+				<a href="#" class="reviewLink">99 Review</a>
+			
+			</div>
+			<div class="shareBlock clearfix">
+					
+				<span class="shareText">Share</span>					
+				<i class="icon icon-facebook"></i>
+				<i class="icon icon-twitter"></i>
+				<i class="icon icon-google-plus"></i>
+				
+			</div>
+			<div class="colorBlock clearfix">
+			
+				<div class="colorList clearfix">
+
+					<label>
+						<div class="circle">
+							<div class="color cantique"></div>
+						</div>
+						<a href="#">Antique bronz</a>
+					</label>
+					<label>
+						<div class="circle">
+							<div class="color cblue"></div>
+						</div>
+						<a href="#">Blue</a>
+					</label>
+					<label>
+						<div class="circle">
+							<div class="color cyellow"></div>
+						</div>
+						<a href="#">Yellow</a>
+					</label>
+					<label>
+						<div class="circle">
+							<div class="color cred"></div>
+						</div>
+						<a href="#">Red</a>
+					</label>
+					<label>
+						<div class="circle">
+							<div class="color cgreen"></div>
+						</div>
+						<a href="#">Green</a>
+					</label>
+					<label>
+						<div class="circle">
+							<div class="color cgunmetal"></div>
+						</div>
+						<a href="#">Gunmetal</a>
+					</label>
+					<label>
+						<div class="circle">
+							<div class="color cburgundy"></div>
+						</div>
+						<a href="#">Burgundy</a>
+					</label>
+
+				</div>
+			
+			</div>
+		
+		</div>
+		
+		<div class="row productPrescriBlock clearfix">
+		
+			<div class="container">
+			
+				<div class="row prescriType clearfix">
+					
+					<h3>Select Prescription Type</h3>
+				
+					<ul class="list clearfix">
+					
+						<li><a href="#">Single Vision</a></li>
+						<li><a href="#">Bifocal</a></li>
+						<li><a href="#">Progressive</a></li>
+						<li><a href="#">Frame Only</a></li>
+						<li><a href="#">Zero Power</a></li>
+					
+					</ul>
+					
+					<div class="valueBlock clearfix">
+					
+						<div class="col-sm-6 leftValue">
+						
+							<h3>Select Value - <span>Left Eye (OS)</span></h3>
+							
+							<div class="valueBar clearfix">
+							
+								<div class="valueBox clearfix">
+								
+									<label>Sphere (SPH)</label>
+									<div class="field">									
+										<input type="text" id="sphL" placeholder="0.00">
+										<i class="icon icon-angle-down"></i>
+									</div>
+								
+								</div>
+								<div class="valueBox clearfix">
+								
+									<label>Cylinder(CYL)</label>
+									<div class="field">									
+										<input type="text" id="cylL" placeholder="0.00">
+										<i class="icon icon-angle-down"></i>
+									</div>
+								
+								</div>
+								<div class="valueBox clearfix">
+								
+									<label>Axis</label>
+									<div class="field">									
+										<input type="text" id="axisL" placeholder="0.00">
+										<i class="icon icon-angle-down"></i>
+									</div>
+								
+								</div>
+							
+							</div>
+						
+						</div>
+						
+						<div class="col-sm-6 rightValue">
+						
+							<h3>Select Value - <span>Left Eye (OS)</span></h3>
+							
+							<div class="valueBar clearfix">
+							
+								<div class="valueBox clearfix">
+								
+									<label>Sphere (SPH)</label>
+									<div class="field">									
+										<input type="text" id="sphR" placeholder="0.00">
+										<i class="icon icon-angle-down"></i>
+									</div>
+								
+								</div>
+								<div class="valueBox clearfix">
+								
+									<label>Cylinder(CYL)</label>
+									<div class="field">									
+										<input type="text" id="cylR" placeholder="0.00">
+										<i class="icon icon-angle-down"></i>
+									</div>
+								
+								</div>
+								<div class="valueBox clearfix">
+								
+									<label>Axis</label>
+									<div class="field">									
+										<input type="text" id="axisR" placeholder="0.00">
+										<i class="icon icon-angle-down"></i>
+									</div>
+								
+								</div>
+							
+							</div>
+						
+						</div>
+					
+					</div>
+				
+				</div>
+				
+				
+			
+			</div>
+		
+		</div>
+		
+		<div class="buttonBlock clearfix">
+				
+			<button class="hvr-wobble-top">
+					
+				<i class="icon icon-shopping-cart"></i><span>Add to Cart</span>
+					
+			</button>
+			<div class="whislistIcon">
+			
+				<i class="icon icon-heart"></i>
+			
+			</div>
+				
+		</div>
+		
+		<div class="moreDetailsBlock clearfix">
+		
+			<div class="tabBlock clearfix">
+			  <ul class="tabList clearfix">
+				<li class="tab is-active">Details</li>
+				<li class="tab">Description</li>
+				<li class="tab">Reviews</li>
+			  </ul>
+			  <div class="tabContentBlock clearfix">
+				  
+				<div class="tabContent clearfix">
+				  
+					<div class="col-sm-6 detailsBlock clearfix">
+					
+						<h3>Specification</h3>
+						<ul class="list clearfix">
+						
+							<li>Style: <em>Full Rim</em></li>
+							<li>Shape: <em>Square</em></li>
+							<li>Front Material: <em>Steal</em></li>
+							<li>Color: <em>Crystal Brown</em></li>
+							<li>Features: <em>Spring Hinges , Custom engraving</em></li>
+							<li>Tags: <em>Neutral Glasses</em></li>
+						
+						</ul>
+					
+					</div>
+					<div class="col-sm-6 detailsBlock clearfix">
+					
+						<h3>Frame Details</h3>
+						<ul class="list clearfix">
+						
+							<li>Frame Width: <em>134 mm</em></li>
+							<li>Lens Width: <em>44 mm</em></li>
+							<li>Bridge: <em>21 mm</em></li>
+							<li>Temple Length: <em>142 mm</em></li>
+							<li>Lens Height: <em>38 mm</em></li>
+							<li>Frame Weight: <em>25 grams</em></li>
+						
+						</ul>
+					
+					</div>
+					
+				</div>
+				<div class="tabContent clearfix">
+				  	<p>Our hand-polished ultra-thin acetate frames are designed for all-day comfort and style. These fashion-forward round aviator glasses are medium-wide and come in the following colors: clear with tortoiseshell temple arms, cream tortoiseshell, and brown pattern. Spring hinges provide added comfort. </p>
+				</div>
+				<div class="tabContent clearfix">
+				  	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias molestiae atque quis blanditiis eaque maiores ducimus optio neque debitis quos dolorum odit unde quibusdam tenetur quaerat magni eius quod tempore.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias molestiae atque quis blanditiis eaque maiores ducimus optio neque debitis quos dolorum odit unde quibusdam tenetur quaerat magni eius quod tempore.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias molestiae atque quis blanditiis eaque maiores ducimus optio neque debitis quos dolorum odit unde quibusdam tenetur quaerat magni eius quod tempore.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias molestiae atque quis blanditiis eaque maiores ducimus optio neque debitis quos dolorum odit unde quibusdam tenetur quaerat magni eius quod tempore.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias molestiae atque quis blanditiis eaque maiores ducimus optio neque debitis quos dolorum odit unde quibusdam tenetur quaerat magni eius quod tempore.</p>
+				</div>
+			  </div>
+			</div>
+		
+		
+		</div>
+	
+	</section>
+	
+	<section class="col-sm-12 proLikeSection clearfix">
+		
+		<div class="container">
+			<div class="sectionTitle">
+			
+           		<h2><span>You may also like these</span></h2>
+			
+       		</div>
+			
+			<div class="row probar clearfix">
+
+					<div class="col-sm-3 proBox">
+						<div class="product">
+							<div class="itemTop">
+								<ul class="colorList">
+									<li>
+										<a href="#" class="cblue"></a>
+									</li>
+									<li>
+										<a href="#" class="cyellow"></a>
+									</li>
+									<li>
+										<a href="#" class="cred"></a>
+									</li>
+									<li>
+										<a href="#" class="cgreen"></a>
+									</li>
+								</ul>
+							</div>
+							<div class="itemImg"> <a href="productDetails.html"><img src="images/frame_2.png" alt="Frame"></a>
+
+							</div>
+							<div class="itemBottom">
+								<h3>
+									<a class="productName" href="#">Chamberlain</a>
+								</h3>
+								<div class="priceBox">
+									<span>$ 21.99</span>
+								</div>
+								<div class="productAction">
+
+									<div class="cart icon">
+										<i class="icon-shopping-cart"></i>
+									</div>
+									<div class="wishlist icon">
+										<i class="icon-heart"></i>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-3 proBox">
+						<div class="product">
+							<div class="itemTop">
+								<ul class="colorList">
+									<li>
+										<a href="#" class="cblue"></a>
+									</li>
+									<li>
+										<a href="#" class="cyellow"></a>
+									</li>
+									<li>
+										<a href="#" class="cred"></a>
+									</li>
+									<li>
+										<a href="#" class="cgreen"></a>
+									</li>
+								</ul>
+							</div>
+							<div class="itemImg"> <a href="productDetails.html"><img src="images/frame_3.png" alt="Frame"></a>
+
+							</div>
+							<div class="itemBottom">
+								<h3>
+									<a class="productName" href="#">Hughes Wide</a>
+								</h3>
+								<div class="priceBox">
+									<span>$ 30.97</span>
+								</div>
+								<div class="productAction">
+
+									<div class="cart icon">
+										<i class="icon-shopping-cart"></i>
+									</div>
+									<div class="wishlist icon">
+										<i class="icon-heart"></i>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-3 proBox">
+						<div class="product">
+							<div class="itemTop">
+								<ul class="colorList">
+									<li>
+										<a href="#" class="cblue"></a>
+									</li>
+									<li>
+										<a href="#" class="cyellow"></a>
+									</li>
+									<li>
+										<a href="#" class="cred"></a>
+									</li>
+									<li>
+										<a href="#" class="cgreen"></a>
+									</li>
+								</ul>
+							</div>
+							<div class="itemImg"> <a href="productDetails.html"><img src="images/frame_4.png" alt="Frame"></a>
+
+							</div>
+							<div class="itemBottom">
+								<h3>
+									<a class="productName" href="#">Baker</a>
+								</h3>
+								<div class="priceBox">
+									<span>$ 29.97</span>
+								</div>
+								<div class="productAction">
+
+									<div class="cart icon">
+										<i class="icon-shopping-cart"></i>
+									</div>
+									<div class="wishlist icon">
+										<i class="icon-heart"></i>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-3 proBox">
+						<div class="product">
+							<div class="itemTop">
+								<ul class="colorList">
+									<li>
+										<a href="#" class="cblue"></a>
+									</li>
+									<li>
+										<a href="#" class="cyellow"></a>
+									</li>
+									<li>
+										<a href="#" class="cred"></a>
+									</li>
+									<li>
+										<a href="#" class="cgreen"></a>
+									</li>
+								</ul>
+							</div>
+							<div class="itemImg"> <a href="productDetails.html"><img src="images/frame_2.png" alt="Frame"></a>
+
+							</div>
+							<div class="itemBottom">
+								<h3>
+									<a class="productName" href="#">Chamberlain</a>
+								</h3>
+								<div class="priceBox">
+									<span>$ 21.99</span>
+								</div>
+								<div class="productAction">
+
+									<div class="cart icon">
+										<i class="icon-shopping-cart"></i>
+									</div>
+									<div class="wishlist icon">
+										<i class="icon-heart"></i>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				
+			</div>
+		</div>
+		
+	</section>
+
+	<section class="col-sm-12 companyPolicySection clearfix">
+
+		<div class="col-sm-3 col-xs-12 box">
+
+			<div class="icon">
+				<i class="icon-credit-card"></i>
+			</div>
+			<h5>100% Secure Payment</h5>
+
+		</div>
+		<div class="col-sm-3 col-xs-12 box">
+
+			<div class="icon">
+				<i class="icon-original"></i>
+			</div>
+			<h5>100% Original Product</h5>
+
+		</div>
+		<div class="col-sm-3 col-xs-12 box">
+
+			<div class="icon">
+				<i class="icon-box"></i>
+			</div>
+			<h5>Return Policy</h5>
+
+		</div>
+		<div class="col-sm-3 col-xs-12 box">
+
+			<div class="icon">
+				<i class="icon-free-delivery"></i>
+			</div>
+			<h5>Get free delivery</h5>
+
+		</div>
+
+	</section>
+	
+	<section class="col-sm-12 newLetterSection clearfix">
+			
+			<div class="container">
+			
+				<div class="col-sm-6 col-xs-12 title">
+					<h4>Newletter</h4>
+					<p>Get the inside scoop on new frames, events, and more</p>
+				</div>
+				
+				<div class="col-sm-6 col-xs-12 formBlock">
+
+					<form method="get">
+
+						<div class="field clearfix"><input type="text" name="email" id="email" placeholder="Enter your e-mail"></div>
+						<button>Subscribe</button>
+
+					</form>
+
+				</div>
+				
+			</div>
+		</section>
+
+	<footer>
+
+		<div class="container">
+
+			<div class="row">
+
+				<div class="col-sm-4 companyContact">
+
+					<div class="bottomLogo">
+						<img src="images/logo.png" alt="Logo">
+					</div>
+
+					<div class="bar clearfix">
+
+						<span>Address</span>
+						<em>777/a4 Bonosri Road, Danpura East USA. -25000</em>
+
+					</div>
+					<div class="bar clearfix">
+
+						<span>Phone</span>
+						<em>888.492.7297</em>
+
+					</div>
+					<div class="bar clearfix">
+
+						<span>Email</span>
+						<em>info@zumeyes.com</em>
+
+					</div>
+					<div class="bar socialIcons clearfix">
+
+						<a href="#" class="iconCircle">
+							<i class="icon icon-facebook"></i>
+						</a>
+						<a href="#" class="iconCircle">
+							<i class="icon icon-twitter"></i>
+						</a>
+						<a href="#" class="iconCircle">
+							<i class="icon icon-google-plus"></i>
+						</a>
+
+					</div>
+
+				</div>
+
+				<div class="col-sm-8 col-xs-12 bottomLinks clearfix">
+
+					<div class="col-sm-4 linksBlock">
+
+						<h5>Online Shopping</h5>
+						<ul class="links">
+
+							<li>
+								<a href="#">Men</a>
+							</li>
+							<li>
+								<a href="#">Women</a>
+							</li>
+							<li>
+								<a href="#">Kids</a>
+							</li>
+
+						</ul>
+
+					</div>
+					<div class="col-sm-4 linksBlock">
+
+						<h5>Useful Links</h5>
+						<ul class="links">
+
+							<li>
+								<a href="#">Contact Us</a>
+							</li>
+							<li>
+								<a href="#">About us</a>
+							</li>
+							<li>
+								<a href="#">FAQs</a>
+							</li>
+							<li>
+								<a href="#">Blog</a>
+							</li>
+							<li>
+								<a href="#">Terms & Conditions</a>
+							</li>
+
+						</ul>
+
+					</div>
+					<div class="col-sm-4 linksBlock">
+
+						<h5>Policies</h5>
+						<ul class="links">
+
+							<li>
+								<a href="#">Shipping Policy</a>
+							</li>
+							<li>
+								<a href="#">Cancellations & Modifications</a>
+							</li>
+							<li>
+								<a href="#">Return & Refund</a>
+							</li>
+							<li>
+								<a href="#">Privacy Policy</a>
+							</li>
+
+						</ul>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row copyrightBlock">
+
+				<span>© 2018 Zumeyes. All rights resereved</span>
+
+			</div>
+
+		</div>
+	</footer>
+	
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script src="js/slick.js" type="text/javascript" charset="utf-8"></script>
+  	<script type="text/javascript">
+		$(document).on('ready', function() {
+		  $(".center").slick({
+			dots: true,
+			infinite: true,
+			centerMode: true,
+			centerPadding: '280px',
+			slidesToShow: 1,
+			slidesToScroll: 3
+		  });
+		});
+	</script>
+
+</body>
+
+</html>
