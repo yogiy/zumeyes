@@ -7,16 +7,16 @@
   <title>Victory Admin</title>
   <!-- plugins:css -->
    <link rel="shortcut icon" href="../../images/favicon.png" />
- <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/flag-icon-css/css/flag-icon.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
-  
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/css/style.css" />
-   <link rel="shortcut icon" href="<?php echo base_url();?>assets/zumeyes/images/favicon.png" />
-  
+
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/css/style.css" />
+   <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/zumeyes/images/favicon.png" />
+
 </head>
 
 <body>
@@ -29,31 +29,31 @@
               <div class="auth-form-dark text-left p-5">
                 <h2>Login</h2>
                 <h4 class="font-weight-light">Hello! let's get started</h4>
-                <?php if(!empty($error_msg)){
-        echo '<p class="statusMsg">'.$error_msg.'</p>';
-    } ?>
+                <?php if (!empty($error_msg)) {
+    echo '<p class="statusMsg">' . $error_msg . '</p>';
+}?>
                 <?php
 echo form_open_multipart('admin/login');
-  ?>
+?>
                   <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
                     <input type="email" class="form-control" autocomplete="off" name="email" id="exampleInputEmail1" value="" placeholder="Email">
                     <i class="mdi mdi-account"></i>
 
-                    <?php echo form_error('email');?>
+                    <?php echo form_error('email'); ?>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="" placeholder="Password">
                     <i class="mdi mdi-eye"></i>
-                    <?php echo form_error('password');?>
+                    <?php echo form_error('password'); ?>
                   </div>
                   <div class="mt-5">
                     <input type="submit" name="login" class="btn btn-block btn-warning btn-lg font-weight-medium" value="Login" />
                   </div>
                   <div class="mt-3 text-center">
                     <a href="" class="auth-link text-white">Forgot password?</a>
-                  </div>                 
+                  </div>
                 </form>
               </div>
             </div>
@@ -67,21 +67,21 @@ echo form_open_multipart('admin/login');
   </div>
   <!-- container-scroller -->
     <!-- plugins:js -->
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
   <!-- endinject -->
- 
+
   <!-- inject:js -->
-  <script src="<?php echo base_url();?>assets/zumeyes/js/off-canvas.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/hoverable-collapse.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/misc.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/settings.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/todolist.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/hoverable-collapse.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/misc.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/settings.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
   <!-- endinject -->
    <!-- End custom js for this page-->
- 
+
 </body>
 
 

@@ -10,6 +10,7 @@
 	<link href="<?php echo base_url();?>/assets/styles/font.css" rel="stylesheet" type="text/css">
 	<script src="<?php echo base_url();?>/assets/js/jquery-3.2.1.min.js"></script>
 	<script src="<?php echo base_url();?>/assets/js/bootstrap.min.js"></script>
+	
 </head>
 
 <body>
@@ -18,20 +19,26 @@
 	<section class="col-sm-12 otpSection clearfix">
 
 		<div class="container">
-			
 			<div class="otpPanel">
-			
-			<p>Please enter the OTP</p>
-			
+				<?php echo $this->session->flashdata('unauth');?>
+		
+			<form method="post" action="identify">
+			<p>Please enter the Your Detail</p>
 			<div class="field clearfix">
 				
-				<input type="text" id="otpnum" placeholder="OTP">
-				<a href="#">Resend OTP</a>
+				<input type="text" id="email" name="email" placeholder="Enter Your email">
+				
+				
+			</div>
+			<div class="field clearfix">
+				
+				<input type="text" id="otpnum" name="phone" placeholder="Phone No">
+				
 				
 			</div>
 			
-			<button>Verify</button>
-		
+			<button name="frgpass" value="frgpass" type="submit">Submit</button>
+		</form>
 			</div>
 			
 		</div>
@@ -52,7 +59,6 @@
 
 
 	</footer>
-<script src="<?php echo base_url('assets/js/script.js');?>"></script>
 
 </body>
 

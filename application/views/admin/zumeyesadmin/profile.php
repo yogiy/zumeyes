@@ -9,43 +9,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
  <title>Zumeyes Admin</title>
   <!-- plugins:css -->
-  <link href="<?php echo base_url();?>/assets/zumeyes/node_modules/mdi/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/flag-icon-css/css/flag-icon.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
+  <link href="<?php echo base_url(); ?>/assets/zumeyes/node_modules/mdi/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/icheck/skins/all.css" />
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/select2/dist/css/select2.min.css" />
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/skins/all.css" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/css/select2.min.css" />
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css" />
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/zumeyes/css/style.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="<?php echo base_url();?>assets/zumeyes/images/favicon.png" />
+  <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/zumeyes/images/favicon.png" />
 </head>
 
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
-   <?php include('header.php')?>
+   <?php include 'header.php'?>
     <!-- partial -->
-    
+
         <!-- partial -->
         <!-- partial:../../partials/_sidebar.html -->
-       <?php include('sidebar.php');?>
+       <?php include 'sidebar.php';?>
         <!-- partial -->
-        <?php foreach($profile as $key => $profile_data){ 
-       $email= $profile_data->email;
-       $name= $profile_data->name;
-       $phone= $profile_data->phone;
-       $designation= $profile_data->designation;
-       $address= $profile_data->address;
-       $img= $profile_data->user_image;
-        }
-          ?>
+        <?php foreach ($profile as $key => $profile_data) {
+    $email = $profile_data->email;
+    $name = $profile_data->name;
+    $phone = $profile_data->phone;
+    $designation = $profile_data->designation;
+    $address = $profile_data->address;
+    $img = $profile_data->user_image;
+}
+?>
         <div class="content-wrapper">
           <div class="row user-profile">
             <div class="col-lg-4 side-left d-flex align-items-stretch">
@@ -54,26 +54,22 @@
                   <div class="card">
                     <div class="card-body avatar">
                       <h4 class="card-title">Profile Info</h4>
-                      <img src="<?php echo base_url('assets/upload/')?><?php echo $img;?>" alt="">
-                      <p class="name"><?php echo $name;?></p>
-                      <p class="designation">-  <?php echo $designation;?>  -</p>
-                      <a class="d-block text-center text-dark" href="#"><?php echo $email;?></a>
-                      <a class="d-block text-center text-dark" href="#"><?php echo $phone?></a>
+                      <img style="
+    display: block;
+    width: 190px;
+    height: 100px;
+    border-radius: 0%;
+    margin-left: auto;
+    margin-right: auto;
+" src="<?php echo base_url('assets/upload/') ?><?php echo $img; ?>" alt="">
+                      <p class="name"><?php echo $name; ?></p>
+                      <p class="designation">-  <?php echo $designation; ?>  -</p>
+                      <a class="d-block text-center text-dark" href="#"><?php echo $email; ?></a>
+                      <a class="d-block text-center text-dark" href="#"><?php echo $phone ?></a>
                     </div>
                   </div>
                 </div>
-                <div class="col-12 stretch-card">
-                  <div class="card">
-                    <div class="card-body overview">
-                      
-                      <div class="wrapper about-user">
-                        <h4 class="card-title mt-4 mb-3">About</h4>
-                        <p><?php echo $address;?></p>
-                      </div>
-                     
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
             <div class="col-lg-8 side-right stretch-card">
@@ -118,7 +114,7 @@
                             <label for="address">Address</label>
                             <textarea name="address" id="address" name="address" rows="6" class="form-control" placeholder="Change address"></textarea>
                           </div>
-                         
+
                           <div class="form-group mt-5">
                             <button type="submit" name="profileupdate" value="profile" class="btn btn-success mr-2">Update</button>
                             <button class="btn btn-outline-danger" type="reset">Cancel</button>
@@ -130,16 +126,16 @@
                           <span class="badge badge-warning text-white">Note : </span>
                           <p class="d-inline ml-3 text-muted">Image size is limited to not greater than 1MB .</p>
                         </div>
-                          <?php 
-echo form_open_multipart('admin/profile');
-  ?>
-                            <?php echo form_upload(['name'=> 'userfile','class'=>'dropify','data-max-file-size'=>'1mb'])?>
-                         
                           <?php
-        if(isset($upload_error)){
-            echo $upload_error;
+echo form_open_multipart('admin/profile');
+?>
+                            <?php echo form_upload(['name' => 'userfile', 'class' => 'dropify', 'data-max-file-size' => '1mb']) ?>
 
-            }?>
+                          <?php
+if (isset($upload_error)) {
+    echo $upload_error;
+
+}?>
                           <div class="form-group mt-5">
                             <button type="submit" name="profileimg" value="profileimg" class="btn btn-success mr-2">Update</button>
                             <button class="btn btn-outline-danger" name="reset" value="profileimg" type="reset">Cancel</button>
@@ -184,28 +180,28 @@ echo form_open_multipart('admin/profile');
   </div>
   <!-- container-scroller -->
    <!-- plugins:js -->
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="<?php echo base_url();?>assets/zumeyes/js/off-canvas.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/hoverable-collapse.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/misc.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/settings.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/todolist.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/hoverable-collapse.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/misc.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/settings.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="<?php echo base_url();?>assets/zumeyes/js/file-upload.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/iCheck.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/typeahead.js"></script>
-  <script src="<?php echo base_url();?>assets/zumeyes/js/select2.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/file-upload.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/iCheck.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/typeahead.js"></script>
+  <script src="<?php echo base_url(); ?>assets/zumeyes/js/select2.js"></script>
   <!-- End custom js for this page-->
 <!-- End custom js for this page-->
 </body>

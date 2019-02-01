@@ -48,11 +48,12 @@
 			</div>
 
 			<div class="col-sm-6 col-xs-12 formBlock">
-
+                <span class="successsubscribe"></span>
 				<form method="post">
 
 					<div class="field clearfix">
-						<input type="text" name="email" id="email" placeholder="Enter your e-mail">
+
+						<input type="text" name="email" autocomplete="off" id="email" placeholder="Enter your e-mail">
 					</div>
 					<button type="button" class="newsletter">Subscribe</button>
 
@@ -117,10 +118,10 @@
 						<ul class="links">
 
 							<li>
-								<a href="<?php echo site_url('productlist');?>?id=">Men</a>
+								<a href="<?php echo site_url('productlist');?>?id=9">Men</a>
 							</li>
 							<li>
-								<a href="<?php echo site_url('productlist');?>?id=">Women</a>
+								<a href="<?php echo site_url('productlist');?>?id=10">Women</a>
 							</li>
 							<li>
 								<a href="<?php echo site_url('productlist');?>?id=">Kids</a>
@@ -181,7 +182,7 @@
 
 			<div class="row copyrightBlock">
 
-				<span>© 2018 Zumeyes. All rights resereved</span>
+				<span>© <?php echo date('Y') ?> Zumeyes. All rights resereved</span>
 
 			</div>
 
@@ -197,7 +198,7 @@
 				data:{email:email},
 				url:"<?php echo base_url('newsletter')?>",		
 				success:function(data){
-					alert('You are Successfully Subscribed');
+					$(".successsubscribe").html(data);
 				}
 
 			});

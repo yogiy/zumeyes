@@ -579,7 +579,12 @@
 										<div class="buttonBlock clearfix">
 										
 											<button class="editClass"><i class="icon icon-pencil-edit-button"></i><em>Edit Address</em></button>
-											<button class="deleteClass"><i class="icon icon-delete-button"></i><em>Remove</em></button>
+                                        
+
+
+<form method="post" action="delete_user_address">
+		     <input type="hidden" name="addressid" value="<?php echo $user_address->id?>">	
+											<button class="deleteClass"><i class="icon icon-delete-button"></i><em>Remove</em></button></form>
 										
 										</div>
 										
@@ -881,8 +886,8 @@
 							foreach($wishlist as $key =>$wishlist) { ?>
 							<div class="wishlistBox clearfix">
 							
-								<div class="img clearfix"><img src="<?php echo base_url('assets/upload/product/')?><?php echo $wishlist->pro_image;?>" alt="Product Image"></div>
-								<h3><?php echo $wishlist->product_name;?></h3>
+								<div class="img clearfix"><img src="<?php echo base_url('assets/upload/product/')?><?php echo str_replace(" ", '_',$wishlist->pro_image);?>" alt="Product Image"></div>
+								<h3><?php echo $wishlist->name;?></h3>
 								<em>Rs <?php echo $wishlist->price;?></em>
 								<div class="reviewRatingBar clearfix">
 									<div class="rating clearfix"> 
@@ -894,23 +899,10 @@
 									</div>
       								<a href="#" class="reviewLink">99 Review</a> 
 								</div>
-								<form method="post" action="shoppingCart">
+								<form method="post" action="wisht_to_shoppingCart">
 								<div class="buttonBlock clearfix">
-									<input type="hidden" name="pro_name" value="<?php echo @$wishlist->product_name?>">
-									<input type="hidden" name="prescription_id" value="<?php echo @$wishlist->pres_id?>">
-									<input type="hidden" name="sale_price" value="<?php echo @$wishlist->price?>">
-									<input type="hidden" name="pro_image" value="<?php echo @$wishlist->pro_image?>">
-									<input type="hidden" name="lense_name" value="<?php echo @$wishlist->lense_name?>">
-									<input type="hidden" name="lsphere" value="<?php echo @$wishlist->lsphere?>">
-									<input type="hidden" name="raxis" value="<?php echo @$wishlist->raxis?>">
-									<input type="hidden" name="laxis" value="<?php echo @$wishlist->laxis?>">
-									<input type="hidden" name="rcylinder" value="<?php echo @$wishlist->rcylinder?>">
-									<input type="hidden" name="lcylinder" value="<?php echo @$wishlist->lcylinder?>">
-									<input type="hidden" name="rsphere" value="<?php echo @$wishlist->rsphere?>">
-									<input type="hidden" name="nearpdsphere" value="<?php echo @$wishlist->nearpdsphere?>">
-									<input type="hidden" name="pdsphere" value="<?php echo @$wishlist->pdsphere?>">
+									<input type="hidden" name="wish_id" value="<?php echo @$wishlist->id?>">
 									
-								
 									<button class="hvr-wobble-top" name="<?php echo @$wishlist->prescription_type;?>" type="submit"> 
 										<i class="icon icon-shopping-cart"></i> <span>Add to Cart</span> 
 									</button>

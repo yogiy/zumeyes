@@ -9,6 +9,7 @@
 <link href="<?php echo base_url();?>/assets/styles/style.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url();?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url();?>/assets/styles/font.css" rel="stylesheet" type="text/css">
+
 	<script src="<?php echo base_url();?>/assets/js/jquery-3.2.1.min.js"></script>
 	<script src="<?php echo base_url();?>/assets/js/bootstrap.min.js"></script>
 </head>
@@ -18,67 +19,48 @@
 <?php include('header.php');?>
 	
 <section class="col-sm-12 clearfix proDetailsSection lensDetailsSection">
-	
+	<?php if(@$pro_data){
+                   foreach ($pro_data as $key => $pro_dat) {
+                     $featuredimage=explode("|",$pro_dat->featuredimage);
+                     $pro_colors=explode("|",$pro_dat->color);
+                      $procolor=$pro_dat->color;
+                     $pro_brand=$pro_dat->brand;
+
+                        $weight=$pro_dat->weight;
+                       $water_content=$pro_dat->water_content;
+                        $packaging=$pro_dat->packaging;
+                        $uses=$pro_dat->uses;
+                       $uses_duration=$pro_dat->uses_duration;
+                        
+                    
+                    
+                     $pro_material=$pro_dat->material;
+                     $description=$pro_dat->pro_description;
+                                     ?>
   <div class="center slider">
-    <div> <img src="<?php echo base_url('assets/images/lens_Img1.jpg')?>" alt="Image1"> </div>
-    <div> <img src="<?php echo base_url('assets/images/lens_Img2.jpg')?>" alt="Image2"> </div>
-    <div> <img src="<?php echo base_url('assets/images/lens_Img3.jpg')?>" alt="Image3"> </div>
-    <div> <img src="<?php echo base_url('assets/images/lens_Img4.jpg')?>" alt="Image1"> </div>
+   <?php foreach ($featuredimage as $key => $featuredimage) { ?>
+    <div> <img src="<?php echo base_url('assets/upload/featuredimage/')?><?php echo $featuredimage?>" alt="Image1"> </div> <?php  } ?>  
+ 
   </div>
 	
-  <div class="row productDetails lenstDetails clearfix">
-    <h3>Bausch & Lomb</h3>
-	<p>Soflens 59 (6 Lens per Box) Bausch & Lomb</p>
-    <small>1 Box</small><em>$19.95</em><span class="mrp">$ 25.97 </span><div class="offer"><span>30% Off</span></div>
-    
+  <div class="row productDetails clearfix">
+    <h3><?php echo $pro_dat->product_name?></h3>
+    <em>$<?php echo $pro_dat->sale_price?></em><span class="mrp">$ <?php echo $pro_dat->regular_price?> </span><div class="offer"><span><?php echo $pro_dat->offer?>% Off</span></div>
+    <p>Starting at $95, including prescription lenses</p>
     <div class="reviewRatingBar clearfix">
-      <div class="rating clearfix"> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full"></i> </div>
-      <a href="#" class="reviewLink">66 Review</a> </div>
+      <div class="rating clearfix"> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full"></i> <i class="icon icon-star-full"></i> </div>
+      <a href="#" class="reviewLink">99 Review</a> </div>
     <div class="shareBlock clearfix"> <span class="shareText">Share</span> <i class="icon icon-facebook"></i> <i class="icon icon-twitter"></i> <i class="icon icon-google-plus"></i> </div>
     <div class="colorBlock clearfix">
       <div class="colorList clearfix">
+        <?php foreach($pro_colors as $key => $color){ ?>
         <label>
         <div class="circle">
-          <div class="color cantique"></div>
+          <div class="color" style="background-color:<?php echo $color;?>"></div>
         </div>
-        <a href="#">Antique bronz</a>
-        </label>
-        <label>
-        <div class="circle">
-          <div class="color cblue"></div>
-        </div>
-        <a href="#">Blue</a>
-        </label>
-        <label>
-        <div class="circle">
-          <div class="color cyellow"></div>
-        </div>
-        <a href="#">Yellow</a>
-        </label>
-        <label>
-        <div class="circle">
-          <div class="color cred"></div>
-        </div>
-        <a href="#">Red</a>
-        </label>
-        <label>
-        <div class="circle">
-          <div class="color cgreen"></div>
-        </div>
-        <a href="#">Green</a>
-        </label>
-        <label>
-        <div class="circle">
-          <div class="color cgunmetal"></div>
-        </div>
-        <a href="#">Gunmetal</a>
-        </label>
-        <label>
-        <div class="circle">
-          <div class="color cburgundy"></div>
-        </div>
-        <a href="#">Burgundy</a>
-        </label>
+        <a><?php echo $color;?></a>
+        </label> 
+    <?php } ?>
       </div>
     </div>
   </div>
@@ -92,13 +74,13 @@
           <div class="valueBlock clearfix" >
 			  
 			 <h3>Enter Your Prescription</h3>
-			
+			<form action="contactlensecart" method="post" name="lenseform">
 			<div class="value clearfix">
 				
 				<div class="bar clearfix">
 				
 					<label>Prescription Name</label>
-					<input type="text" name="prescName" id="prescName" placeholder="e.g amanda octobar 2018">
+					<input type="text" name="prescriptionname" required id="prescName" placeholder="e.g amanda octobar 2018">
 					
 				</div>
 			
@@ -108,53 +90,62 @@
               			<div class="valueBox valueBox1 clearfix">
 						<label>Boxes</label>
 						<div class="field">
-						  <input type="text" id="boxL" placeholder="1 Box">
+						  <input type="text" list="box" required id="boxL" name="lbox" placeholder="1 Box">
 						  <i class="icon icon-angle-down"></i>
-						  <ul class="list">
-							<li><a href="#">1 Box</a></li>
-							<li><a href="#">2 Box</a></li>
-							<li><a href="#">3 Box</a></li>
-							<li><a href="#">4 Box</a></li>
-						  </ul>
+						  <datalist id="box">
+							<option value="1 Box">1 Box</option>
+							<option value="2 Box">2 Box</option>
+							<option value="3 Box">3 Box</option>
+							<option value="4 Box">4 Box</option>
+						 </datalist>
 						</div>
 					  	</div>
 						<div class="valueBox valueBox1 clearfix">
 						<label>Sphere (SPH)</label>
 						<div class="field">
-						  <input type="text" id="sphL" placeholder="0.00">
-						  <i class="icon icon-angle-down"></i>
-						  <ul class="list">
-							<li><a href="#">1.00</a></li>
-							<li><a href="#">1.25</a></li>
-							<li><a href="#">1.50</a></li>
-							<li><a href="#">1.75</a></li>
-						  </ul>
-						</div>
+                  <input type="text" list="lsphere" id="sphL" required name="lsphere" placeholder="0.00">
+                  <i class="icon icon-angle-down"></i>
+                  
+                   <datalist id="lsphere">
+                  
+ <?php foreach($sphere_data as $key =>$sphere){ ?>
+                     ?>
+
+            <option value="<?php echo $sphere->sphere; ?>"><?php echo $sphere->sphere; ?></option>
+           <?php }  ?>
+           </datalist>
+         
+
+                 
+                </div>
 					  	</div>
               			<div class="valueBox valueBox1 clearfix">
                 <label>Cylinder(CYL)</label>
                 <div class="field">
-                  <input type="text" id="cylL" placeholder="0.00">
+                  <input type="text" id="cylL" list="lcylinder" required name="lcylinder" required="" placeholder="0.00">
                   <i class="icon icon-angle-down"></i>
-                  <ul class="list">
-                    <li><a href="#">1.00</a></li>
-                    <li><a href="#">1.25</a></li>
-                    <li><a href="#">1.50</a></li>
-                    <li><a href="#">1.75</a></li>
-                  </ul>
+                   <datalist id="lcylinder">
+                   
+                    <?php foreach($cylinder_data as $key =>$cylinder){ ?>
+                      <option value="<?php echo $cylinder->cylinder ?>"><?php echo $cylinder->cylinder; ?></option>
+         
+                       <?php } ?>
+                  </datalist>
                 </div>
               </div>
               			<div class="valueBox valueBox1 clearfix">
                 <label>Axis</label>
                 <div class="field">
-                  <input type="text" id="axisL" placeholder="0.00">
+                  <input type="text" id="axisL" list="laxis" required name="laxis" placeholder="0.00">
                   <i class="icon icon-angle-down"></i>
-                  <ul class="list">
-                    <li><a href="#">1.00</a></li>
-                    <li><a href="#">1.25</a></li>
-                    <li><a href="#">1.50</a></li>
-                    <li><a href="#">1.75</a></li>
-                  </ul>
+                  
+                     <datalist id="laxis">
+                    <?php foreach($axis_data as $key =>$axis){ ?>
+                      <option value="<?php echo $axis->axis; ?>"><?php echo $axis->axis; ?></option>
+         
+                     <?php } ?>
+                </datalist>
+                 
                 </div>
               </div>
             		</div>
@@ -166,53 +157,62 @@
              <div class="valueBox valueBox1 clearfix">
 						<label>Boxes</label>
 						<div class="field">
-						  <input type="text" id="boxR" placeholder="1 Box">
+						  <input type="text" id="boxR" list="rbox" required name="rbox" placeholder="1 Box">
 						  <i class="icon icon-angle-down"></i>
-						  <ul class="list">
-							<li><a href="#">1 Box</a></li>
-							<li><a href="#">2 Box</a></li>
-							<li><a href="#">3 Box</a></li>
-							<li><a href="#">4 Box</a></li>
-						  </ul>
+						   <datalist id="rbox">
+              <option value="1 Box">1 Box</option>
+              <option value="2 Box">2 Box</option>
+              <option value="3 Box">3 Box</option>
+              <option value="4 Box">4 Box</option>
+             </datalist>
 						</div>
 					  	</div>
 						<div class="valueBox valueBox1 clearfix">
 						<label>Sphere (SPH)</label>
-						<div class="field">
-						  <input type="text" id="sphL" placeholder="0.00">
-						  <i class="icon icon-angle-down"></i>
-						  <ul class="list">
-							<li><a href="#">1.00</a></li>
-							<li><a href="#">1.25</a></li>
-							<li><a href="#">1.50</a></li>
-							<li><a href="#">1.75</a></li>
-						  </ul>
-						</div>
+						 <div class="field">
+                  <input type="text" list="rsphere" id="sphR" required name="rsphere" placeholder="0.00">
+                  <i class="icon icon-angle-down"></i>
+                  
+                   <datalist id="rsphere">
+                  
+ <?php foreach($sphere_data as $key =>$sphere){ ?>
+                     ?>
+
+            <option value="<?php echo $sphere->sphere; ?>"><?php echo $sphere->sphere; ?></option>
+           <?php }  ?>
+           </datalist>
+         
+
+                 
+                </div>
 					  	</div>
               			<div class="valueBox valueBox1 clearfix">
                 <label>Cylinder(CYL)</label>
                 <div class="field">
-                  <input type="text" id="cylL" placeholder="0.00">
+                  <input type="text" id="cylR" list="rcylinder" required name="rcylinder" required="" placeholder="0.00">
                   <i class="icon icon-angle-down"></i>
-                  <ul class="list">
-                    <li><a href="#">1.00</a></li>
-                    <li><a href="#">1.25</a></li>
-                    <li><a href="#">1.50</a></li>
-                    <li><a href="#">1.75</a></li>
-                  </ul>
+                   <datalist id="rcylinder">
+                   
+                    <?php foreach($cylinder_data as $key =>$cylinder){ ?>
+                      <option value="<?php echo $cylinder->cylinder ?>"><?php echo $cylinder->cylinder; ?></option>
+         
+                       <?php } ?>
+                  </datalist>
                 </div>
               </div>
               			<div class="valueBox valueBox1 clearfix">
                 <label>Axis</label>
                 <div class="field">
-                  <input type="text" id="axisL" placeholder="0.00">
+                  <input type="text" id="axisR" list="raxis" required name="raxis" placeholder="0.00">
                   <i class="icon icon-angle-down"></i>
-                  <ul class="list">
-                    <li><a href="#">1.00</a></li>
-                    <li><a href="#">1.25</a></li>
-                    <li><a href="#">1.50</a></li>
-                    <li><a href="#">1.75</a></li>
-                  </ul>
+                  
+                     <datalist id="raxis">
+                    <?php foreach($axis_data as $key =>$axis){ ?>
+                      <option value="<?php echo $axis->axis; ?>"><?php echo $axis->axis; ?></option>
+         
+                     <?php } ?>
+                </datalist>
+                 
                 </div>
               </div>
             </div>
@@ -224,12 +224,19 @@
       </div>
     </div>
   </div>
-	
+	 <input type="hidden" name="pro_name" id="pro_name" value="<?php echo $pro_dat->product_name;?>">
+       <input type="hidden" name="pro_image" id="pro_image" value="<?php echo $pro_dat->pro_image;?>">
+     <input type="hidden" name="sale_price" id="sale_price" value="<?php echo $pro_dat->sale_price;?>">
+     <input type="hidden" name="id" id="id" value="<?php echo $pro_dat->id;?>">
+    
   <div class="buttonBlock clearfix">
-    <button class="hvr-wobble-top"> <i class="icon icon-shopping-cart"></i> <span>Add to Cart</span> </button>
-    <div class="whislistIcon"> <i class="icon icon-heart"></i> </div>
+    <button class="hvr-wobble-top" type="submit" name="contactlense" value="contactlense "> <i class="icon icon-shopping-cart class"></i> <span>Add to Cart</span> </button>
+
+    <div class="whislistIcon"><i style="cursor: pointer" class="icon icon-heart class" proprice="<?php echo $pro_dat->sale_price?>" pro_id="<?php echo $pro_dat->id?>" pro_name="<?php echo $pro_dat->product_name?>" pro_image="<?php echo $pro_dat->pro_image?>"></i>
   </div>
-	
+  </div>
+	</form>
+
   <div class="moreDetailsBlock clearfix">
     <div class="tabBlock clearfix">
       <ul class="tabList clearfix">
@@ -253,17 +260,17 @@
           <div class="col-sm-6 detailsBlock clearfix">
             <h3>Product Features</h3>
             <ul class="list clearfix">
-              <li>Brand: <em>Bausch & Lomb</em> </li>
-              <li>Water Content: <em>59%</em> </li>
-              <li>Lens Material: <em>Hilafilcon B</em> </li>
-              <li>Lens Type: <em>Monthly Disposable</em> </li>
-              <li>Usage Duration: <em>Monthly</em> </li>
-              <li>Packaging: <em>6 Lens Box</em> </li>
+              <li>Brand: <em><?php echo $pro_brand?></em> </li>
+              <li>Water Content: <em><?php echo $water_content?></em> </li>
+              <li>Lens Material: <em><?php echo $pro_material?></em> </li>
+              <li>Lens Type: <em><?php echo $uses?></em> </li>
+              <li>Usage Duration: <em><?php echo $uses_duration?></em> </li>
+              <li>Packaging: <em><?php echo $packaging?> Lens Box</em> </li>
             </ul>
           </div>
         </div>
         <div class="tabContent clearfix">
-          <p>Bausch & Lomb Soflens 59 (6 Lenses/box) delivers the ultimate clarity in vision with a very comfortable experience throughout the day. These lenses are made from a protein resistant material - Hilafilcon B polymer, which leads to the unique combination of visual acuity, excellent performance and comfort.</p>
+          <?php echo $description; } }?>
         </div>
         <div class="tabContent clearfix">
           <div class="tabRatingBlock clearfix">
@@ -587,6 +594,9 @@
       <h2> <span>You may also like these</span> </h2>
     </div>
     <div class="row probar clearfix">
+     <?php foreach($related as $key =>$relate){
+?>
+     
       <div class="col-sm-3 proBox">
         <div class="product">
           <div class="itemTop">
@@ -597,10 +607,10 @@
               <li> <a href="#" class="cgreen"></a> </li>
             </ul>
           </div>
-          <div class="itemImg"> <a href="productDetails.html"> <img src="<?php echo base_url('assets/images/frame_2.png')?>" alt="Frame"> </a> </div>
+          <div class="itemImg"> <a href="<?php echo site_url('productDetails');?>?id=<?php echo $relate->id?>"> <img src="<?php echo base_url('assets/upload/product/')?><?php echo str_replace(" ", '_',$relate->pro_image) ?>" alt="Frame"> </a> </div>
           <div class="itemBottom">
-            <h3> <a class="productName" href="#">Chamberlain</a> </h3>
-            <div class="priceBox"> <span>$ 21.99</span> </div>
+            <h3> <a class="productName" href="#"><?php echo $relate->product_name?></a> </h3>
+            <div class="priceBox"> <span>Rs <?php echo $relate->sale_price?></span> </div>
             <div class="productAction">
               <div class="cart icon"> <i class="icon-shopping-cart"></i> </div>
               <div class="wishlist icon"> <i class="icon-heart"></i> </div>
@@ -608,69 +618,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-3 proBox">
-        <div class="product">
-          <div class="itemTop">
-            <ul class="colorList">
-              <li> <a href="#" class="cblue"></a> </li>
-              <li> <a href="#" class="cyellow"></a> </li>
-              <li> <a href="#" class="cred"></a> </li>
-              <li> <a href="#" class="cgreen"></a> </li>
-            </ul>
-          </div>
-          <div class="itemImg"> <a href="productDetails.html"> <img src="images/frame_3.png " alt="Frame"> </a> </div>
-          <div class="itemBottom">
-            <h3> <a class="productName" href="#">Hughes Wide</a> </h3>
-            <div class="priceBox"> <span>$ 30.97</span> </div>
-            <div class="productAction">
-              <div class="cart icon"> <i class="icon-shopping-cart"></i> </div>
-              <div class="wishlist icon"> <i class="icon-heart"></i> </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3 proBox">
-        <div class="product">
-          <div class="itemTop">
-            <ul class="colorList">
-              <li> <a href="#" class="cblue"></a> </li>
-              <li> <a href="#" class="cyellow"></a> </li>
-              <li> <a href="#" class="cred"></a> </li>
-              <li> <a href="#" class="cgreen"></a> </li>
-            </ul>
-          </div>
-          <div class="itemImg"> <a href="productDetails.html"> <img src="images/frame_4.png" alt="Frame"> </a> </div>
-          <div class="itemBottom">
-            <h3> <a class="productName" href="#">Baker</a> </h3>
-            <div class="priceBox"> <span>$ 29.97</span> </div>
-            <div class="productAction">
-              <div class="cart icon"> <i class="icon-shopping-cart"></i> </div>
-              <div class="wishlist icon"> <i class="icon-heart"></i> </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-3 proBox">
-        <div class="product">
-          <div class="itemTop">
-            <ul class="colorList">
-              <li> <a href="#" class="cblue"></a> </li>
-              <li> <a href="#" class="cyellow"></a> </li>
-              <li> <a href="#" class="cred"></a> </li>
-              <li> <a href="#" class="cgreen"></a> </li>
-            </ul>
-          </div>
-          <div class="itemImg"> <a href="productDetails.html"> <img src="images/frame_2.png" alt="Frame"> </a> </div>
-          <div class="itemBottom">
-            <h3> <a class="productName" href="#">Chamberlain</a> </h3>
-            <div class="priceBox"> <span>$ 21.99</span> </div>
-            <div class="productAction">
-              <div class="cart icon"> <i class="icon-shopping-cart"></i> </div>
-              <div class="wishlist icon"> <i class="icon-heart"></i> </div>
-            </div>
-          </div>
-        </div>
-      </div>
+     <?php }?>
     </div>
   </div>
 </section>
@@ -678,11 +626,34 @@
 
 <?php include('footer.php');?>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+   $(".class").click(function(){
+
+        $(this).toggleClass("active");
+      var sale_price =  $(this).attr("proprice");
+      var pro_id=  $(this).attr("pro_id");
+      var pro_name=  $(this).attr("pro_name");
+      var pro_image=  $(this).attr("pro_image");
+      var prescription_type="prescription_type"; 
+        $.ajax({
+                type:"POST",
+                url:"<?php echo base_url('wishframeOnly')?>",                              
+            data:{pro_id:pro_id,pro_name:pro_name,sale_price:sale_price,pro_image:pro_image,prescription_type:prescription_type},
+                success:function(data){                   
+                    
+                }
+            });    
+          
+    });
+    });
+</script>
 <script src="<?php echo base_url('assets/js/owl.carousel.js');?>"></script>
 <script src="<?php echo base_url('assets/js/script.js');?>"></script>
 <script src="<?php echo base_url('assets/js/slick.js');?>"></script>
 <script type="text/javascript">
 		
 	</script>
+
 </body>
 </html>

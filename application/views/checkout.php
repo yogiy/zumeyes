@@ -1,174 +1,185 @@
 <!doctype html>
-<html> 
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zumeyes</title>
-<link href="<?php echo base_url();?>/assets/styles/style.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url();?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url();?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url();?>/assets/styles/slick.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url();?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url();?>/assets/js/bootstrap.min.js"></script>
+
+	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url(); ?>/assets/styles/slick.css" rel="stylesheet" type="text/css">
+	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
 <style type="text/css"></style>
 </head>
 
 <body>
-	 
-	<?php include('header.php');?>
+
+	<?php include 'header.php';?>
 	<section class="col-sm-12 checkoutSection clearfix">
-	
+
 		<div class="col-sm-8 secureCheckoutBlock clearfix">
-		
+
 			<div class="secureCheckout clearfix">
-			
+
 				<h2>Secure Checkout</h2>
-				
+
 				<div class="checkoutList clearfix">
-				
+
 					<div class="bar active clearfix">
-					
+
 						<span class="loginText">Login</span>
-						
+
 						<div class="userId clearfix">
-						
+
 							<h3 id="checkoutLoginDetails" ><?php echo $this->session->userdata('user_name'); ?> <em><?php echo $this->session->userdata('user_email'); ?></em></h3>
-							
+
 							<div id="newCheckoutLoginDetails" class="field" style="display: none;"><input type="text" id="email" placeholder="useremail@gmail.com"></div>
-							
+
 							<button id="changeLoginBtn">Change</button>
 							<button id="saveLoginBtn" style="display: none;">Save</button>
-						
-						</div>
-					
-					</div>
-					
-					<div class="bar active clearfix" id="chooseAddressBar">
-					
-						<span>Delivery Address</span>
-						
-						<div class="addrsBlock clearfix">
-						<?php if(isset($useraddress) ){
-							foreach($useraddress as $user_address){?>
-							<div class="addrsBox clearfix">
-							
-								<div class="addrsBoxHead clearfix">
-								
-									<div class="radioBlock"><i class="icon icon-radio-button active"></i></div>
-									
-									<div class="userName">
-									
-										<h3><?php echo $this->session->userdata('user_name'); ?> (Default Address)</h3>
-										<div class="buttonBlock">
-										
-											<button><i class="icon icon-pencil-edit-button"></i><em>Edit Address</em></button>
-											<button><i class="icon icon-delete-button"></i><em>Remove</em></button>
-										
-										</div>
-										
-									</div>
-									
-								</div>
-								
-								<div class="addrsBoxContent clearfix">
-								
-									<p><?php echo	$user_address->address;?>,</p>
-								<p><?php echo	$user_address->city;?>,</p>
-								<p><?php echo	$user_address->pincode;?>,</p>
-								<p><?php echo	$user_address->state;?>,</p>
-								<p><?php echo	$user_address->phone;?></p>
-								
-								
-								</div>
-								
-								<div class="addrsBoxFoot clearfix"><button class="selectDeliveryAddress" >Deliver to this address</button></div>
-							
-							</div>
-							<?php } } ?>
-							
+
 						</div>
 
-						
+					</div>
+
+					<div class="bar active clearfix" id="chooseAddressBar">
+
+						<span>Delivery Address</span>
+
+						<div class="addrsBlock clearfix">
+						<?php if (isset($useraddress)) {
+    $i = 1;
+    foreach ($useraddress as $user_address) {?>
+							<div class="addrsBox clearfix">
+
+								<div class="addrsBoxHead clearfix">
+
+									<div class="radioBlock"><i class="icon icon-radio-button <?php if ($i <= 1) {?> active <?php }?>"></i></div>
+
+									<div class="userName">
+
+										<h3><?php echo $user_address->name; ?><?php if ($i <= 1) {?> (Default Address)<?php $i++;}?></h3>
+										<div class="buttonBlock">
+
+											<button><i class="icon icon-pencil-edit-button"></i><em>Edit Address</em></button>
+											<button><i class="icon icon-delete-button"></i><em>Remove</em></button>
+
+										</div>
+
+									</div>
+
+								</div>
+
+								<div class="addrsBoxContent clearfix">
+
+									<p><?php echo $user_address->address; ?>,</p>
+								<p><?php echo $user_address->city; ?>,</p>
+								<p><?php echo $user_address->pincode; ?>,</p>
+								<p><?php echo $user_address->state; ?>,</p>
+								<p><?php echo $user_address->phone; ?></p>
+
+
+								</div>
+
+								<div class="addrsBoxFoot clearfix"><button class="selectDeliveryAddress" >Deliver to this address</button></div>
+
+							</div>
+							<?php }}?>
+
+						</div>
+
+
 						<div class="addNewAddrs clearfix">
-							
+
 							<a href="#" class="clearfix">
-							
+
 								<i class="icon icon-plus-button"></i>
 								<span>Add New Address</span>
-								
+
 							</a>
-							
-						
+
+
 						</div>
-					
+
 					</div>
-					
+
+					<?php if (isset($useraddress)) {
+    $i = 1;if ($i <= 1) {
+        foreach ($useraddress as $user_address) {?>
+
 					<div class="bar active clearfix changeAddrsBar">
-					
+
 						<span class="loginText">Delivery Address</span>
-						
+
+
 						<div class="userId clearfix">
-						
-							<p id="checkoutAddressDetails"><strong>Narinder Singh</strong> B-161,Second Floor, Flat No.3, Gali No1, West Vinod Nagar., Badrinath Mandir, New Delhi, Delhi</p>
-							
-							
+
+							<p id="checkoutAddressDetails"><strong><?php echo $user_address->name; ?></strong><?php echo $user_address->address; ?>,
+								<?php echo $user_address->city; ?>,
+								<?php echo $user_address->pincode; ?>,
+								<?php echo $user_address->state; ?>,
+								<?php echo $user_address->phone; ?></p>
+
+
 							<button id="changeDeliveryBtn">Change</button>
-						
+
 						</div>
-					
+
 					</div>
-					
+					<?php }}}?>
 					<div class="bar clearfix addAddrsBar">
-					
+
 						<span>Add New Address</span>
-						
+
 						<form method="post" action="myAccount">
-							
+
 								<div class="addrsDetails clearfix">
-						
-							
+
+
 								<div class="detailsBar clearfix">
-								
+
 									<div class="field"><input type="text" required name="name" id="cfname" placeholder="Full Name"></div>
 									<div class="field right"><input type="text" required name="phone" id="cnum" placeholder="Phone Number"></div>
-								<?php echo form_error('name');?>
+								<?php echo form_error('name'); ?>
 								</div>
 								<div class="detailsBar clearfix">
-								
+
 									<div class="field full"><textarea required name="address" id="caddrs" placeholder="Address"></textarea></div>
-								<?php echo form_error('address');?>
+								<?php echo form_error('address'); ?>
 								</div>
-								
+
 								<div class="detailsBar clearfix">
-								
+
 									<div class="field"><input type="text" required name="cpin" id="cpin" placeholder="Pincode"></div>
-									<?php echo form_error('cpin');?>
+									<?php echo form_error('cpin'); ?>
 									<div class="field right"><input type="text" id="clocality" name="locality" required placeholder="Locality"></div>
-								<?php echo form_error('locality');?>
+								<?php echo form_error('locality'); ?>
 								</div>
-								
+
 								<div class="detailsBar clearfix">
-								
+
 									<div class="field"><input type="text" required name="city" id="ccity" placeholder="City"></div>
-									<?php echo form_error('city');?>
+									<?php echo form_error('city'); ?>
 									<div class="field right"><input name="state" required type="text" id="cstate" placeholder="State"></div>
-								<?php echo form_error('state');?>
+								<?php echo form_error('state'); ?>
 								</div>
-								
+
 								<div class="detailsBar clearfix">
-								
+
 									<div class="field"><input type="text" required name="landmark" id="clandm" placeholder="Landmark"></div>
-									<?php echo form_error('landmark');?>
+									<?php echo form_error('landmark'); ?>
 									<div class="field right"><input name="alternatephone" required type="text" id="caltnum" placeholder="Alternate Number"></div>
-								<?php echo form_error('alternatephone');?>
+								<?php echo form_error('alternatephone'); ?>
 								</div>
-								
+
 								<div class="detailsBar clearfix">
-								
+
 									<label>Addresss Type</label>
-									
+
 									<div class="addrsType clearfix">
-											
+
 										<div class="radioBlock">
 										<input id="homeD" class="radio-custom" value="Home (All day delivery)" name="radio-group" type="radio" checked>
             							<span for="homeD" class="radio-custom-label"><em>Home (All day delivery)</em></span>
@@ -177,119 +188,186 @@
 										<input id="officeD" class="radio-custom" value="Office (Delivery Between 10am - 7pm)" name="radio-group" type="radio">
             							<span for="officeD" class="radio-custom-label"><em>Office (Delivery Between 10am - 7pm)</em></span>
 										</div>
-														<?php echo form_error('radio-group');?>					
+														<?php echo form_error('radio-group'); ?>
 									</div>
-								
+
 								</div>
-								
+
 								<div class="buttonBlock clearfix">
-								
+
 									<div class="button"><input name="addnewaddress" value="Save" type="submit"></div>
 									<button class="cancelBtn">Cancel</button>
-								
+
 								</div>
-							
-							
-						
+
+
+
 						</div>
 					</form>
 						</div>
-					
-					</div>
-					
-					<div class="bar clearfix reviewBar">
-					
+
+						<div class="bar clearfix active">
+
 						<span>Review Order</span>
-						
+
 						<div class="orderList clearfix">
-							<?php $i = 1; 
-			       $Total=0;?>
-			       <?php $total_product=0; ?>
-						 <?php foreach ($this->cart->contents() as $items): ?>
-		  	<?php echo form_hidden($i.'[rowid]', $items['rowid']); ?>
-		  
+							<?php $i = 1;
+$Total = 0;?>
+			       <?php $total_product = 0;?>
+						 <?php
+if (!$cart_data) {
+    foreach ($this->cart->contents() as $items): ?>
+		  	<?php echo form_hidden($i . '[rowid]', $items['rowid']); ?>
+
 							<div class="itemBar clearfix">
-							
+
 								<div class="itemImgBlock clearfix">
-								
-									<img src="<?php echo base_url('assets/upload/product/')?><?php echo str_replace(" ", '_',$items['pro_image']) ; ?>" alt="Image1">
-									<form method="post" action="delete_product_from_cart">
-					<input type="hidden" name="rowid" value="<?php echo $items['rowid']?>">	<button type="submit" name="delete_pro"><i class="icon icon-delete-button"></i><em>Remove</em></button></form>
-					
+
+									<img src="<?php echo base_url('assets/upload/product/') ?><?php echo str_replace(" ", '_', $items['pro_image']); ?>" alt="Image1">
+								<form method="post" action="delete_product_from_cartcheckout">
+		     <input type="hidden" name="rowid" value="<?php echo $items['rowid'] ?>">	<button type="submit"  value="delete_pro" name="delete_pro"><i class="icon icon-delete-button"></i><em>Remove</em></button></form>
+
 								</div>
 								<div class="itemInfoBlock clearfix">
-								
-									<h4><?php echo $items['name']; ?>Square-Eye Glasses </h4>
-									<span><?php echo $items['prescription_type']?></span>
-									<em>Delivery By: <strong>Wed, 4th Jul</strong></em>
-									
+
+									<h4><?php echo $items['name']; ?></h4>
+									<span><?php echo $items['prescription_type'] ?></span>
+									<em>Delivery By: <strong><?php date_default_timezone_set('Asia/Kolkata');
+    $date = date("M d Y");
+    echo date('M d Y', strtotime($date . ' + 7 days'));?></strong></em>
+
 									<div class="quantityBlock clearfix">
 										<label>Quantity</label>
-										
+
 										<div class="field">
-										  <input id="cylL" placeholder="01" type="text">
-										  <i class="icon icon-angle-down"></i>
-										  <ul class="list">
-											<li><a href="#">01</a></li>
-											<li><a href="#">02</a></li>
-											<li><a href="#">03</a></li>
-											<li><a href="#">04</a></li>
-										  </ul>
+										 <form method="post" action="update_product_from_cartcheckout" class="cartupdate">
+									<input type="hidden" name="crowid" value="<?php echo $items['rowid'] ?>">
+								  <input type="text" list="qty" value="<?php echo $items['qty'] ?>" name="qantity" id="cylL" placeholder="01" onchange="this.form.submit()">
+								  <i class="icon icon-angle-down"></i>
+								  <datalist id="qty" >
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+
+								 </datalist>
+								</form>
 										</div>
 									</div>
-									
+
 								</div>
-								<div class="itemPriceBlock clearfix"><span>Rs<?php echo $items['price']?></span></div>
-							
+								<div class="itemPriceBlock clearfix"><span>Rs<?php echo $items['subtotal'] ?></span></div>
+
 							</div>
-							<?php $total_product++; 
-                    if(isset($items['lense_price'])) {       $subtotal=$items['lense_price']+$items['price']; } else {
-								
-							 
-                        $subtotal=$items['price'];
-                          }
-                   $Total=$subtotal+$Total;
-			?>
-			<?php endforeach; ?>
-							
-							
+							<?php $total_product = $this->cart->total_items();
+    if (isset($items['lense_price'])) {$subtotal = $items['lense_price'] + $items['subtotal'];} else {
+
+        $subtotal = $items['subtotal'];
+    }
+    $Total = $subtotal + $Total;
+    ?>
+			<?php endforeach;}?>
+							<?php if (isset($cart_data) && !empty($cart_data)) {
+
+    foreach ($cart_data as $items) {?>
+
+						 	<div class="itemBar clearfix">
+
+								<div class="itemImgBlock clearfix">
+
+									<img src="<?php echo base_url('assets/upload/product/') ?><?php echo str_replace(" ", '_', $items->pro_image); ?>" alt="Image1">
+
+							<form method="post" action="delete_product_from_usercartcheckout">
+								<?php
+if ($this->cart->contents()) {
+        foreach ($this->cart->contents() as $item) {?>
+		  	<?php echo form_hidden($i . '[rowid]', $item['rowid']); ?>
+
+								 <input type="hidden" name="crowid" value="<?php echo $item['rowid'] ?>">
+
+                        <?php }}?>
+					<input type="hidden" name="rowid" value="<?php echo $items->id ?>">	<button type="submit" value="delete_pro" name="delete_pro"><i class="icon icon-delete-button"></i><em>Remove</em></button>
+				</form>
+								</div>
+								<div class="itemInfoBlock clearfix">
+
+									<h4><?php echo $items->name; ?></h4>
+									<span><?php echo $items->prescription_type ?></span>
+									<em>Delivery By: <strong><?php date_default_timezone_set('Asia/Kolkata');
+        $date = date("M d Y");
+        echo date('M d Y', strtotime($date . ' + 7 days'));?></strong></em>
+
+									<div class="quantityBlock clearfix">
+										<label>Quantity</label>
+
+										<div class="field">
+										 <form method="post" action="update_product_from_usercartcheckout" id="usercartupdate">
+									<input type="hidden" name="crowid" value="<?php echo $items->pro_id ?>">
+									<input type="hidden" name="email" value="<?php echo $items->email ?>">
+								  <input type="text" list="qty" value="<?php echo $items->qty ?>" name="qantity" id="cylL" placeholder="01" onchange="this.form.submit()">
+								  <i class="icon icon-angle-down"></i>
+								  <datalist id="qty" >
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+
+								 </datalist>
+								</form>
+										</div>
+									</div>
+
+								</div>
+								<div class="itemPriceBlock clearfix"><span>Rs<?php echo $items->price * $items->qty; ?></span></div>
+
+							</div>
+							<?php $total_product = $items->qty;
+        if (isset($items->lense_price)) {$subtotal = ($items->lense_price + $items->price) * $items->qty;} else {
+
+            $subtotal = $items->price * $items->qty;
+        }
+        $Total = $subtotal + $Total;
+        ?>
+			<?php }}?>
+
+
 							<div class="buttonBlock clearfix"><button class="proceed">Proceed to Pay</button></div>
-						
+
 						</div>
-						
+
 					</div>
-					
+
 					<div class="bar clearfix paymentBar">
-					
+
 						<span>Make Payment</span>
-						
+
 						<div class="paymentOptionBlock clearfix">
-						
+
 							<ul class="optionsList clearfix">
-							
+
 								<li id="creditCard">Credit Card</li>
 								<li id="debitCard">Debit Card</li>
 								<li id="netBanking">Net Banking</li>
 								<li id="cod">Cash on Delivery</li>
 								<li id="bhimUPI">PhonePe/BHIM UPI</li>
 								<li id="emi">EMI (Easy Installments)</li>
-							
+
 							</ul>
-							
+
 							<div class="paymentOptionContent clearfix">
-								
+
 								<span class="option creditCardOption">Credit Card</span>
-								
+
 								<div class="paymentDetails clearfix" id="creditCardContent">
-									
+
 									<div class="detailsBar clearfix">
-									
+
 										<div class="field full"><input type="text" id="ccardnum" placeholder="Card Number"></div>
-									
+
 									</div>
-									
+
 									<div class="detailsBar clearfix">
-									
+
 										<div class="field">
 											<input type="text" id="ccardexpM" placeholder="Expiry Month">
 											<i class="icon icon-angle-down"></i>
@@ -326,13 +404,13 @@
 												<li><a href="#">2029</a></li>
 										  	</ul>
 										</div>
-									
+
 									</div>
-									
+
 									<div class="detailsBar clearfix">
-									
+
 										<div class="field">
-											<input type="text" id="cccvv" placeholder="CVV Number">											
+											<input type="text" id="cccvv" placeholder="CVV Number">
 										</div>
 										<div class="field right">
 											<input type="text" id="cctype" placeholder="Card Type">
@@ -343,123 +421,123 @@
 												<li><a href="#">American Express</a></li>
 										  	</ul>
 										</div>
-									
+
 									</div>
-									
+
 									<div class="detailsBar clearfix">
-									
+
 										<div class="field full"><input type="text" id="ccname" placeholder="Name on Card"></div>
-									
+
 									</div>
-									
+
 									<div class="detailsBar clearfix">
-									
+
 										<div class="checkbox check"><i class="checkIcon icon-tick"></i></div>
 										<em class="saveCard">Save this card for future faster checkout</em>
-									
+
 									</div>
 									<div class="buttonBlock clearfix">
-									<form method="post" action="guestdelete">
-										<button type="submit" name="guestdelete" value="guestdelete">Pay $45.93</button>
-									</form>
-									</div>
-								
-								</div>
-								
-								<span class="option debitCardOption">Debit Card</span>
-								
-								<div class="paymentDetails clearfix" id="debitCardContent">
-									
-									<div class="detailsBar clearfix">
-									
-										<div class="field full"><input type="text" id="ccardnum" placeholder="Card Number"></div>
-									
-									</div>
-									
-									<div class="detailsBar clearfix">
-									
-										<div class="field">
-											<input type="text" id="ccardexpM" placeholder="Expiry Month">
-											<i class="icon icon-angle-down"></i>
-										  	<ul class="list">
-												<li><a href="#">01</a></li>
-												<li><a href="#">02</a></li>
-												<li><a href="#">03</a></li>
-												<li><a href="#">04</a></li>
-												<li><a href="#">05</a></li>
-												<li><a href="#">06</a></li>
-												<li><a href="#">07</a></li>
-												<li><a href="#">08</a></li>
-												<li><a href="#">09</a></li>
-												<li><a href="#">10</a></li>
-												<li><a href="#">11</a></li>
-												<li><a href="#">12</a></li>
-										  	</ul>
-										</div>
-										<div class="field right">
-											<input type="text" id="ccardexpY" placeholder="Expiry Year">
-											<i class="icon icon-angle-down"></i>
-										  	<ul class="list">
-												<li><a href="#">2018</a></li>
-												<li><a href="#">2019</a></li>
-												<li><a href="#">2020</a></li>
-												<li><a href="#">2021</a></li>
-												<li><a href="#">2022</a></li>
-												<li><a href="#">2023</a></li>
-												<li><a href="#">2024</a></li>
-												<li><a href="#">2025</a></li>
-												<li><a href="#">2026</a></li>
-												<li><a href="#">2027</a></li>
-												<li><a href="#">2028</a></li>
-												<li><a href="#">2029</a></li>
-										  	</ul>
-										</div>
-									
-									</div>
-									
-									<div class="detailsBar clearfix">
-									
-										<div class="field">
-											<input type="text" id="cccvv" placeholder="CVV Number">											
-										</div>
-										<div class="field right">
-											<input type="text" id="cctype" placeholder="Card Type">
-											<i class="icon icon-angle-down"></i>
-										  	<ul class="list">
-												<li><a href="#">Master</a></li>
-												<li><a href="#">Visa</a></li>
-												<li><a href="#">American Express</a></li>
-										  	</ul>
-										</div>
-									
-									</div>
-									
-									<div class="detailsBar clearfix">
-									
-										<div class="field full"><input type="text" id="ccname" placeholder="Name on Card"></div>
-									
-									</div>
-									
-									<div class="detailsBar clearfix">
-									
-										<div class="checkbox check"><i class="checkIcon icon-tick"></i></div>
-										<em class="saveCard">Save this card for future faster checkout</em>
-									
-									</div>
-									<div class="buttonBlock clearfix">
-									
+
 										<button>Pay $45.93</button>
-									
+
 									</div>
-								
+
 								</div>
-								
-								<span class="option netBankingOption">Net Banking</span>
-								
-								<div class="paymentDetails clearfix" id="netBankingContent">
-									
+
+								<span class="option debitCardOption">Debit Card</span>
+
+								<div class="paymentDetails clearfix" id="debitCardContent">
+
 									<div class="detailsBar clearfix">
-									
+
+										<div class="field full"><input type="text" id="ccardnum" placeholder="Card Number"></div>
+
+									</div>
+
+									<div class="detailsBar clearfix">
+
+										<div class="field">
+											<input type="text" id="ccardexpM" placeholder="Expiry Month">
+											<i class="icon icon-angle-down"></i>
+										  	<ul class="list">
+												<li><a href="#">01</a></li>
+												<li><a href="#">02</a></li>
+												<li><a href="#">03</a></li>
+												<li><a href="#">04</a></li>
+												<li><a href="#">05</a></li>
+												<li><a href="#">06</a></li>
+												<li><a href="#">07</a></li>
+												<li><a href="#">08</a></li>
+												<li><a href="#">09</a></li>
+												<li><a href="#">10</a></li>
+												<li><a href="#">11</a></li>
+												<li><a href="#">12</a></li>
+										  	</ul>
+										</div>
+										<div class="field right">
+											<input type="text" id="ccardexpY" placeholder="Expiry Year">
+											<i class="icon icon-angle-down"></i>
+										  	<ul class="list">
+												<li><a href="#">2018</a></li>
+												<li><a href="#">2019</a></li>
+												<li><a href="#">2020</a></li>
+												<li><a href="#">2021</a></li>
+												<li><a href="#">2022</a></li>
+												<li><a href="#">2023</a></li>
+												<li><a href="#">2024</a></li>
+												<li><a href="#">2025</a></li>
+												<li><a href="#">2026</a></li>
+												<li><a href="#">2027</a></li>
+												<li><a href="#">2028</a></li>
+												<li><a href="#">2029</a></li>
+										  	</ul>
+										</div>
+
+									</div>
+
+									<div class="detailsBar clearfix">
+
+										<div class="field">
+											<input type="text" id="cccvv" placeholder="CVV Number">
+										</div>
+										<div class="field right">
+											<input type="text" id="cctype" placeholder="Card Type">
+											<i class="icon icon-angle-down"></i>
+										  	<ul class="list">
+												<li><a href="#">Master</a></li>
+												<li><a href="#">Visa</a></li>
+												<li><a href="#">American Express</a></li>
+										  	</ul>
+										</div>
+
+									</div>
+
+									<div class="detailsBar clearfix">
+
+										<div class="field full"><input type="text" id="ccname" placeholder="Name on Card"></div>
+
+									</div>
+
+									<div class="detailsBar clearfix">
+
+										<div class="checkbox check"><i class="checkIcon icon-tick"></i></div>
+										<em class="saveCard">Save this card for future faster checkout</em>
+
+									</div>
+									<div class="buttonBlock clearfix">
+
+										<button>Pay $45.93</button>
+
+									</div>
+
+								</div>
+
+								<span class="option netBankingOption">Net Banking</span>
+
+								<div class="paymentDetails clearfix" id="netBankingContent">
+
+									<div class="detailsBar clearfix">
+
 										<div class="paymoney clearfix">
 											<i class="icon icon-radio-button"></i>
 											<img src="images/AXIS_Bank.jpg" alt="Axis Bank">
@@ -484,11 +562,11 @@
 											<i class="icon icon-radio-button"></i>
 											<img src="images/YES_Bank.png" alt="Yes Bank">
 										</div>
-									
+
 									</div>
-									
+
 									<div class="detailsBar clearfix">
-									
+
 										<div class="field full">
 											<input id="banklist" placeholder="Select Bank" type="text">
 											<i class="icon icon-angle-down"></i>
@@ -535,67 +613,67 @@
 												<li><a href="#">United Bank of India</a></li>
 												<li><a href="#">Vijaya Bank</a></li>
 										  	</ul>
-										</div>										
-									
+										</div>
+
 									</div>
-									
+
 									<div class="buttonBlock clearfix">
-									
+
 										<button>Pay $45.93</button>
-									
+
 									</div>
-									
+
 								</div>
-								
+
 								<span class="option codOption">Cash on Delivery</span>
-								
+
 								<div class="paymentDetails clearfix" id="codContent">
-									
+
 									<div class="detailsBar clearfix">
-									
+
 										<p class="text1">Amount payable at the time of delivery $45.93 (includes $9 COD charges)</p>
-										
+
 										<p class="text2">Save $9 COD charges by placing a prepaid order. #GoCashless</p>
-									
+
 									</div>
-									
+
 									<div class="buttonBlock clearfix">
-									
+
 										<button>Place Order</button>
-									
+
 									</div>
 									<br><br>
 									<br><br>
-								
+
 								</div>
-								
+
 								<span class="option bhimUPIOption">PhonePe/Bhim UPI</span>
-								
+
 								<div class="paymentDetails clearfix" id="bhimUPIContent">
-									
+
 									<div class="detailsBar clearfix">
-									
+
 										<p class="text1">You'll be redirected to PhonePe page, where you can pay using UPI, credit/debit card or wallet.</p>
-									
+
 									</div>
-									
+
 									<div class="buttonBlock clearfix">
-									
+
 										<button>Pay $45.93</button>
-									
+
 									</div>
-									
+
 									<br><br>
 									<br><br>
-								
+
 								</div>
-								
+
 								<span class="option emiOption">EMI</span>
-								
+
 								<div class="paymentDetails clearfix" id="emiContent">
-									
+
 									<div class="detailsBar clearfix selectEMIBank">
-									
+
 										<div class="field full">
 											<input id="banklist" placeholder="Select Bank" type="text">
 											<i class="icon icon-angle-down"></i>
@@ -642,12 +720,12 @@
 												<li><a href="#">United Bank of India</a></li>
 												<li><a href="#">Vijaya Bank</a></li>
 										  	</ul>
-										</div>										
-									
+										</div>
+
 									</div>
-									
+
 									<div class="detailsBar clearfix selectEMIOption">
-									
+
 										<div id="emiOptions" class="emiOptions clearfix">
 											<label>Select EMI Option</label>
 											<div class="emiHeadingBlock clearfix">
@@ -680,15 +758,15 @@
 												<p class="emi-heading emiValue">Rs. 1252.83/- p.m.</p>
 												<p class="emi-heading emiValue">Rs. 1043.96</p>
 											</div>
-									
+
 										</div>
-										
+
 									</div>
-									
+
 									<div class="detailsBar clearfix selectEMICardDetail">
-									
+
 										<div class="field"><input type="text" id="ccardnum" placeholder="Card Number"></div>
-										
+
 										<div class="field right">
 											<input type="text" id="ccardexpM" placeholder="Expiry Month">
 											<i class="icon icon-angle-down"></i>
@@ -707,11 +785,11 @@
 												<li><a href="#">12</a></li>
 										  	</ul>
 										</div>
-									
+
 									</div>
-									
+
 									<div class="detailsBar clearfix selectEMICardDetail">
-									
+
 										<div class="field">
 											<input type="text" id="ccardexpY" placeholder="Expiry Year">
 											<i class="icon icon-angle-down"></i>
@@ -730,56 +808,56 @@
 												<li><a href="#">2029</a></li>
 										  	</ul>
 										</div>
-										
+
 										<div class="field right">
-											<input type="text" id="cccvv" placeholder="CVV Number">											
+											<input type="text" id="cccvv" placeholder="CVV Number">
 										</div>
-									
+
 									</div>
-									
+
 									<div class="buttonBlock clearfix">
-									
+
 										<button>Pay $45.93</button>
-									
+
 									</div>
-								
+
 								</div>
-							
+
 							</div>
-						
+
 						</div>
-						
+
 					</div>
-				
+
 				</div>
-			
+
 			</div>
-		
+
 		</div>
-		
+
 		<div class="col-sm-4 orderSumryBlock clearfix">
-		
+
 			<div class="amountBar clearfix">
-			
+
 				<h4>Order Complete Summary</h4>
-				
-					<div class="amount clearfix"><span>Item Count</span><em><?php echo $total_product; ?></em></div>
-					<div class="amount clearfix"><span>Sub Total</span><em>Rs<?php echo $Total; ?></em></div>
-					<div class="amount clearfix"><span>Tax</span><em>Rs0.00</em></div>
-					<div class="amount clearfix"><span>Shipping</span><em>Rs0.00</em></div>
-					<div class="amount clearfix"><span>Coupon</span><em>Rs0.00</em></div>
-					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs<?php echo $Total; ?></em></div>
-							
+
+					<div class="amount clearfix"><span>Item Count</span><em>02</em></div>
+					<div class="amount clearfix"><span>Sub Total</span><em>$35.93</em></div>
+					<div class="amount clearfix"><span>Tax</span><em>$10.00</em></div>
+					<div class="amount clearfix"><span>Shipping</span><em>$0.00</em></div>
+					<div class="amount clearfix"><span>Coupon</span><em>$0.00</em></div>
+					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">$45.93</em></div>
+
 			</div>
-		
+
 		</div>
-	
+
 	</section>
-	
 
 
-	
-<?php include('footer.php');?>
-<script src="<?php echo base_url('assets/js/script.js');?>"></script>
+
+<?php include 'footer.php';?>
+<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+
 </body>
 </html>

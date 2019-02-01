@@ -9,15 +9,15 @@
         <link href='http://www.mostlikers.com/favicon.ico' rel='icon' type='image/x-icon'/>
         <title>Product Brand,Size,Material Checkbox Search Filtering Using PHP And Jquery</title>
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" type='text/css' href="<?php echo base_url('assets/js/plugins/bootstrap.min.css')?>">
-        <link rel="stylesheet" type='text/css' href="<?php echo base_url('assets/js/plugins/font-awesome.css')?>">
-        <link rel="stylesheet" type='text/css' href="<?php echo base_url('assets/js/plugins/css/style.css')?>">
+        <link rel="stylesheet" type='text/css' href="<?php echo base_url('assets/js/plugins/bootstrap.min.css') ?>">
+        <link rel="stylesheet" type='text/css' href="<?php echo base_url('assets/js/plugins/font-awesome.css') ?>">
+        <link rel="stylesheet" type='text/css' href="<?php echo base_url('assets/js/plugins/css/style.css') ?>">
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <!-- jQuery -->
-        <script src="<?php echo base_url('assets/js/plugins/jquery.js')?>"></script>
+        <script src="<?php echo base_url('assets/js/plugins/jquery.js') ?>"></script>
     </head>
     <body>
     <div class="content"> <!-- content -->
@@ -41,14 +41,14 @@
                 </div><!-- /.container-fluid -->
             </nav>
         </header>
-                
+
         <!-- content -->
         <div class="container-fluid">
             <form method="get" id="search_form">
                 <div class="row">
                     <div class="panel list">
                       <div class="col-sm-12">
-                         <!-- remove this google ads -->  
+                         <!-- remove this google ads -->
                                 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                                     <!-- header_responsive_ads -->
                                     <ins class="adsbygoogle"
@@ -70,16 +70,16 @@
                             <div class="panel-heading"><h3 class="panel-title" data-toggle="collapse" data-target="#panelOne" aria-expanded="true">Shop by Brand</h3></div>
                             <div class="panel-body collapse in" id="panelOne">
                                 <ul class="list-group">
-                               
+
                                     <li class="list-group-item">
                                         <div class="checkbox"><label><input type="checkbox"  name="brand[]" class="sort_rang brand">Brand</label></div>
                                     </li>
-                             
+
                                 </ul>
                             </div>
                         </div>
-                       
-                       
+
+
                     </aside> <!-- /.sidebar -->
                     <section class="col-lg-9 col-md-8">
                         <div class="row">
@@ -91,8 +91,8 @@
         </div> <!-- /.content -->
         <!-- external -->
     </div>
-        <script src="<?php echo base_url('assets/js/plugins/bootstrap.min.js')?>"></script>
-<script src="<?php echo base_url('assets/js/plugins/script.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/plugins/bootstrap.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/plugins/script.js'); ?>"></script>
     </body>
 </html>
 <script type="text/javascript">
@@ -104,7 +104,7 @@
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
-    
+
     $('.sort_rang').change(function(){
         alert();
         $("#search_form").submit();

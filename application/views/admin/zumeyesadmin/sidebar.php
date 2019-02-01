@@ -27,22 +27,11 @@
           <ul class="nav">
             <li class="nav-item nav-profile">
               <div class="nav-link">
-                <div class="profile-image"><a href="<?php echo site_url('admin/profile');?>">
-                  <img src="<?php echo base_url()?>assets/zumeyes/images/faces/face10.jpg" alt="image"/>
-                  <span class="online-status online"></span> </a><!--change class online to offline or busy as needed-->
-                </div>
-                <div class="profile-name">
-                  <p class="name">
-                    Zumeyes
-                  </p>
-                  <p class="designation">
-                     Admin
-                  </p>
-                </div>
+
               </div>
             </li>
-            
-          
+
+
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
                 <i class="icon-check menu-icon"></i>
@@ -51,18 +40,17 @@
               </a>
               <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
-                   <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/homepage');?>">Home Page</a></li>
-                  <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/addabout');?>">About Page</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/category');?>">Category Page</a></li>
-                  <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/addblog');?>">Blog Page</a></li>
-                  <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/filter');?>">Product Filter Page</a></li>
-                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/addproduct');?>">Product Page</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/addprescription');?>">Add Glass Prescription</a></li> 
-                
+                   <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/homepage'); ?>">Home Page</a></li>
+                  <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/addabout'); ?>">About Page</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/category'); ?>">Category Page</a></li>
+                  <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/addblog'); ?>">Blog Page</a></li>
+                  <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/filter'); ?>">Product Filter Page</a></li>
+                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/addproduct'); ?>">Product Page</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/addprescription'); ?>">Add Product Prescription</a></li>
+
                 </ul>
               </div>
             </li>
-          
+
           </ul>
         </nav>
-      
