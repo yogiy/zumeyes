@@ -21,6 +21,8 @@ Admin Bugs
       screen. 
    -> On clicking the donut menu button on top left the side panel minimizes and the logo changes to V on clicking this
       logo the page redirects to index page which is not available and error is shown.
+   -> On clicking the Submit button on blog listing page in the top section for adding new blog, the url redirects to 
+      "http://127.0.0.1/CI_Z/admin/blog_insertData" and white screen is presented without any error or activity. 
       
 
 
