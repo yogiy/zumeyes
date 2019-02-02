@@ -23,8 +23,26 @@ Admin Bugs
       logo the page redirects to index page which is not available and error is shown.
    -> On clicking the Submit button on blog listing page in the top section for adding new blog, the url redirects to 
       "http://127.0.0.1/CI_Z/admin/blog_insertData" and white screen is presented without any error or activity. 
-      
+   
+5. Product filter page
+   -> No validation in forms working, able to submit on clicking the button without providing any value and the parameter is shown 
+      as blank in the below lists.
+   -> Color list update button ::> Update the name of color value:: Nothing happens. Values not getting updated. 
+   -> On updating item in filters submit can be pressed without any value in textfields and its updated in the list as well.
 
+6. Product page
+   -> Product listing is missing from the admin section
+   -> How is Lens prescription package associated with Frames product. Frame need to also add the type of lens package 
+      can be part of while selling. Sunglasses can/cannot have powered lens.
+
+7. Add prescription page
+   -> Form getting submitted without values. 
+
+-> Lens Prescription Package Listing and Update Sections are missing.
+-> Product list is not there. 
+-> Orders Section list is not there. 
+-> Registered Users section is not there. 
+-> Offer Section should be available seprately. 
 
 
 Client Bugs
