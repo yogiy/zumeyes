@@ -15,6 +15,12 @@ Admin Bugs
       changing anything spits out multiple errors.
    -> Category Name list on clicking update, is presented with update screen on changing value but without clicking 
       submit the values are getting updated on clicking CANCEL.
+
+4. Blog
+   -> Blog update page has unwanted icons in the toolbar which are not working, no back button to go back to blog list
+      screen. 
+   -> On clicking the donut menu button on top left the side panel minimizes and the logo changes to V on clicking this
+      logo the page redirects to index page which is not available and error is shown.
       
 
 
