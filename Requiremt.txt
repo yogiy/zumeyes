@@ -1,9 +1,26 @@
-Hy Sir,
-        I have issue only in productdetail page. 
-        1. Inside the productdetail page there's priscription form. 
-           Form have input fields of left and right eyes.That field ,i want convert that field in to 
-           select field. 
-        2. In this page have packages of prescription.That priscription packages have button add to 
-           cart(select Product). I want to convert that button in to radio button. Only I required 
-           these things.
-   Thanks
+Admin Bugs
+--------------------
+1. About page : 
+   -> on clicking update button on about content, the content is displayed in RTE but on clicking submit 
+      user goes to URL("http://127.0.0.1/CI_Z/admin/updateabout") and white screen is presented.
+   -> Back button should also be there along with submit to go back without changing the content. 
+
+2. Profile page
+   -> On update with only address provided spit out multiple errors.
+   ->
+
+3. Category
+   -> Sub Category of Subcategory are not visible anywhere in admin section
+   -> On Clicking SubCategory update button, a new screen with sections to update cames but on clicking CANCEL  
+      changing anything spits out multiple errors.
+   -> Category Name list on clicking update, is presented with update screen on changing value but without clicking 
+      submit the values are getting updated on clicking CANCEL.
+      
+
+
+
+Client Bugs
+--------------------
+-> Once selected Guest User, user can't change his type. Login can't be accessed again.
+-> Login Screen error doesn't gets disappear on entering credentails in the textboxes and the button are hidden. 
+-> Register Button also doesn't show once error are visible.
