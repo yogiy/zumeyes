@@ -38,11 +38,14 @@ Admin Bugs
 7. Add prescription page
    -> Form getting submitted without values. 
 
+
 -> Lens Prescription Package Listing and Update Sections are missing.
 -> Product list is not there. 
 -> Orders Section list is not there. 
 -> Registered Users section is not there. 
 -> Offer Section should be available seprately. 
+-> Payments Mgmt section is missing. 
+
 
 
 Client Bugs
