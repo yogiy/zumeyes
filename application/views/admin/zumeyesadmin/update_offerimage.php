@@ -38,32 +38,39 @@
                 <div class="col-12 grid-margin">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title">Update Purpose Names
+                      <h4 class="card-title">Update Offer Image
                       <span style="color:blue;padding-left:70px">
               <?php echo $this->session->flashdata('form_succ_msg1'); ?></span></h4>
                       <?php $attributes = array('class' => 'forms-sample');
-echo form_open_multipart('admin/filter_update', $attributes);
+echo form_open_multipart('admin/update_Offerimage', $attributes);
 ?>
-<?php foreach ($purpose1 as $key => $value) {
-    $purpose = $value->purpose_name;
+<?php foreach ($offerimage as $key => $value) {
+    $offerimage = $value->offerimage;
     $id = $value->id;
 
 }?>
- <div class="form-group">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text bg-info bg-info" id="colored-addon1">
-                              <i class="mdi mdi-shield-outline text-white"></i>
-                            </span>
-                          </div>
-                          <input type="hidden" name="id" value="<?php echo $id ?>">
-                          <input type="text" class="form-control" value="<?php echo $purpose ?>" aria-label="Category" name="purpose" aria-describedby="colored-addon1">
+  <div class="form-group">
+                       <div class="form-group" style="margin-top: 1rem;">
+
+                      <?php echo form_upload(['name' => 'offerimage', 'class' => 'file-upload-default', 'value' => '' . $offerimage . '']) ?>
+                      <input type="hidden" value="<?php echo $id ?>">
+                      <div class="input-group col-xs-12">
+                        <input type="text" value="<?php echo $offerimage ?>" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                        <div class="input-group-append">
+                          <button class="file-upload-browse btn btn-info" type="button">Upload</button>
                         </div>
-                        <?php echo form_error('brand'); ?>
+                      </div>
+                    </div>
+                        <?php
+if (isset($upload_error)) {
+    echo $upload_error;
+
+}?>
+
                       </div>
 
-                      <button type="submit" name="purposes" value="purposes" class="btn btn-success mr-2">Submit</button>
-                     <a href=<?php echo base_url('admin/filter'); ?>>Back</a>
+                      <button type="submit" name="updateofferimage" value="updateofferimage" class="btn btn-success mr-2">Submit</button>
+                    <a href=<?php echo base_url('admin/homepage'); ?>>Back</a>
                 </form>
               </div>
             </div>
@@ -76,6 +83,8 @@ echo form_open_multipart('admin/filter_update', $attributes);
 
   </div>
 
-     <?php include 'footer.php';?>  <!-- End custom js for this page-->
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+       <?php include 'footer.php';?>  <!-- End custom js for this page-->
 </body>
 </html>

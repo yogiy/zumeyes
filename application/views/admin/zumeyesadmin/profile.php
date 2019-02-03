@@ -96,23 +96,23 @@
                         <form action="profile" method="post">
                           <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Change user name">
+                            <input type="text" class="form-control" required name="name" id="name" placeholder="Change user name">
                           </div>
                           <div class="form-group">
                             <label for="designation">Designation</label>
-                            <input type="text" class="form-control" name="designation" id="designation" placeholder="Change designation">
+                            <input type="text" required class="form-control" name="designation" id="designation" placeholder="Change designation">
                           </div>
                           <div class="form-group">
                             <label for="mobile">Mobile Number</label>
-                            <input type="text" class="form-control" name="phone" id="mobile" placeholder="Change mobile number">
+                            <input type="text" required class="form-control" name="phone" id="mobile" placeholder="Change mobile number">
                           </div>
                           <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Change email address">
+                            <input type="email" required class="form-control" name="email" id="email" placeholder="Change email address">
                           </div>
                           <div class="form-group">
                             <label for="address">Address</label>
-                            <textarea name="address" id="address" name="address" rows="6" class="form-control" placeholder="Change address"></textarea>
+                            <textarea name="address" required id="address" name="address" rows="6" class="form-control" placeholder="Change address"></textarea>
                           </div>
 
                           <div class="form-group mt-5">
@@ -129,15 +129,15 @@
                           <?php
 echo form_open_multipart('admin/profile');
 ?>
-                            <?php echo form_upload(['name' => 'userfile', 'class' => 'dropify', 'data-max-file-size' => '1mb']) ?>
+                            <?php echo form_upload(['name' => 'userfile', 'class' => 'dropify', 'data-max-file-size' => '1mb', 'id' => 'userfile']) ?>
 
                           <?php
 if (isset($upload_error)) {
     echo $upload_error;
 
-}?>
+}?> <?php echo form_error('userfile'); ?>
                           <div class="form-group mt-5">
-                            <button type="submit" name="profileimg" value="profileimg" class="btn btn-success mr-2">Update</button>
+                            <button type="submit" name="profileimg" value="profileimg" class="btn btn-success mr-2 profileimg">Update</button>
                             <button class="btn btn-outline-danger" name="reset" value="profileimg" type="reset">Cancel</button>
                           </div>
                         </form>
@@ -166,46 +166,13 @@ if (isset($upload_error)) {
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2017 <a href="#">UrbanUI</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-      <!-- row-offcanvas ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-   <!-- plugins:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/hoverable-collapse.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/misc.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/settings.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/file-upload.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/iCheck.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/typeahead.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/select2.js"></script>
-  <!-- End custom js for this page-->
-<!-- End custom js for this page-->
-</body>
+       <?php include 'footer.php';?></body>
 
+<script type="text/javascript">
+  $(document).ready(function(){
 
+  document.getElementById("userfile").required = true;
+});
+</script>
 <!-- Mirrored from www.urbanui.com/victory/pages/samples/profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 20 Dec 2018 15:33:41 GMT -->
 </html>

@@ -84,16 +84,44 @@ class Aquery extends CI_Model
         }
     }
 
-    public function get_profilerow($user)
+    public function get_profilerow($params = array())
     {
-        $query = $this->db->query("SELECT * FROM `adminuser` where `email`='" . $user . "'");
-        if ($query->num_rows() > 0) {
-            return $query->row();
+        $this->userTbl = 'adminuser';
+        $this->db->select('*');
+        $this->db->from($this->userTbl);
 
-        } else {
-            return false;
+        //fetch data by conditions
+        if (array_key_exists("conditions", $params)) {
+            foreach ($params['conditions'] as $key => $value) {
+                $this->db->where($key, $value);
+            }
         }
+
+        if (array_key_exists("id", $params)) {
+            $this->db->where('id', $params['id']);
+            $query = $this->db->get();
+            $result = $query->row();
+        } else {
+            //set start and limit
+            if (array_key_exists("start", $params) && array_key_exists("limit", $params)) {
+                $this->db->limit($params['limit'], $params['start']);
+            } elseif (!array_key_exists("start", $params) && array_key_exists("limit", $params)) {
+                $this->db->limit($params['limit']);
+            }
+            $query = $this->db->get();
+            if (array_key_exists("returnType", $params) && $params['returnType'] == 'count') {
+                $result = $query->num_rows();
+            } elseif (array_key_exists("returnType", $params) && $params['returnType'] == 'single') {
+                $result = ($query->num_rows() > 0) ? $query->row_array() : false;
+            } else {
+                $result = ($query->num_rows() > 0) ? $query->result_array() : false;
+            }
+        }
+
+        //return fetched data
+        return $result;
     }
+
     public function cat_entry($data)
     {
         $query = $this->db->insert('category', $data);
@@ -389,6 +417,16 @@ class Aquery extends CI_Model
             return false;
         }
     }
+    public function sub_subcat_list()
+    {
+        $query = $this->db->query("SELECT * FROM `sub_subcategory`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
     public function product_data()
     {
         $query = $this->db->query("SELECT * FROM `product`");
@@ -496,6 +534,36 @@ class Aquery extends CI_Model
         $query = $this->db->query("SELECT * FROM `subcategory` where `id`='" . $id . "'");
         if ($query->num_rows() > 0) {
             return $query->row();
+
+        } else {
+            return false;
+        }
+    }
+    public function get_slider_byid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `sliderimage` where `id`='" . $id . "'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function get_offerimage_byid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `offerimage` where `id`='" . $id . "'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function get_bannerimage_byid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `bannerimage` where `id`='" . $id . "'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
 
         } else {
             return false;
@@ -672,10 +740,62 @@ class Aquery extends CI_Model
             return false;
         }
     }
+    public function get_prescriptiontypebyid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `prescription` where `id`='" . $id . "'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function prescription_package()
+    {
+        $query = $this->db->query("SELECT * FROM `lensepackages` ");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function prescription_packagebyid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `lensepackages` where `id`='" . $id . "' ");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
     public function update_cat($data, $id)
     {
         $this->db->where('id', $id);
         $query = $this->db->update('category', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function product_update($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('product', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function prescription_package_update($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('lensepackages', $data);
 
         if (isset($query)) {
             return true;
@@ -688,6 +808,40 @@ class Aquery extends CI_Model
     {
         $this->db->where('id', $id);
         $query = $this->db->update('subcategory', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function offerimage_update($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('offerimage', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function bannerimage_update($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('bannerimage', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function update_prescriptiontypebyid($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('prescription', $data);
 
         if (isset($query)) {
             return true;

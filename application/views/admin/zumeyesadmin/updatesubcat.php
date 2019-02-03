@@ -79,7 +79,7 @@ echo form_open_multipart('admin/update_subcat', $attributes);
                         </div>
                         <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default']) ?>
+                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default', 'value' => '' . $bg_image . '']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" value="<?php echo $bg_image ?>" disabled placeholder="Upload Image">
                         <div class="input-group-append">
@@ -94,7 +94,7 @@ if (isset($upload_error)) {
                     </div>
                       </div>
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                     <a href=<?php echo base_url('admin/category'); ?>>Back</a>
                 </form>
               </div>
             </div>
@@ -146,42 +146,5 @@ if (isset($upload_error)) {
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2017 <a href="#">UrbanUI</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-      <!-- row-offcanvas ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/hoverable-collapse.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/misc.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/settings.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/file-upload.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/iCheck.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/typeahead.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/select2.js"></script>
-  <!-- End custom js for this page-->
-</body>
+       <?php include 'footer.php';?></body>
 </html>

@@ -64,7 +64,9 @@
 										<div class="buttonBlock">
 
 											<button><i class="icon icon-pencil-edit-button"></i><em>Edit Address</em></button>
-											<button><i class="icon icon-delete-button"></i><em>Remove</em></button>
+											<form method="post" action="delete_user_address">
+		     <input type="hidden" name="addressid" value="<?php echo $user_address->id ?>">	<button type="submit"  value="delete_pro" name="delete_pro"><i class="icon icon-delete-button"></i><em>Remove</em></button></form>
+
 
 										</div>
 
@@ -75,8 +77,8 @@
 								<div class="addrsBoxContent clearfix">
 
 									<p><?php echo $user_address->address; ?>,</p>
-								<p><?php echo $user_address->city; ?>,</p>
-								<p><?php echo $user_address->pincode; ?>,</p>
+								<p><?php echo $user_address->city; ?>:-<?php echo $user_address->pincode; ?>,</p>
+
 								<p><?php echo $user_address->state; ?>,</p>
 								<p><?php echo $user_address->phone; ?></p>
 
@@ -206,7 +208,7 @@
 					</form>
 						</div>
 
-						<div class="bar clearfix active">
+						<div class="bar clearfix reviewBar">
 
 						<span>Review Order</span>
 
@@ -438,7 +440,7 @@ if ($this->cart->contents()) {
 									</div>
 									<div class="buttonBlock clearfix">
 
-										<button>Pay $45.93</button>
+										<button>Pay Rs <?php echo $Total; ?></button>
 
 									</div>
 
@@ -526,7 +528,7 @@ if ($this->cart->contents()) {
 									</div>
 									<div class="buttonBlock clearfix">
 
-										<button>Pay $45.93</button>
+										<button>Pay Rs <?php echo $Total; ?></button>
 
 									</div>
 
@@ -619,7 +621,7 @@ if ($this->cart->contents()) {
 
 									<div class="buttonBlock clearfix">
 
-										<button>Pay $45.93</button>
+										<button>Pay Rs <?php echo $Total; ?></button>
 
 									</div>
 
@@ -631,7 +633,7 @@ if ($this->cart->contents()) {
 
 									<div class="detailsBar clearfix">
 
-										<p class="text1">Amount payable at the time of delivery $45.93 (includes $9 COD charges)</p>
+										<p class="text1">Amount payable at the time of delivery Rs <?php echo $Total; ?> (includes $9 COD charges)</p>
 
 										<p class="text2">Save $9 COD charges by placing a prepaid order. #GoCashless</p>
 
@@ -659,7 +661,7 @@ if ($this->cart->contents()) {
 
 									<div class="buttonBlock clearfix">
 
-										<button>Pay $45.93</button>
+										<button>Pay Rs <?php echo $Total; ?></button>
 
 									</div>
 
@@ -817,7 +819,7 @@ if ($this->cart->contents()) {
 
 									<div class="buttonBlock clearfix">
 
-										<button>Pay $45.93</button>
+										<button>Pay Rs <?php echo $Total; ?></button>
 
 									</div>
 
@@ -841,12 +843,12 @@ if ($this->cart->contents()) {
 
 				<h4>Order Complete Summary</h4>
 
-					<div class="amount clearfix"><span>Item Count</span><em>02</em></div>
-					<div class="amount clearfix"><span>Sub Total</span><em>$35.93</em></div>
-					<div class="amount clearfix"><span>Tax</span><em>$10.00</em></div>
-					<div class="amount clearfix"><span>Shipping</span><em>$0.00</em></div>
-					<div class="amount clearfix"><span>Coupon</span><em>$0.00</em></div>
-					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">$45.93</em></div>
+					<div class="amount clearfix"><span>Item Count</span><em><?php echo $total_product; ?></em></div>
+					<div class="amount clearfix"><span>Sub Total</span><em>Rs <?php echo $Total; ?></em></div>
+					<div class="amount clearfix"><span>Tax</span><em>00.00</em></div>
+					<div class="amount clearfix"><span>Shipping</span><em>0.00</em></div>
+					<div class="amount clearfix"><span>Coupon</span><em>0.00</em></div>
+					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs <?php echo $Total; ?></em></div>
 
 			</div>
 

@@ -4,7 +4,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Zumeyes Admin</title>
+  <title>Victory Admin</title>
   <!-- plugins:css -->
    <link rel="shortcut icon" href="../../images/favicon.png" />
  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/zumeyes/node_modules/mdi/css/materialdesignicons.min.css">
@@ -27,33 +27,30 @@
           <div class="row w-100">
             <div class="col-lg-4 mx-auto">
               <div class="auth-form-dark text-left p-5">
-                <h2>Login</h2>
+                <h2>Zumeyes</h2>
                 <h4 class="font-weight-light"></h4>
-                <?php if (isset($error_msg)) {
-    echo '<p class="statusMsg">' . $error_msg . '</p>';
-}?>
+               <?php echo $this->session->flashdata('unauth'); ?>
                 <?php
-echo form_open_multipart('auth/login');
+echo form_open_multipart('auth/identify');
 ?>
+
                   <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
-                    <input type="email" class="form-control" autocomplete="off" name="email" id="exampleInputEmail1" value="" placeholder="Email">
-                    <i class="mdi mdi-account"></i>
+                    <input type="email" class="form-control" style="color:black" autocomplete="off" name="email" id="exampleInputEmail1" value="" placeholder="Email">
+
 
                     <?php echo form_error('email'); ?>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="" placeholder="Password">
-                    <i class="mdi mdi-eye"></i>
-                    <?php echo form_error('password'); ?>
+                    <label for="exampleInputPassword1">Phone No</label>
+                    <input type="text" style="color:black" name="phone" class="form-control" id="exampleInputPassword1" value="" placeholder="Registered Phone No.">
+
+                    <?php echo form_error('phone'); ?>
                   </div>
                   <div class="mt-5">
-                    <input type="submit" name="login" class="btn btn-block btn-warning btn-lg font-weight-medium" value="Login" />
+                    <input type="submit" name="frgpass" class="btn btn-block btn-warning btn-lg font-weight-medium" value="Verify" />
                   </div>
-                  <div class="mt-3 text-center">
-                    <a href="<?php echo base_url('auth/identify'); ?>" class="auth-link text-white">Forgot password?</a>
-                  </div>
+
                 </form>
               </div>
             </div>

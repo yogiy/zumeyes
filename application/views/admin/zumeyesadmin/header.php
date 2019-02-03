@@ -9,7 +9,7 @@
         </button>
         <ul class="navbar-nav">
           <li class="nav-item dropdown d-none d-lg-flex">
-            <a class="nav-link dropdown-toggle nav-btn" href="<?php echo base_url('admin/logout') ?>" >
+            <a class="nav-link dropdown-toggle nav-btn" href="<?php echo base_url('auth/logout') ?>" >
               <span class="btn">Logout</span>
             </a>
 

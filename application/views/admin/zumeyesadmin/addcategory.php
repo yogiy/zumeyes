@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+ <script type="text/javascript">
+  $(document).ready(function(){
+
+  document.getElementById("userfile1").required = true;
+   document.getElementById("userfile2").required = true;
+    document.getElementById("userfile3").required = true;
+});
+</script><!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Required meta tags -->
@@ -56,12 +63,12 @@ echo form_open_multipart('admin/category_insert', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Category" aria-label="Category" name="cat_name" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Category" aria-label="Category" name="cat_name" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('cat_name'); ?>
                       </div>
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -78,7 +85,7 @@ echo form_open_multipart('admin/category_insert', $attributes);
 echo form_open_multipart('admin/sub_cat_insert', $attributes);
 ?>
  <div class="form-group">
-                          <select class="js-example-basic-single" onclick="document.getElementById('sub_cat_name').disabled = true;" name="cat_name" style="width:100%">
+                          <select class="js-example-basic-single" required onclick="document.getElementById('sub_cat_name').disabled = true;" name="cat_name" style="width:100%">
                             <option>Select Category Name</option>
                          <?php if ($cat_data) {
     foreach ($cat_data as $key => $cat_dat) {
@@ -94,12 +101,12 @@ echo form_open_multipart('admin/sub_cat_insert', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Sub Category" aria-label="Category" name="sub_cat_name" id="sub_cat_name" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Sub Category" aria-label="Category" name="sub_cat_name" id="sub_cat_name" aria-describedby="colored-addon1">
                         </div>
 
                         <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default']) ?>
+                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default', 'id' => 'userfile1']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <div class="input-group-append">
@@ -114,7 +121,7 @@ if (isset($upload_error)) {
                     </div>
                       </div>
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -129,7 +136,7 @@ if (isset($upload_error)) {
 echo form_open_multipart('admin/sub_sub_cat_insert', $attributes);
 ?>
   <div class="form-group" style="margin-top: 1rem;">
-                          <select class="js-example-basic-single"  name="cat_id" id="cat_name" style="width:100%">
+                          <select class="js-example-basic-single" required name="cat_id" id="cat_name" style="width:100%">
                             <option>Select Category Name</option>
                          <?php if (@$cat_data) {
     foreach ($cat_data as $key => $cat_dat) {
@@ -141,7 +148,7 @@ echo form_open_multipart('admin/sub_sub_cat_insert', $attributes);
                       </div>
 
                        <div class="form-group" style="margin-top: 1rem;">
-                        <select class="js-example-basic-single" name="sub_cat_id" style="width:100%" id="sub_cat_data">
+                        <select class="js-example-basic-single" required name="sub_cat_id" style="width:100%" id="sub_cat_data">
                             <option>Select Category Name First</option>
 
                         </select>
@@ -152,11 +159,11 @@ echo form_open_multipart('admin/sub_sub_cat_insert', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Sub About Sub Category" aria-label="Category" name="sub_sub_cat_name"aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Sub About Sub Category" aria-label="Category" name="sub_sub_cat_name"aria-describedby="colored-addon1">
                         </div>
                         <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default']) ?>
+                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default', 'id' => 'userfile2']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <div class="input-group-append">
@@ -171,7 +178,7 @@ if (isset($upload_error)) {
                     </div>
                       </div>
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -205,13 +212,12 @@ if ($cat_data) {
                         <tr>
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $cat_dat->cat_name ?></td>
-                            <td>
-
-
-                        <input tabindex="6" type="checkbox" value="<?php echo $cat_dat->status ?>" id="flat-checkbox-2"        class="checkbox-custom status"<?php if ($cat_dat->status == 1) {?> checked <?php }?> >
-                        <label for="flat-checkbox-2">Active</label>
-
-
+                            <td><form method="post" action="status_category" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $cat_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $cat_dat->status ?>" <?php if ($cat_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
 
                             </td>
                             <td>
@@ -238,7 +244,7 @@ if ($cat_data) {
                             <th>Sr No.</th>
                             <th>Category Name</th>
                             <th>Sub Category Name</th>
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -256,8 +262,66 @@ if ($subcat_data) {
                             <td><?php echo $cat_dat->cat_name ?></td>
                           <?php }}?>
                             <td><?php echo $subcat_dat->sub_cat_name ?></td>
+                            <td><form method="post" action="status_subcategory" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $subcat_dat->id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $subcat_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $subcat_dat->status ?>" <?php if ($subcat_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
+
+
+                            </td>
                             <td>
-                              <label class="badge badge-info"><a href="<?php echo site_url() ?>admin/delete_subcategory?id=<?php echo $id ?>">Delete</a></label>
+                              <a href="<?php echo site_url() ?>admin/update_subcategory?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
+                            </td>
+                        </tr><?php $sr_no++;}}?>
+                              </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Sub of Sub Category Name List</h4>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                      <thead>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Category Name</th>
+                            <th>Sub Category Name</th>
+                            <th>Sub Of Sub Category Name</th>
+                            <th>Status</th>
+                            <th>Update</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+$sr_no = 1;
+if ($sub_subcat_data) {
+    foreach ($sub_subcat_data as $key => $sub_subcat_dat) {
+        $id = $sub_subcat_dat->id;
+        ?>
+                        <tr>
+                            <td><?php echo $sr_no; ?></td>
+                            <?php foreach ($cat_data as $key => $cat_dat) {
+            if ($cat_dat->cat_name == $sub_subcat_dat->cat_name) {?>
+                            <td><?php echo $cat_dat->cat_name ?></td>
+                          <?php }}?>
+                            <td><?php echo $subcat_dat->sub_cat_name ?></td>
+                            <td><?php echo $sub_subcat_dat->sub_sub_cat ?></td>
+                            <td><form method="post" action="status_subcategory" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $subcat_dat->id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $subcat_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $subcat_dat->status ?>" <?php if ($subcat_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
+
+
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/update_subcategory?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -277,8 +341,8 @@ if ($subcat_data) {
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019 <a href="#">Zumeyes</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© 2018 Zumeyes. All rights resereved</span>
+
           </div>
         </footer>
         <!-- partial -->
@@ -316,15 +380,29 @@ $(document).ready(function(){
 });
 </script>
  <script type="text/javascript">
-    $(document).ready(function(){
-      function status(){
-      alert();
+  $(document).ready(function(){
+    $('.status').on('click',function(){
+        var status= $(this).val();
+    alert(status);
+    if(status){
+            $.ajax({
+                 type:'POST',
+                 url:'<?php echo site_url('status/status_category') ?>',
+                 data:'status='+status,
+                 async:false,
+                success:function(data){
 
-         var status=$(this).val();
-       alert(status);
 
-    }
-    });
+                }
+            });
+        }
+        else{
+            $('#sub_cat_data').html('<option value="">Select Category name first</option>');
+        }
+  });
+  });
+
+
   </script>
   <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -351,5 +429,12 @@ $(document).ready(function(){
   <!-- End custom js for this page-->
 </body>
 
+ <script type="text/javascript">
+  $(document).ready(function(){
 
+  document.getElementById("userfile1").required = true;
+   document.getElementById("userfile2").required = true;
+
+});
+</script>
 </html>

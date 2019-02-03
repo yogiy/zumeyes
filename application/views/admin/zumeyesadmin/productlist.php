@@ -36,52 +36,14 @@
         <!-- partial -->
          <div class="content-wrapper" style="min-height:145px;">
 
-         <div class="row grid-margin">
-            <div class="col-lg-12">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">About Description
-                     <span style="color:blue;padding-left:70px">
-              <?php echo $this->session->flashdata('form_succ_msg'); ?></span></h4>
 
-                  <?php
-echo form_open_multipart('admin/about_insertData');
-?>
-                  <div class="form-group">
-                       <div class="form-group" style="margin-top: 1rem;">
-
-                      <?php echo form_upload(['name' => 'rightaboutimage', 'class' => 'file-upload-default']) ?>
-                      <div class="input-group col-xs-12">
-                        <input type="text" required class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <div class="input-group-append">
-                          <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                        </div>
-                      </div>
-                    </div>
-                        <?php
-if (isset($upload_error)) {
-    echo $upload_error;
-
-}?>
-
-                      </div>
-                  <textarea id="summernoteExample" required name="content"></textarea>
-                   <?php echo form_error('content'); ?>
-
-                  <input type="submit" name="about_Submit" class="btn btn-primary btn-rounded btn-fw" value="Submit"/>
-                   <button type="reset" class="btn btn-light">Cancel</button>
-                </form>
-                </div>
-              </div>
-            </div>
-          </div>
 
 
 
 
  <div class="card">
             <div class="card-body">
-              <h4 class="card-title">About Us Page Content</h4>
+              <h4 class="card-title">Product List</h4>
               <div class="row">
                 <div class="col-12">
                   <div class="table-responsive">
@@ -89,8 +51,10 @@ if (isset($upload_error)) {
                       <thead>
                         <tr>
                             <th>Sr No.</th>
-                            <th>Content</th>
-
+                            <th>Product Name</th>
+                            <th>Category Name</th>
+                             <th>SubCategory Name</th>
+                              <th>Price(INR)</th>
                             <th>Status</th>
                             <th>Update</th>
                         </tr>
@@ -98,26 +62,41 @@ if (isset($upload_error)) {
                       <tbody>
                         <?php
 $sr_no = 1;
-if (@$about_data) {
-    foreach ($about_data as $key => $about_dat) {
-        $id = $about_dat->id;
-        $description = $about_dat->description;
-        $limitedstring = substr($description, 1, 200);
+if (@$pro_list) {
+    foreach ($pro_list as $key => $pro_dat) {
+        $id = $pro_dat->id;
+        $pro_name = $pro_dat->product_name;
+        $sale_price = $pro_dat->sale_price;
+        $cat_id = $pro_dat->cat_id;
+        $sub_cat_id = $pro_dat->sub_cat_id;
 
         ?>
                         <tr>
                             <td><?php echo $sr_no; ?></td>
-                            <td><?php echo $limitedstring ?></td>
+                            <td><?php echo $pro_name ?></td>
+                            <td><?php
+foreach ($cat_list as $key => $value) {
+            $cat_name = $value->cat_name;
+            $cat_name_id = $value->id;
+
+            if ($cat_name_id == $cat_id) {?><?php echo $cat_name;}} ?></td>
+                            <td><?php foreach ($subcat_list as $key => $subvalue) {
+            $sub_cat_name = $subvalue->sub_cat_name;
+            $subcat_name_id = $subvalue->id;
+            if ($subcat_name_id == $sub_cat_id) {echo $sub_cat_name;}
+        }?></td>
+              <td><?php echo $sale_price ?></td>
                             <td>
-                             <form method="post" action="status_about" class="cartupdate">
+
+                             <form method="post" action="status_product" class="cartupdate">
                   <input type="hidden" name="id"  value="<?php echo $id ?>">
-                  <input type="hidden" name="status"  value="<?php echo $about_dat->status ?>">
-                <input type="checkbox" name="status" value="<?php echo $about_dat->status ?>" <?php if ($about_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                  <input type="hidden" name="status"  value="<?php echo $pro_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $pro_dat->status ?>" <?php if ($pro_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
                  <label for="flat-checkbox-2">Active</label>
                 </form>
                             </td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/updateabout?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
+                              <a href="<?php echo site_url() ?>admin/product_update?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
                             </td>
                         </tr><?php $sr_no++;}}?>
                               </tbody>

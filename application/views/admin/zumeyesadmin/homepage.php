@@ -49,7 +49,7 @@ echo form_open_multipart('admin/slider_insert', $attributes);
  <div class="form-group">
                        <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['multiple' => '', 'name' => 'sliderimage[]', 'class' => 'file-upload-default']) ?>
+                      <?php echo form_upload(['multiple' => '', 'name' => 'sliderimage[]', 'class' => 'file-upload-default', 'id' => 'userfile1']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <div class="input-group-append">
@@ -65,7 +65,7 @@ if (isset($upload_error)) {
 
                       </div>
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -87,7 +87,7 @@ echo form_open_multipart('admin/homepage_offer_image', $attributes);
 
                         <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['multiple' => '', 'name' => 'offerimage[]', 'class' => 'file-upload-default']) ?>
+                      <?php echo form_upload(['multiple' => '', 'name' => 'offerimage[]', 'class' => 'file-upload-default', 'id' => 'userfile2']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <div class="input-group-append">
@@ -103,7 +103,7 @@ if (isset($upload_error)) {
 }?>
                       </div>
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -124,7 +124,7 @@ echo form_open_multipart('admin/homepage_bottombanner', $attributes);
 
                         <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['multiple' => '', 'name' => 'bannerimage[]', 'class' => 'file-upload-default']) ?>
+                      <?php echo form_upload(['multiple' => '', 'name' => 'bannerimage[]', 'class' => 'file-upload-default', 'id' => 'userfile3']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <div class="input-group-append">
@@ -140,7 +140,7 @@ if (isset($upload_error)) {
 }?>
                       </div>
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                     <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -160,7 +160,7 @@ if (isset($upload_error)) {
                             <th>Sr No.</th>
                             <th>Slider Image</th>
 
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -178,8 +178,12 @@ if ($sliderimage_data) {
                             <td><div id="lightgallery" class="row lightGallery">
                     <img src="<?php echo base_url('assets/upload/') ?><?php echo $sliderimage ?>" alt="image small"></div></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_bannerimage?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
-
+                              <form method="post" action="status_slider" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $sliderimage_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $sliderimage_dat->status ?>" <?php if ($sliderimage_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/update_slider?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -203,7 +207,7 @@ if ($sliderimage_data) {
                         <tr>
                             <th>Sr No.</th>
                             <th>Offer Image</th>
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -223,10 +227,15 @@ if ($offerimage_data) {
                     <img src="<?php echo base_url('assets/upload/') ?><?php echo $offerimage ?>" alt="image small"></div></td>
 
                             <td>
-                              <label class="badge badge-info"><a href="">Delete</a></label>
+                             <form method="post" action="status_offer" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $offerimage_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $offerimage_dat->status ?>" <?php if ($offerimage_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
-                              <a href="<?php echo site_url() ?>update_subcategory?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
+                              <a href="<?php echo site_url() ?>admin/update_Offerimage?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
                             </td>
                         </tr><?php $sr_no++;}}}?>
                               </tbody>
@@ -236,7 +245,7 @@ if ($offerimage_data) {
               </div>
             </div>
           </div>
-           <div class="card">
+          <div class="card">
             <div class="card-body">
               <h4 class="card-title">Home Page Bottom banner Image</h4>
               <div class="row">
@@ -247,7 +256,7 @@ if ($offerimage_data) {
                         <tr>
                             <th>Sr No.</th>
                             <th>Offer Image</th>
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -266,10 +275,15 @@ if ($bannerimage_data) {
                     <img src="<?php echo base_url('assets/upload/') ?><?php echo $bannerimage ?>" alt="image small"></div></td>
 
                             <td>
-                              <label class="badge badge-info"><a href="">Delete</a></label>
+                              <form method="post" action="status_banner" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $bannerimage_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $bannerimage_dat->status ?>" <?php if ($bannerimage_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
-                              <a href="<?php echo site_url() ?>update_subcategory?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
+                              <a href="<?php echo site_url() ?>admin/update_bannerimage?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
                             </td>
                         </tr><?php $sr_no++;}}}?>
                               </tbody>
@@ -283,44 +297,13 @@ if ($bannerimage_data) {
 
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2017 <a href="#">UrbanUI</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-      <!-- row-offcanvas ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/hoverable-collapse.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/misc.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/settings.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/file-upload.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/iCheck.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/typeahead.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/select2.js"></script>
-   <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/lightgallery/dist/js/lightgallery-all.min.js"></script>
+        <?php include 'footer.php';?></body>
+        <script type="text/javascript">
+  $(document).ready(function(){
 
-  <!-- End custom js for this page-->
-</body>
+  document.getElementById("userfile1").required = true;
+   document.getElementById("userfile2").required = true;
+    document.getElementById("userfile3").required = true;
+});
+</script>
 </html>

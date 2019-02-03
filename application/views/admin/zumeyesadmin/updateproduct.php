@@ -37,6 +37,48 @@
         <!-- partial:../../partials/_sidebar.html -->
      <?php include 'sidebar.php';?>
         <!-- partial -->
+        <?php if (isset($pro_data)) {
+    foreach ($pro_data as $key => $pro_data) {
+        @$pro_id = $pro_data->id;
+        @$pro_product_name = $pro_data->product_name;
+        @$pro_pro_image = $pro_data->pro_image;
+        @$pro_featured_image = $pro_data->featuredimage;
+        @$pro_sale_price = $pro_data->sale_price;
+        @$pro_regular_price = $pro_data->regular_price;
+        @$pro_brand = explode("|", $pro_data->brand);
+        @$pro_color = explode("|", $pro_data->color);
+        @$pro_purpose = explode("|", $pro_data->purpose);
+        @$pro_fit = explode("|", $pro_data->fit);
+        @$pro_material = explode("|", $pro_data->material);
+        @$pro_shape = explode("|", $pro_data->shape);
+        @$pro_lense_type = explode("|", $pro_data->lense_type);
+
+        @$pro_cat_id = $pro_data->cat_id;
+        @$pro_subcat_id = $pro_data->sub_cat_id;
+        @$pro_sub_sub_catid = $pro_data->sub_sub_catid;
+
+        @$pro_description = $pro_data->pro_description;
+        @$pro_offer = $pro_data->offer;
+        @$pro_frame_width = $pro_data->frame_width;
+        @$pro_weight = $pro_data->weight;
+        @$pro_quantity = $pro_data->quantity;
+        @$pro_uses = $pro_data->uses;
+
+        @$pro_bridge = $pro_data->bridge;
+        @$pro_temple_length = $pro_data->temple_length;
+        @$pro_water_content = $pro_data->water_content;
+        @$pro_use_duration = $pro_data->use_duration;
+        @$pro_packageing = $pro_data->packageing;
+        @$pro_lense_width = $pro_data->lense_width;
+        @$pro_lense_height = $pro_data->lense_height;
+
+        @$pro_feature = $pro_data->features;
+        @$pro_tag = $pro_data->tags;
+        @$pro_frame_style = $pro_data->frame_style;
+
+    }
+
+}?>
          <div class="content-wrapper" style="min-height:145px;">
           <div class="row">
             <div class="col-md-6 d-flex align-items-stretch grid-margin">
@@ -48,41 +90,52 @@
                 <span style="color:blue;padding-left:70px">
               <?php echo $this->session->flashdata('form_succ_msg'); ?></span></h4>
                       <?php $attributes = array('class' => 'forms-sample');
-echo form_open_multipart('admin/product_insert', $attributes);
+echo form_open_multipart('admin/product_doupdate', $attributes);
 ?>
+  <input type="hidden" name="proid" value="<?php echo $pro_id ?>">
      <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text bg-info bg-info" id="colored-addon1">
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Product Name" aria-label="Category" name="product_name" id="product_name" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_product_name ?>" class="form-control" placeholder="Product Name" aria-label="Category" name="product_name" id="product_name" aria-describedby="colored-addon1">
                            <?php echo form_error('product_name'); ?>
                         </div>
                          <div class="form-group" style="margin-top: 1rem;">
                           <select class="js-example-basic-single"  name="cat_name" id="cat_name" style="width:100%">
-                            <option>Select Category Name</option>
-                         <?php if (@$cat_data) {
+                            <?php if (@$cat_data) {
     foreach ($cat_data as $key => $cat_dat) {
-        ?>
+        if ($cat_dat->id == $pro_cat_id) {?><option value="<?php echo $cat_dat->id; ?>">
+               <?php echo $cat_dat->cat_name; ?></option><?php }}}?>
+                   <!--      <?php if (@$cat_data) {
+    foreach ($cat_data as $key => $cat_dat) {
+        if ($cat_dat->id != $pro_cat_id) {
+            ?>
                           <option value="<?php echo $cat_dat->id ?>"><?php echo $cat_dat->cat_name ?></option>
-                         <?php }
-}?>
+                         <?php }}
+}?>-->
                         </select>
                           <?php echo form_error('cat_name'); ?>
                       </div>
                       <div id="allhide">
                       <div class="form-group" style="margin-top: 1rem;">
                         <select class="js-example-basic-single" name="sub_cat_id" style="width:100%" id="sub_cat_name">
-                            <option>Select Category Name First</option>
-
+                          <?php if (@$subcat_data) {
+    foreach ($subcat_data as $key => $subcat_dat) {
+        if ($subcat_dat->id == $pro_subcat_id) {?>
+                            <option value="<php echo $subcat_dat->id>"><?php echo $subcat_dat->sub_cat_name; ?></option>
+                        <?php }}}?>
                         </select>
                                           <?php echo form_error('sub_cat_id'); ?>
                       </div>
                        <div class="form-group" style="margin-top: 1rem;">
                         <select class="js-example-basic-single" name="sub_sub_cat_id" style="width:100%" id="sub_sub_cat_name">
-                            <option>Select Sub Category Name First</option>
-
+                           <?php if (@$sub_subcat_data) {
+    foreach ($sub_subcat_data as $key => $sub_subcat_dat) {
+        if ($sub_subcat_dat->id == $pro_sub_sub_catid) {?>
+                            <option><?php echo $sub_subcat_dat->sub_sub_cat; ?></option>
+                        <?php }}}?>
                         </select>
                                     <?php echo form_error('sub_sub_cat_id'); ?>
                       </div>
@@ -93,17 +146,19 @@ echo form_open_multipart('admin/product_insert', $attributes);
                            <?php
 
 foreach ($brand_name as $key => $brand) {
-    ?>
+    if (@$pro_brand) {
+
+        ?>
                                        <div class="col-sm-4">
                                       <div class="form-check form-check-flat">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" name="brand_name[]" value="<?php echo $brand->brand_name; ?>">
+                              <input type="checkbox" <?php foreach ($pro_brand as $key => $pro_brandd) {if ($pro_brandd == $brand->brand_name) {?>checked <?php }}?> class="form-check-input" name="brand_name[]" value="<?php echo $brand->brand_name; ?>">
                                <?php echo $brand->brand_name; ?>
                             </label>
                             <?php echo form_error('brand_name'); ?>
                             </div>
                           </div>
-                          <?php }?>
+                          <?php }}?>
                       </div>
                       </div>
                        <div class="form-group" style="margin-top: 1rem;">
@@ -117,7 +172,7 @@ foreach ($color_name as $key => $color) {
                                        <div class="col-sm-4">
                                       <div class="form-check form-check-flat">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" name="color_name[]" value="<?php echo $color->color_name; ?>">
+                              <input type="checkbox" <?php foreach ($pro_color as $key => $pro_colorr) {if ($pro_colorr == $color->color_name) {?>checked <?php }}?> class="form-check-input" name="color_name[]" value="<?php echo $color->color_name; ?>">
                                <?php echo $color->color_name; ?>
                             </label>
                             <?php echo form_error('color_name'); ?>
@@ -137,7 +192,7 @@ foreach ($fit_name as $key => $fit) {
                                        <div class="col-sm-4">
                                       <div class="form-check form-check-flat">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" name="fit_name[]" value="<?php echo $fit->fit_name; ?>">
+                              <input type="checkbox" <?php foreach ($pro_fit as $key => $pro_fitt) {if ($pro_fitt == $fit->fit_name) {?>checked <?php }}?>  class="form-check-input" name="fit_name[]" value="<?php echo $fit->fit_name; ?>">
                                <?php echo $fit->fit_name; ?>
                             </label>
                             <?php echo form_error('fit_name'); ?>
@@ -157,7 +212,7 @@ foreach ($purpose_name as $key => $purpose) {
                                        <div class="col-sm-4">
                                       <div class="form-check form-check-flat">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" name="purpose_name[]" value="<?php echo $purpose->purpose_name; ?>">
+                              <input type="checkbox" <?php foreach ($pro_purpose as $key => $pro_purposee) {if ($pro_purposee == $purpose->purpose_name) {?>checked <?php }}?> class="form-check-input" name="purpose_name[]" value="<?php echo $purpose->purpose_name; ?>">
                                <?php echo $purpose->purpose_name; ?>
                             </label>
                             <?php echo form_error('purpose_name'); ?>
@@ -177,7 +232,7 @@ foreach ($shape_name as $key => $shape) {
                                        <div class="col-sm-4">
                                       <div class="form-check form-check-flat">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" name="shape_type[]" value="<?php echo $shape->shape_type; ?>">
+                              <input type="checkbox" <?php foreach ($pro_shape as $key => $pro_shapee) {if ($pro_shapee == $shape->shape_type) {?>checked <?php }}?> class="form-check-input" name="shape_type[]" value="<?php echo $shape->shape_type; ?>">
                                <?php echo $shape->shape_type; ?>
                             </label>
                             <?php echo form_error('shape_name'); ?>
@@ -197,10 +252,10 @@ if (isset($lense_uses)) {
                                        <div class="col-sm-4">
                                       <div class="form-check form-check-flat">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" name="lense_type[]" value="<?php echo $lense->uses; ?>">
+                              <input type="checkbox" <?php foreach ($pro_lense_type as $key => $pro_lense_typee) {if ($pro_lense_typee == $lense->uses) {?>checked <?php }}?>  class="form-check-input" name="lense_type[]" value="<?php echo $lense->uses; ?>">
                                <?php echo @$lense->uses; ?>
                             </label>
-                           type="reset"
+                            <?php echo form_error('lense_type'); ?>
                             </div>
                           </div>
                           <?php }}?>
@@ -217,7 +272,7 @@ foreach ($material_name as $key => $material) {
                                        <div class="col-sm-4">
                                       <div class="form-check form-check-flat">
                             <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" name="material_name[]" value="<?php echo $material->material_name; ?>">
+                              <input type="checkbox" <?php foreach ($pro_material as $key => $pro_materiall) {if ($pro_materiall == $material->material_name) {?>checked <?php }}?> class="form-check-input" name="material_name[]" value="<?php echo $material->material_name; ?>">
                                <?php echo $material->material_name; ?>
                             </label>
                             <?php echo form_error('material_name'); ?>
@@ -234,7 +289,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Product Weight" aria-label="Category" name="weight" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_weight ?>" class="form-control" placeholder="Product Weight" aria-label="Category" name="weight" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('weight'); ?>
                       </div>
@@ -246,7 +301,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Frame Width" aria-label="Category" name="frame_width" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_frame_width ?>" class="form-control" placeholder="Frame Width" aria-label="Category" name="frame_width" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('frame_width'); ?>
                       </div>
@@ -258,7 +313,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Frame Style Like Full Rim" aria-label="Category" name="frame_style" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_frame_style ?>" class="form-control" placeholder="Frame Style Like Full Rim" aria-label="Category" name="frame_style" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('frame_style'); ?>
                       </div>
@@ -270,7 +325,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Produc Feature Example Spring Hinges , Custom engraving" aria-label="Category" name="features" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" value="<?php echo $pro_feature ?>" placeholder="Produc Feature Example Spring Hinges , Custom engraving" aria-label="Category" name="features" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('features'); ?>
                       </div>
@@ -282,7 +337,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Tags... Example Like Neutral Glasses" aria-label="Category" name="tag" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_tag ?>" class="form-control" placeholder="Tags... Example Like Neutral Glasses" aria-label="Category" name="tag" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('tag'); ?>
                       </div>
@@ -294,7 +349,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Lense Width" aria-label="Category" name="lense_width" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_lense_width ?>" class="form-control" placeholder="Lense Width" aria-label="Category" name="lense_width" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('lense_width'); ?>
                       </div>
@@ -306,7 +361,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Lense Height" aria-label="Category" name="lense_height" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" value="<?php echo $pro_lense_height ?>" placeholder="Lense Height" aria-label="Category" name="lense_height" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('lense_height'); ?>
                       </div>
@@ -319,7 +374,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Temple Length" aria-label="Category" name="temple_length" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_temple_length ?>" class="form-control" placeholder="Temple Length" aria-label="Category" name="temple_length" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('temple_length'); ?>
                       </div>
@@ -331,7 +386,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Bridge" aria-label="Category" name="bridge" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_bridge ?>" class="form-control" placeholder="Bridge" aria-label="Category" name="bridge" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('bridge'); ?>
                       </div>
@@ -345,7 +400,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="No. of lense in one Package" aria-label="Category" name="lense_inpackage" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_packageing ?>" class="form-control" placeholder="No. of lense in one Package" aria-label="Category" name="lense_inpackage" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('lense_inpackage'); ?>
                       </div>
@@ -357,9 +412,9 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Lense Type Example Like  Monthly Disposable" aria-label="Category" name="lense_uses" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_uses ?>" class="form-control" placeholder="Lense Type Example Like  Monthly Disposable" aria-label="Category" name="lense_uses" aria-describedby="colored-addon1">
                         </div>
-                        <?php echo form_error('lense_type'); ?>
+                        <?php echo form_error('lense_uses'); ?>
                       </div>
                        <div class="form-group" id="watercontent" style="margin-top: 1rem;">
                          <h4 class="card-title">Water Content</h4>
@@ -369,7 +424,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Water Content Example Like 50%" aria-label="Category" name="water_content" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_water_content ?>" class="form-control" placeholder="Water Content Example Like 50%" aria-label="Category" name="water_content"  aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('water_content'); ?>
                       </div>
@@ -381,7 +436,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Lense Usage Duration Like Monthly" aria-label="Category" name="use_duration" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_use_duration ?>" class="form-control" placeholder="Lense Usage Duration Like Monthly" aria-label="Category" name="use_duration" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('use_duration'); ?>
                       </div>
@@ -395,7 +450,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Product Price" aria-label="Category" name="product_price" id="product_price" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_regular_price ?>" class="form-control"  placeholder="Product Price" aria-label="Category" name="product_price" id="product_price" aria-describedby="colored-addon1">
                           <?php echo form_error('product_price'); ?>
                         </div>
                       </div>
@@ -408,7 +463,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Product Quantity" aria-label="Category" name="product_quantity" id="product_quantity" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_quantity ?>" class="form-control"  placeholder="Product Quantity" aria-label="Category" name="product_quantity" id="product_quantity" aria-describedby="colored-addon1">
                           <?php echo form_error('product_quantity'); ?>
                         </div>
                       </div>
@@ -421,15 +476,15 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Offer In Percentage(Don't put % sign)" aria-label="Category" name="offer" id="offer" aria-describedby="colored-addon1">
+                          <input type="text" value="<?php echo $pro_offer ?>" class="form-control"  placeholder="Offer In Percentage(Don't put % sign)" aria-label="Category" name="offer" id="offer" aria-describedby="colored-addon1">
                           <?php echo form_error('offer'); ?>
                         </div>
                       </div>
                         <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default']) ?>
+                    <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default', 'value' => '' . $pro_pro_image . '']) ?>
                       <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload product Image">
+                        <input type="text" value="<?php echo $pro_pro_image ?>" class="form-control file-upload-info" disabled placeholder="Upload product Image">
                         <div class="input-group-append">
                           <button class="file-upload-browse btn btn-info" type="button">Upload</button>
                         </div>
@@ -441,9 +496,9 @@ if (isset($upload_error)) {
                       </div>
                     </div>
                     <div class="form-group" style="margin-top: 1rem;">
-                    <?php echo form_upload(['multiple' => '', 'name' => 'featuredimage[]', 'class' => 'file-upload-default']) ?>
+                    <?php echo form_upload(['multiple' => '', 'name' => 'featuredimage[]', 'class' => 'file-upload-default', 'value' => '' . $pro_featured_image . '']) ?>
                       <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Fetured Images">
+                        <input type="text" value="<?php echo $pro_featured_image ?>" class="form-control file-upload-info" disabled placeholder="Upload Fetured Images">
                         <div class="input-group-append">
                           <button class="file-upload-browse btn btn-info" type="button">Upload</button>
                         </div>
@@ -455,13 +510,13 @@ if (isset($fupload_error)) {
                       </div>
                       <div class="form-group" style="margin-top: 1rem;">
                          <h4 class="card-title">Product Description</h4>
-                       <textarea id="summernoteExample" name="content" placeholder="Product Description..."></textarea>
+                       <textarea id="summernoteExample" name="content" placeholder="Product Description..."><?php echo $pro_description ?></textarea>
 
                     </div>
                   </div>
 
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    <button type="reset" class="btn btn-light">Cancel</button>
+                    <button class="btn btn-light">Cancel</button>
                     </div>
                   </div>
                 </form>
@@ -479,7 +534,6 @@ if (isset($fupload_error)) {
         <footer class="footer">
           <div class="container-fluid clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© 2018 Zumeyes. All rights resereved</span>
-
           </div>
         </footer>
         <!-- partial -->
@@ -493,9 +547,9 @@ if (isset($fupload_error)) {
   <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript">
 $(document).ready(function(){
-  document.getElementById('allhide').style.display = "none";
-    $('#cat_name').on('change',function(){
-        var cat_id= $(this).val();
+
+        var cat_id= $('#cat_name').val();
+
         if(cat_id == '13' || cat_id == '14'){
               document.getElementById('lenseuses').style.display = "none";
              document.getElementById('watercontent').style.display = "none";
@@ -543,7 +597,7 @@ $(document).ready(function(){
           }
 
 
-        if(cat_id){
+       /* if(cat_id){
             $.ajax({
                  type:'POST',
                  url:'<?php echo site_url('admin/dropsubcat_ajaxData') ?>',
@@ -555,8 +609,8 @@ $(document).ready(function(){
         }
         else{
             $('#sub_cat_name').html('<option value="">Select Category name first</option>');
-        }
-    });
+        }*/
+
 });
 </script>
 

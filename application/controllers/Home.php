@@ -57,9 +57,9 @@ class Home extends CI_Controller
         $cat_data['subcat_data'] = $this->Vquery->subcat_list();
         $cat_data['about_data'] = $this->Vquery->about_get();
         $this->load->view('aboutus', $cat_data);
-        
+
     }
-    
+
     public function blogDetails()
     {
 
@@ -145,8 +145,7 @@ class Home extends CI_Controller
         }
         $this->load->view('productList', $cat_data);
     }
-	
-	public function subProduct()
+    public function subProduct()
     {
         $subcatid = $this->session->userdata('last_subid');
         $cat_data['subcatdata'] = $this->Vquery->sub_subcat_data($subcatid);
@@ -177,8 +176,7 @@ class Home extends CI_Controller
         $cat_data['lense_uses'] = $this->Vquery->uses_data();
 
         $this->load->view('contactLenses', $cat_data);
-	}
-	
+    }
     public function productDetails()
     {
 
@@ -195,8 +193,7 @@ class Home extends CI_Controller
 
         $this->load->view('productDetails', $cat_data);
     }
-	
-	public function lenseDetails()
+    public function lenseDetails()
     {
 
         $id = $this->input->get('id');
@@ -211,8 +208,7 @@ class Home extends CI_Controller
 
         $this->load->view('lensDetails', $cat_data);
     }
-	
-	public function removewishlist()
+    public function removewishlist()
     {
 
         $id = $this->input->post('wishid');
@@ -1061,10 +1057,18 @@ class Home extends CI_Controller
         $cat_data['faq_data'] = $this->Vquery->faq_get();
         $this->load->view('faq', $cat_data);
     }
+    public function privacy_policy()
+    {
+
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+
+        $this->load->view('privacy_policy', $cat_data);
+    }
     public function login_and_registration()
     {
-        if (!$this->session->userdata('isUserLoggedIn') &&
-            !$this->session->userdata('userId')) {
+        if ((!$this->session->userdata('isUserLoggedIn') &&
+            !$this->session->userdata('userId')) || $this->session->userdata('guest')) {
 
             $cat_data['cat_data'] = $this->Vquery->cat_list();
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();

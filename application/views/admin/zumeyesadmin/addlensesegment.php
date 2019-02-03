@@ -58,7 +58,7 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                       </div>
 
                       <button type="submit" name="cylinderinfo" value="cylinder" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                     <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -88,7 +88,7 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                        <?php echo form_error('sphere'); ?>
                       </div>
                       <button type="submit" name="sphereinfo" value="sphereinfo" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -120,7 +120,7 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                       </div>
 
                       <button type="submit" name="axisinfo" value="axis" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -150,7 +150,7 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                        <?php echo form_error('nearaddition'); ?>
                       </div>
                       <button type="submit" name="nearadditioninfo" value="nearaddition" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -187,7 +187,12 @@ if (@$sphere_data) {
                             <td><?php echo $sphere_dat->sphere ?></td>
                             <td>
 
-                              <a href="<?php echo site_url() ?>admin/delete_color?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
+                             <form method="post" action="status_sphere" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $sphere_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $sphere_dat->status ?>" <?php if ($sphere_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
 
                             </td>
                             <td>
@@ -228,7 +233,12 @@ if ($cylinder_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $cylinder_dat->cylinder ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_brand?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
+                               <form method="post" action="status_cylinder" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $cylinder_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $cylinder_dat->status ?>" <?php if ($cylinder_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
 
                             </td>
                             <td>
@@ -269,7 +279,12 @@ if ($axis_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $axis_dat->axis ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_shape?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
+                               <form method="post" action="status_axis" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $axis_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $axis_dat->status ?>" <?php if ($axis_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
 
                             </td>
                             <td>
@@ -310,7 +325,12 @@ if ($nearaddition_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $nearaddition_dat->nearaddition ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_shape?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
+                               <form method="post" action="status_nearaddition" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $nearaddition_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $nearaddition_dat->status ?>" <?php if ($nearaddition_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
 
                             </td>
                             <td>
@@ -332,42 +352,5 @@ if ($nearaddition_data) {
 
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2017 <a href="#">UrbanUI</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-      <!-- row-offcanvas ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/hoverable-collapse.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/misc.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/settings.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/file-upload.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/iCheck.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/typeahead.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/select2.js"></script>
-  <!-- End custom js for this page-->
-</body>
+        <?php include 'footer.php';?></body>
 </html>

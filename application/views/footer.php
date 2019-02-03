@@ -73,7 +73,7 @@
 				<div class="col-sm-4 companyContact">
 
 					<div class="bottomLogo">
-						<img src="<?php echo base_url('assets/images/logo.png')?>" alt="Logo">
+						<img src="<?php echo base_url('assets/images/logo.png') ?>" alt="Logo">
 					</div>
 
 					<div class="bar clearfix">
@@ -118,13 +118,13 @@
 						<ul class="links">
 
 							<li>
-								<a href="<?php echo site_url('productlist');?>?id=9">Men</a>
+								<a href="<?php echo site_url('productlist'); ?>?id=9">Men</a>
 							</li>
 							<li>
-								<a href="<?php echo site_url('productlist');?>?id=10">Women</a>
+								<a href="<?php echo site_url('productlist'); ?>?id=10">Women</a>
 							</li>
 							<li>
-								<a href="<?php echo site_url('productlist');?>?id=">Kids</a>
+								<a href="<?php echo site_url('productlist'); ?>?id=">Kids</a>
 							</li>
 
 						</ul>
@@ -139,16 +139,16 @@
 								<a href="#">Contact Us</a>
 							</li>
 							<li>
-								<a href="<?php echo site_url('aboutus');?>">About us</a>
+								<a href="<?php echo site_url('aboutus'); ?>">About us</a>
 							</li>
 							<li>
-								<a href="<?php echo site_url('faq');?>">FAQs</a>
+								<a href="<?php echo site_url('faq'); ?>">FAQs</a>
 							</li>
 							<li>
 								<a href="#">Blog</a>
 							</li>
 							<li>
-								<a href="<?php echo site_url('term_and_condition');?>">Terms & Conditions</a>
+								<a href="<?php echo site_url('term_and_condition'); ?>">Terms & Conditions</a>
 							</li>
 
 						</ul>
@@ -169,7 +169,7 @@
 								<a href="#">Return & Refund</a>
 							</li>
 							<li>
-								<a href="#">Privacy Policy</a>
+								<a href="<?php echo base_url('privacy_policy'); ?>">Privacy Policy</a>
 							</li>
 
 						</ul>
@@ -192,11 +192,11 @@
 		$(document).ready(function(){
 			$('.newsletter').click(function(){
           var email =document.getElementById("email").value;
-			
+
            $.ajax({
 				type:'POST',
 				data:{email:email},
-				url:"<?php echo base_url('newsletter')?>",		
+				url:"<?php echo base_url('newsletter') ?>",
 				success:function(data){
 					$(".successsubscribe").html(data);
 				}
@@ -204,6 +204,6 @@
 			});
 			});
 			});
-            
-			
+
+
 		</script>

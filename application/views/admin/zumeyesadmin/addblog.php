@@ -54,7 +54,7 @@ echo form_open_multipart('admin/blog_insertData');
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Blog title" aria-label="Category" name="title" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Blog title" aria-label="Category" name="title" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('title'); ?>
                       </div>
@@ -76,9 +76,10 @@ if (isset($upload_error)) {
 }?>
 
                       </div>
-                  <textarea id="summernoteExample" name="content"></textarea>
+                  <textarea id="summernoteExample" required name="content"></textarea>
 
                   <input type="submit" name="blog_Submit" class="btn btn-primary btn-rounded btn-fw" value="Submit"/>
+                   <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
                 </div>
               </div>
@@ -99,7 +100,7 @@ if (isset($upload_error)) {
                             <th>Sr No.</th>
                             <th>Blog Title</th>
                              <th>Blog Image</th>
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -116,8 +117,12 @@ if (@$blog_data) {
                             <td><?php if ($blog_dat->image) {?><div id="lightgallery" class="row lightGallery">
                     <img src="<?php echo base_url('assets/upload/blog/') ?><?php echo $blog_dat->image ?>" alt="image small"></div><?php }?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_blog?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
-
+                              <form method="post" action="status_blog" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $blog_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $blog_dat->status ?>" <?php if ($blog_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/blog_update?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -135,45 +140,6 @@ if (@$blog_data) {
 
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2017 <a href="#">UrbanUI</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-      <!-- row-offcanvas ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/summernote/dist/summernote-bs4.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/hoverable-collapse.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/misc.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/settings.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/file-upload.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/iCheck.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/typeahead.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/select2.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/editorDemo.js"></script>
-  <!-- End custom js for this page-->
-
+       <?php include 'footer.php'?>
 </body>
 </html>

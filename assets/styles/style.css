@@ -1308,10 +1308,10 @@ footer .copyrightBlock span{
 	margin-top: 10px;
 }
 .userLoginPanel .login {
-    min-height: 390px;
+    min-height: 490px;
 }
 .userLoginPanel .signup {
-    min-height: 580px;
+    min-height: 820px;
 }
 .userLoginPanel .content .content-1,.userLoginPanel .content .content-2 {
     position: absolute;

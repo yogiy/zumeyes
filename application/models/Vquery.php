@@ -76,14 +76,14 @@ class Vquery extends CI_Model
 
         return $query;
     }
-    
+
     public function count_all($pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_query($pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid);
         $data = $this->db->query($query);
         return $data->num_rows();
     }
-    
+
     public function fetch_data($limit, $start, $pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_query($pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid);
@@ -200,7 +200,7 @@ $(document).ready(function(){
         }
         return $output;
     }
-    
+
     public function make_lensequery($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid)
     {
         $sid = 3;
@@ -249,14 +249,14 @@ $(document).ready(function(){
 
         return $query;
     }
-    
+
     public function count_lenseall($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_lensequery($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid);
         $data = $this->db->query($query);
         return $data->num_rows();
     }
-    
+
     public function fetch_lensedata($limit, $start, $pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_lensequery($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid);
@@ -371,7 +371,6 @@ $(document).ready(function(){
         }
         return $output;
     }
-    
     public function getRows($params = array())
     {
         $this->db->select('*');
@@ -425,7 +424,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function comment($data)
     {
         $query = $this->db->insert('usercomments', $data);
@@ -447,10 +445,20 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function subcat_list()
     {
         $query = $this->db->query("SELECT * FROM `subcategory`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+
+    public function sub_subcat_list()
+    {
+        $query = $this->db->query("SELECT * FROM `sub_subcategory`");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -469,7 +477,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function sub_subcat_data($subcatid)
     {
         $query = $this->db->query("SELECT * FROM `sub_subcategory` where `sub_cat_name` = '" . $subcatid . "' ");
@@ -480,7 +487,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function get_cat_id($subid)
     {
         $query = $this->db->query("SELECT `cat_name` FROM `subcategory` where `id` = '" . $subid . "' ");
@@ -491,7 +497,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function product_data()
     {
         $query = $this->db->query("SELECT * FROM `product`");
@@ -502,7 +507,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function slider_data()
     {
         $query = $this->db->query("SELECT * FROM `sliderimage`");
@@ -513,7 +517,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function offer_data()
     {
         $query = $this->db->query("SELECT * FROM `offerimage`");
@@ -524,7 +527,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function banner_data()
     {
         $query = $this->db->query("SELECT * FROM `bannerimage`");
@@ -535,7 +537,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function term_get()
     {
         $query = $this->db->query("SELECT * FROM `term_and_condition`");
@@ -546,7 +547,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function faq_get()
     {
         $query = $this->db->query("SELECT * FROM `faq`");
@@ -569,8 +569,6 @@ $(document).ready(function(){
         }
     }
 
-
-    
     public function blog_data()
     {
         $query = $this->db->query("SELECT * FROM `blog`");
@@ -581,7 +579,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function blog_databy_id($id)
     {
         $query = $this->db->query("SELECT * FROM `blog` WHERE `id`='" . $id . "'");
@@ -592,7 +589,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function checkuser_newsletter($email)
     {
         $query = $this->db->query("SELECT * FROM `newsletter` WHERE `email`='" . $email . "'");
@@ -603,7 +599,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function product_databy_subid($id)
     {
         $query = $this->db->query("SELECT * FROM `product` WHERE `sub_cat_id`='" . $id . "'");
@@ -614,7 +609,6 @@ $(document).ready(function(){
             return false;
         }
     }
-    
     public function sub_sub_page_byid($id)
     {
         $query = $this->db->query("SELECT `sub_sub_cat` FROM `subcategory` WHERE `id`='" . $id . "' AND `sub_sub_cat` IS NOT NULL");

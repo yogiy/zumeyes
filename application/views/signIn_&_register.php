@@ -37,17 +37,19 @@
 
 						<div class="leftPanel clearfix">
 
-							<span>&nbsp;</span>
+							<span><?php echo form_error('email', '<p style="font-size:15px" class="statusMsg">', '</p>'); ?>
+								<?php echo form_error('password', '<p style="font-size:15px"class="statusMsg">', '</p>'); ?>
+							</span>
 
                          <form action="login_and_registration" method="post">
 							<div class="loginDetails clearfix">
 								<div class="fieldBar clearfix">
-<?php echo '<p class="statusMsg">' . $this->session->flashdata('rsuccess_msg') . '</p>';
-?>
+<?php if ($this->session->flashdata('rsuccess_msg')) {echo '<p class="statusMsg">' . $this->session->flashdata('rsuccess_msg') . '</p>';
+}?>
 									<label>Username</label>
 									<div class="field">
-										<input type="text" id="cname" name="email" value="" placeholder="user@gmail.com">
-									<?php echo form_error('email', '<p class="statusMsg">', '</p>'); ?>
+										<input type="text" id="cname" required name="email" value="" placeholder="user@gmail.com">
+
 
 									</div>
                                     </div>
@@ -55,8 +57,8 @@
 
 									<label>Password</label>
 									<div class="field">
-						      <input type="password" id="cpwd" value="" name="password" placeholder="......">
-						      <?php echo form_error('password', '<p class="statusMsg">', '</p>'); ?>
+						      <input type="password" id="cpwd" required value="" name="password" placeholder="......">
+
 							<?php
 echo $this->session->flashdata('error_msg');
 ?>
@@ -103,7 +105,7 @@ echo $this->session->flashdata('error_msg');
 
 									<label>First Name</label>
 									<div class="field">
-										<input type="text" id="cfname" name="fname" placeholder="First Name">
+										<input type="text" id="cfname" required name="fname" placeholder="First Name">
 										  <?php echo form_error('fname', '<p class="statusMsg">', '</p>'); ?>
 
 									</div>
@@ -112,7 +114,7 @@ echo $this->session->flashdata('error_msg');
 
 									<label>Last Name</label>
 									<div class="field">
-										<input type="texxt" id="clname" name="lname" placeholder="Last Name">
+										<input type="texxt" id="clname" required name="lname" placeholder="Last Name">
 										 <?php echo form_error('lname', '<p class="statusMsg">', '</p>'); ?>
 
 									</div>
@@ -121,7 +123,7 @@ echo $this->session->flashdata('error_msg');
 
 									<label>Email</label>
 									<div class="field">
-										<input type="text" id="cemail" name="cemail" placeholder="user@gmail.co">
+										<input type="text" id="cemail" required name="cemail" placeholder="user@gmail.co">
 										<?php echo form_error('cemail', '<p class="statusMsg">', '</p>'); ?>
 
 									</div>
@@ -130,7 +132,7 @@ echo $this->session->flashdata('error_msg');
 
 									<label>Password</label>
 									<div class="field">
-										<input type="password" id="cpwds" name="pass" placeholder=".......">
+										<input type="password" required id="cpwds" name="pass" placeholder=".......">
 									 <?php echo form_error('pass', '<p class="statusMsg">', '</p>'); ?>
 									</div>
 
@@ -139,14 +141,14 @@ echo $this->session->flashdata('error_msg');
 
 									<label>Confirm Password</label>
 									<div class="field">
-										<input type="password" id="ccpwd" name="cpass" placeholder=".......">
+										<input type="password" id="ccpwd" required name="cpass" placeholder=".......">
 										<?php echo form_error('cpass', '<p class="statusMsg">', '</p>'); ?></p>
 									</div>
 
 								</div>
 								<p class="condition clearfix">By creating this account, you agree to the
-									<a href="#">Terms of Use</a> and
-									<a href="#">Privacy Policy.</a>
+									<a href="<?php echo base_url('term_and_condition'); ?>">Terms of Use</a> and
+									<a href="<?php echo base_url('privacy_policy'); ?>">Privacy Policy.</a>
 								</p>
 
                             <button type="submit" name="regisSubmit" value="registerSubmit">Register</button>
@@ -186,7 +188,7 @@ echo $this->session->flashdata('error_msg');
 
 		<div class="row copyrightBlock loginCopyrightBlock">
 
-			<span>© 2018 Zumeyes. All rights resereved</span>
+			<span>© <?php echo date('Y') ?> Zumeyes. All rights resereved</span>
 
 		</div>
 

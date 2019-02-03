@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 $route['home/(:any)'] = 'home/$1';
+$route['status/(:any)'] = 'status/$1';
 $route['admin/(:any)'] = 'admin/$1';
 $route['(:any)'] = "home/$1";
 $route['404_override'] = '';

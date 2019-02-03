@@ -213,7 +213,23 @@ $i = 1;
 
 					</div>
 					<?php } elseif ($this->session->userdata('guest')) {
-    ?><a href="#" class="signIn">GuestUser</a>
+    ?>
+
+							<span><a href="#" class="signIn">GuestUser</a></span>
+
+					<div class="userDrop1">
+
+
+
+						<ul class="userActionList">
+
+
+
+
+						<li style="padding:0px"><a href="<?php echo base_url('login_and_registration') ?>" class="signIn">Sign In</a></li>
+					</ul>
+
+					</div>
 				<?php	} else {?>
 
 						<a href="<?php echo base_url('login_and_registration') ?>" class="signIn">Sign In</a>

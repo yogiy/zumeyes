@@ -52,13 +52,13 @@ echo form_open_multipart('admin/filter', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Brand Name" aria-label="Category" name="brand" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Brand Name" aria-label="Category" name="brand" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('brand'); ?>
                       </div>
 
                       <button type="submit" name="brandd" value="brandd" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                     <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -83,12 +83,12 @@ echo form_open_multipart('admin/filter', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Color Name" aria-label="Category" name="color_name" id="color_name" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control"  placeholder="Color Name" aria-label="Category" required name="color_name" id="color_name" aria-describedby="colored-addon1">
                         </div>
                        <?php echo form_error('color_name'); ?>
                       </div>
                       <button type="submit" name="color" value="color" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                     <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -114,13 +114,13 @@ echo form_open_multipart('admin/filter', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Shape Name" aria-label="Category" name="shape" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Shape Name" aria-label="Category" name="shape" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('shape'); ?>
                       </div>
 
                       <button type="submit" name="shapee" value="shapee" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                     <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -145,12 +145,12 @@ echo form_open_multipart('admin/filter', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="material Name" aria-label="Category" name="material_name" id="color_name" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="material Name" aria-label="Category" name="material_name" id="color_name" aria-describedby="colored-addon1">
                         </div>
                        <?php echo form_error('material_name'); ?>
                       </div>
                       <button type="submit" name="material" value="material" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -176,13 +176,13 @@ echo form_open_multipart('admin/filter', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="FBrandilter Name" aria-label="Category" name="purpose" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="FBrandilter Name" aria-label="Category" name="purpose" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('purpose'); ?>
                       </div>
 
                       <button type="submit" name="purposes" value="purpse" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -207,12 +207,12 @@ echo form_open_multipart('admin/filter', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Fit Name" aria-label="Category" name="fit_name" id="fit_name" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Fit Name" aria-label="Category" name="fit_name" id="fit_name" aria-describedby="colored-addon1">
                         </div>
                        <?php echo form_error('fit_name'); ?>
                       </div>
                       <button type="submit" name="fit" value="fit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -235,12 +235,12 @@ echo form_open_multipart('admin/filter', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Example Like Daily Uses" aria-label="Category" name="lense_uses" id="lense_uses" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control"  placeholder="Example Like Daily Uses" required aria-label="Category" name="lense_uses" id="lense_uses" aria-describedby="colored-addon1">
                         </div>
                        <?php echo form_error('lense_uses'); ?>
                       </div>
                       <button type="submit" name="style" value="style" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
               </div>
             </div>
@@ -259,7 +259,7 @@ echo form_open_multipart('admin/filter', $attributes);
                             <th>Sr No.</th>
                             <th>Color Name</th>
 
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -274,9 +274,12 @@ if ($color_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $color_dat->color_name ?></td>
                             <td>
-
-                              <a href="<?php echo site_url() ?>admin/delete_color?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
-
+                              <form method="post" action="status_color" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $color_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $color_dat->status ?>" <?php if ($color_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/update_color?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -301,7 +304,7 @@ if ($color_data) {
                             <th>Sr No.</th>
                             <th>Brand Name</th>
 
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -316,8 +319,12 @@ if ($brand_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $brand_dat->brand_name ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_brand?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
-
+                             <form method="post" action="status_brand" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $brand_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $brand_dat->status ?>" <?php if ($brand_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/update_brand?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -342,7 +349,7 @@ if ($brand_data) {
                             <th>Sr No.</th>
                             <th>Shape NamTypee</th>
 
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -357,8 +364,12 @@ if ($shape_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $shape_dat->shape_type ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_shape?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
-
+                             <form method="post" action="status_shape" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $shape_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $shape_dat->status ?>" <?php if ($shape_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/update_shape?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -383,7 +394,7 @@ if ($shape_data) {
                             <th>Sr No.</th>
                             <th>Material Name</th>
 
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -398,8 +409,12 @@ if ($material_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $material_dat->material_name ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_material?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
-
+                             <form method="post" action="status_material" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $material_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $material_dat->status ?>" <?php if ($material_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/update_material?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -424,7 +439,7 @@ if ($material_data) {
                             <th>Sr No.</th>
                             <th>Purpose Name</th>
 
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -439,8 +454,12 @@ if ($purpose_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $purpose_dat->purpose_name ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_purpose?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
-
+                             <form method="post" action="status_purpose" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $purpose_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $purpose_dat->status ?>" <?php if ($purpose_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/update_purpose?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -465,7 +484,7 @@ if ($purpose_data) {
                             <th>Sr No.</th>
                             <th>Useing Time</th>
 
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -480,8 +499,12 @@ if ($lense_uses) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $lense_data->uses ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_lensesuses?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
-
+                              <form method="post" action="status_lense_type" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $lense_data->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $lense_data->status ?>" <?php if ($lense_data->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
                             </td>
                             <td>
                               <a href="<?php echo site_url() ?>admin/update_lenseuses?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
@@ -505,7 +528,7 @@ if ($lense_uses) {
                         <tr>
                             <th>Sr No.</th>
                             <th>Fit Name</th>
-                            <th>Delete</th>
+                            <th>Status</th>
                             <th>Update</th>
                         </tr>
                       </thead>
@@ -520,7 +543,12 @@ if ($fit_data) {
                             <td><?php echo $sr_no; ?></td>
                             <td><?php echo $fit_dat->fit_name ?></td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/delete_fit?id=<?php echo $id ?>" class="btn btn-outline-primary">Delete</a>
+                              <form method="post" action="status_fit" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $fit_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $fit_dat->status ?>" <?php if ($fit_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
 
                             </td>
                             <td>
@@ -538,42 +566,5 @@ if ($fit_data) {
 
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2017 <a href="#">UrbanUI</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
-          </div>
-        </footer>
-        <!-- partial -->
-      </div>
-      <!-- row-offcanvas ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/hoverable-collapse.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/misc.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/settings.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/file-upload.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/iCheck.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/typeahead.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/js/select2.js"></script>
-  <!-- End custom js for this page-->
-</body>
+       <?php include 'footer.php';?></body>
 </html>

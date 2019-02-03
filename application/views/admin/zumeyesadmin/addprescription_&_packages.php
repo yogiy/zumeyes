@@ -58,12 +58,12 @@ echo form_open_multipart('admin/addprescription', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Prescription Name" aria-label="Category" name="pres_name" id="pres_name" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required  placeholder="Prescription Name" aria-label="Category" name="pres_name" id="pres_name" aria-describedby="colored-addon1">
                         </div>
                        <?php echo form_error('pres_name'); ?>
                       </div>
                       <button type="submit" name="pres" value="submit" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                     <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
 
 
@@ -76,7 +76,7 @@ echo form_open_multipart('admin/addprescription', $attributes);
               <div class="row flex-grow">
                 <div class="col-12 grid-margin">
                   <div class="card">
-                <div class="card-body">
+     <div class="card-body">
                   <h4 class="card-title">Add Prescription Packages
                 <span style="color:blue;padding-left:70px">
               <?php echo $this->session->flashdata('form_succ_msg2'); ?></span></h4>
@@ -85,7 +85,7 @@ echo form_open_multipart('admin/addprescription', $attributes);
 ?>
 
                          <div class="form-group" style="margin-top: 1rem;">
-                          <select class="js-example-basic-single"  name="pres_name" id="pres_name" style="width:100%">
+                          <select class="js-example-basic-single" required  name="pres_name" id="pres_name" style="width:100%">
                             <option>Select Prescription Name</option>
                          <?php if (@$pres_data) {
     foreach ($pres_data as $key => $pres_dat) {
@@ -103,7 +103,7 @@ echo form_open_multipart('admin/addprescription', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Lense Name" aria-label="Category" name="lense_name" aria-describedby="colored-addon1">
+                          <input type="text" required class="form-control" placeholder="Lense Name" aria-label="Category" name="lense_name" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('lense_name'); ?>
                       </div>
@@ -114,7 +114,7 @@ echo form_open_multipart('admin/addprescription', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="Package Price" aria-label="Category" name="package_price" id="package_price" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required  placeholder="Package Price" aria-label="Category" name="package_price" id="package_price" aria-describedby="colored-addon1">
                         </div>
 
 
@@ -122,20 +122,114 @@ echo form_open_multipart('admin/addprescription', $attributes);
 
                       <div class="form-group" style="margin-top: 1rem;">
                          <h4 class="card-title">Product Description</h4>
-                       <textarea id="summernoteExample" name="content" placeholder="Product Description..."></textarea>
+                       <textarea id="summernoteExample" required name="content" placeholder="Product Description..."></textarea>
 
                     </div>
                   </div>
-                      </div>
+
                       <button type="submit" name="packege" value="packege" class="btn btn-success mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
                 </form>
+              </div>
               </div>
             </div>
             </div>
           </div>
         </div>
+<div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Prescription Name Type</h4>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                      <thead>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Prescription Name</th>
+                            <th>Status</th>
+                            <th>Update</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+$sr_no = 1;
+if ($pres_data) {
+    foreach ($pres_data as $key => $pres_data) {
+        $id = $pres_data->id;
+        ?>
+                        <tr>
+                            <td><?php echo $sr_no; ?></td>
+                            <td><?php echo $pres_data->prescription_type ?></td>
 
+                            <td>
+                             <form method="post" action="status_prescription_type" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $pres_data->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $pres_data->status ?>" <?php if ($pres_data->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
+                            </td>
+                            <td>
+                              <a href="<?php echo site_url() ?>admin/update_prescription_type?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
+                            </td>
+                        </tr><?php $sr_no++;}}?>
+                              </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Prescription Package</h4>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                      <thead>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Prescription Type</th>
+                            <th>Package Name</th>
+                            <th>Package Price(INR)</th>
+                            <th>Status</th>
+                            <th>Update</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+$sr_no = 1;
+if ($prespack_data) {
+    foreach ($prespack_data as $key => $prespack_data) {
+        $id = $prespack_data->id;
+        ?>
+                        <tr>
+                            <td><?php echo $sr_no; ?></td>
+                            <td><?php echo $prespack_data->prescription_type ?></td>
+                            <td><?php echo $prespack_data->lense_name ?></td>
+                            <td><?php echo $prespack_data->price ?></td>
+
+                            <td>
+                             <form method="post" action="status_prescription_package" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $prespack_data->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $prespack_data->status ?>" <?php if ($prespack_data->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
+                            </td>
+                            <td>
+                              <a href="<?php echo site_url() ?>admin/update_prescription_package?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
+                            </td>
+                        </tr><?php $sr_no++;}}?>
+                              </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </div>
@@ -144,8 +238,8 @@ echo form_open_multipart('admin/addprescription', $attributes);
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2017 <a href="#">UrbanUI</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© 2018 Zumeyes. All rights resereved</span>
+
           </div>
         </footer>
         <!-- partial -->

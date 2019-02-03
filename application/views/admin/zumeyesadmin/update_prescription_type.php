@@ -38,14 +38,14 @@
                 <div class="col-12 grid-margin">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title">Update Purpose Names
+                      <h4 class="card-title">Update Prescription Type
                       <span style="color:blue;padding-left:70px">
               <?php echo $this->session->flashdata('form_succ_msg1'); ?></span></h4>
                       <?php $attributes = array('class' => 'forms-sample');
-echo form_open_multipart('admin/filter_update', $attributes);
+echo form_open_multipart('admin/update_prescription_type', $attributes);
 ?>
-<?php foreach ($purpose1 as $key => $value) {
-    $purpose = $value->purpose_name;
+<?php foreach ($prescription as $key => $value) {
+    $prescription_type = $value->prescription_type;
     $id = $value->id;
 
 }?>
@@ -57,13 +57,13 @@ echo form_open_multipart('admin/filter_update', $attributes);
                             </span>
                           </div>
                           <input type="hidden" name="id" value="<?php echo $id ?>">
-                          <input type="text" class="form-control" value="<?php echo $purpose ?>" aria-label="Category" name="purpose" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" value="<?php echo $prescription_type ?>"aria-label="Category" name="prescription_type" aria-describedby="colored-addon1">
                         </div>
-                        <?php echo form_error('brand'); ?>
+                        <?php echo form_error('prescription_type'); ?>
                       </div>
 
-                      <button type="submit" name="purposes" value="purposes" class="btn btn-success mr-2">Submit</button>
-                     <a href=<?php echo base_url('admin/filter'); ?>>Back</a>
+                      <button type="submit" name="updateprescription_type" value="updateprescription_type" class="btn btn-success mr-2">Submit</button>
+                      <a href=<?php echo base_url('admin/addprescription'); ?>>Back</a>
                 </form>
               </div>
             </div>
@@ -76,6 +76,8 @@ echo form_open_multipart('admin/filter_update', $attributes);
 
   </div>
 
-     <?php include 'footer.php';?>  <!-- End custom js for this page-->
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+       <?php include 'footer.php';?> <!-- End custom js for this page-->
 </body>
 </html>

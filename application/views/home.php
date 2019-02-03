@@ -9,8 +9,8 @@
 	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url(); ?>/assets/js/slider/slider.css" rel="stylesheet" type="text/css">
 	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/slider/slider.js"></script>
 	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
+	<script src="<?php echo base_url(); ?>/assets/js/slider/slider.js"></script>
 </head>
 <body>
 	<?php include_once 'header.php';?>
@@ -53,7 +53,7 @@
 	</div>
 
 	<section class="col-sm-12 offerSection clearfix">
- <?php foreach ($offer_data as $key => $offer_dat) {
+	<?php foreach ($offer_data as $key => $offer_dat) {
     $offer = explode("|", $offer_dat->offerimage);
     foreach ($offer as $key => $offerimages) {
         ?>
@@ -315,14 +315,12 @@ foreach ($pro_data as $key => $produc_dat) {
 	</section>
 
 	<section class="col-sm-12 offerSection">
-<?php foreach ($banner_data as $key => $banner_dat) {
-    $banner = explode("|", $banner_dat->bannerimage);
-    foreach ($banner as $key => $bannerimages) {
-        ?>
+<?php foreach ($banner_data as $key => $bannerimages) {
+    ?>
 		<div class="offerL">
-			<img src="<?php echo base_url('assets/images/') ?><?php echo $bannerimages ?>" alt="Offer">
+			<img src="<?php echo base_url('assets/images/') ?><?php echo $bannerimages->bannerimage ?>" alt="Offer">
 		</div>
-<?php }}?>
+<?php }?>
 	</section>
 
 	<section class="col-sm-12 blogSection clearfix">

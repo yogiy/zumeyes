@@ -38,9 +38,9 @@
 	</section>
 
 
-	<?php include 'footer.php';?>
-	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
-	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+<?php include 'footer.php';?>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 </body>
 
 </html>

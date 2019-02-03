@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zumeyes</title>
 
-	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
+<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url(); ?>/assets/js/slider/slider.css" rel="stylesheet" type="text/css">
@@ -27,12 +27,7 @@
 			<h1>About us</h1>
 
 		<div class="aboutContent clearfix">
-		<?php foreach ($about_data as $key => $value) {
-    		$description = $value->description;
-    		echo $description;
-		}?>
-		</div>
-			 <?php /* foreach ($about_data as $key => $about_dat) {?>
+			<?php foreach ($about_data as $key => $about_dat) {?>
 			<div class="bar clearfix">
 				<div class="col-sm-6 contentBox clearfix">
 					<h2>Our Story</h2>
@@ -44,7 +39,7 @@
 					<div class="img clearfix"><img src="<?php echo base_url('assets/images/blog_2.jpg') ?>" alt="Image"></div>
 				</div>
 			</div>
-		<?php }  */?> 
+		<?php }?>
 			<div class="bar clearfix">
 				<div class="col-sm-6 imgBox clearfix">
 					<div class="img clearfix"><img src="<?php echo base_url('assets/images/blog_1.jpg') ?>" alt="Image"></div>

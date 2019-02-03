@@ -3,82 +3,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('form_validation');
-        $this->load->database();
-        $this->load->model('Aquery');
-        if ($this->session->userdata('isUserLoggedIn') == true &&
-            $this->session->userdata('userId')) {
-            $user = "admin@gmail.com";
-            $profile['profile'] = $this->Aquery->get_profilerow($user);
-            foreach ($profile as $key => $profiledataa) {
-                $email = $profiledataa->email;
-                $usrname = $profiledataa->name;
-                $imgg = $profiledataa->user_image;
+        if ($this->session->userdata('isUser_LoggedIn') && $this->session->userdata('user_Id')) {
+            $this->load->library('form_validation');
+            $this->load->database();
+            $this->load->model('Aquery');
+            $adminuser['adminuser'] = $this->Aquery->get_profilerow(array('id' => $this->session->userdata('user_Id')));
+            foreach ($adminuser as $key => $adminuserr) {
+                $usrname = $adminuserr->name;
+                $email = $adminuserr->email;
+                $imgg = $adminuserr->user_image;
+
+                $this->session->set_userdata('user_email', $email);
                 $this->session->set_userdata('user_nname', $usrname);
 
                 $this->session->set_userdata('userimg', $imgg);
 
             }
+        } else {
+            redirect('auth/login');
+
         }
 
     }
 
-
-    public function _isLoggedIn()
-    {
-        if ($this->session->userdata('isUser_LoggedIn') == true &&
-            $this->session->userdata('user_Id'));
-        else{
-            redirect('admin/login');
-        }
-
-    }
-
-    public function login()
-    {
-
-        if ($this->input->post('login')) {
-
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-            $this->form_validation->set_rules('password', 'password', 'required');
-            if ($this->form_validation->run() == true) {
-                $con['returnType'] = 'single';
-                $con['conditions'] = array(
-                    'email' => $this->input->post('email'),
-                    'password' => $this->input->post('password'),
-                    'status' => 1,
-                );
-                $this->load->model('Aquery');
-                $checkLogin = $this->Aquery->getRows($con);
-                if ($checkLogin) {
-                    $this->session->set_userdata('isUser_LoggedIn', true);
-                    $this->session->set_userdata('user_Id', $checkLogin['id']);
-                    redirect('admin/homepage');
-                } else {
-                    $data['error_msg'] = 'Wrong email or password, please try again.';
-                }
-            }
-        }
-        $this->load->view('admin/zumeyesadmin/login', @$data);
-    }
-    
-    public function logout()
-    {
-        $this->session->unset_userdata('isUser_LoggedIn');
-        $this->session->unset_userdata('user_Id');
-        $this->session->unset_userdata('user_nname');
-        $this->session->unset_userdata('userimg');
-        $this->session->sess_destroy();
-        redirect('admin/login');
-    }
-    
     public function profile()
     {
-        $user = "admin@gmail.com";
+        $user = $this->session->userdata('user_email');
         if ($this->input->post('profileupdate')) {
 
             $this->form_validation->set_rules('name', 'Name', 'required');
@@ -86,6 +39,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
             $this->form_validation->set_rules('address', 'Address', 'required');
             $this->form_validation->set_rules('phone', 'Phone No', 'required');
+
             $data = array(
                 'name' => $this->input->post('name'),
                 'email' => $this->input->post('email'),
@@ -97,7 +51,6 @@ class Admin extends CI_Controller
 
             $this->Aquery->update_profile($data, $user);
         }
-    
         if ($this->input->post('profilepass')) {
 
             $this->form_validation->set_rules('cpass', 'Current Password', 'required');
@@ -110,7 +63,6 @@ class Admin extends CI_Controller
 
             $this->Aquery->update_userpass($data, $user, $cpass);
         }
-    
         if ($this->input->post('profileimg')) {
 
             $configp = [
@@ -165,6 +117,7 @@ class Admin extends CI_Controller
         $this->load->model('Vquery');
         $cat_data['cat_data'] = $this->Vquery->cat_list();
         $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+        $cat_data['sub_subcat_data'] = $this->Vquery->sub_subcat_list();
         $this->load->view('admin/zumeyesadmin/addcategory', $cat_data);
     }
     public function category_insert()
@@ -491,6 +444,21 @@ class Admin extends CI_Controller
         redirect('admin/filter');
 
     }
+    public function update_prescription_type()
+    {
+        if ($this->input->post('updateprescription_type')) {
+            $data = array(
+                'prescription_type' => $this->input->post('prescription_type'),
+            );
+            $id = $this->input->post('id');
+            $this->Aquery->update_prescriptiontypebyid($data, $id);
+            redirect('admin/addprescription');
+        }
+        $id = $this->input->get('id');
+        $prescription['prescription'] = $this->Aquery->get_prescriptiontypebyid($id);
+        $this->load->view('admin/zumeyesadmin/update_prescription_type', $prescription);
+    }
+
     public function lensefilter()
     {
 
@@ -556,10 +524,34 @@ class Admin extends CI_Controller
         } else {
             $this->load->database();
             $this->load->model('Aquery');
+
             $pres_data['pres_data'] = $this->Aquery->prescription_type();
+            $pres_data['prespack_data'] = $this->Aquery->prescription_package();
             $this->load->view('admin/zumeyesadmin/addprescription_&_packages', $pres_data);
         }
 
+    }
+    public function update_prescription_package()
+    {
+        if ($this->input->post('updateprescription_package')) {
+            $data = array(
+                'prescription_type' => $this->input->post('pres_name'),
+                'lense_name' => $this->input->post('lense_name'),
+                'price' => $this->input->post('package_price'),
+                'description' => $this->input->post('content'),
+            );
+            $id = $this->input->post('id');
+            $this->Aquery->prescription_package_update($data, $id);
+            $this->session->set_flashdata('packageform_succ_msg2', 'Form Submited');
+            redirect('admin/addprescription');
+        } else {
+            $this->load->database();
+            $this->load->model('Aquery');
+            $id = $this->input->get('id');
+            $pres_data['pres_data'] = $this->Aquery->prescription_type();
+            $pres_data['pres_package'] = $this->Aquery->prescription_packagebyid($id);
+            $this->load->view('admin/zumeyesadmin/update_prescription_package', $pres_data);
+        }
     }
     public function addproduct()
     {
@@ -577,22 +569,7 @@ class Admin extends CI_Controller
         $cat_data['purpose_name'] = $this->Aquery->purpose_data();
         $this->load->view('admin/zumeyesadmin/addproduct', $cat_data);
     }
-    public function addlenseproduct()
-    {
-        $this->load->database();
-        $this->load->model('Aquery');
-        $cat_data['cat_data'] = $this->Aquery->cat_list();
 
-        $cat_data['subcat_data'] = $this->Aquery->subcat_list();
-        $cat_data['brand_name'] = $this->Aquery->brand_data();
-        $cat_data['color_name'] = $this->Aquery->color_data();
-        $cat_data['fit_name'] = $this->Aquery->fit_data();
-        $cat_data['lense_type'] = $this->Aquery->lense_type_data();
-        $cat_data['shape_name'] = $this->Aquery->shape_data();
-        $cat_data['material_name'] = $this->Aquery->material_data();
-        $cat_data['purpose_name'] = $this->Aquery->purpose_data();
-        $this->load->view('admin/zumeyesadmin/addlense_product', $cat_data);
-    }
     public function product_insert()
     {
         //-----------Image File Section Start Here -----------//
@@ -761,114 +738,189 @@ class Admin extends CI_Controller
     }
     public function product_update()
     {
-        //-----------Image File Section Start Here -----------//
-        if ($this->input->post('update_product')) {
 
-            $this->load->library('upload');
-            $_FILES['file']['name'] = $_FILES['userfile']['name'];
-            $_FILES['file']['type'] = $_FILES['userfile']['type'];
-            $_FILES['file']['tmp_name'] = $_FILES['userfile']['tmp_name'];
-            $_FILES['file']['error'] = $_FILES['userfile']['error'];
-            $_FILES['file']['size'] = $_FILES['userfile']['size'];
+        $this->load->database();
+        $this->load->model('Aquery');
+        $cat_data['cat_data'] = $this->Aquery->cat_list();
+
+        $cat_data['subcat_data'] = $this->Aquery->subcat_list();
+        $cat_data['sub_subcat_data'] = $this->Aquery->sub_subcat_list();
+        $cat_data['brand_name'] = $this->Aquery->brand_data();
+        $cat_data['color_name'] = $this->Aquery->color_data();
+        $cat_data['fit_name'] = $this->Aquery->fit_data();
+        $cat_data['lense_uses'] = $this->Aquery->lenseuses_data();
+        $cat_data['shape_name'] = $this->Aquery->shape_data();
+        $cat_data['material_name'] = $this->Aquery->material_data();
+        $cat_data['purpose_name'] = $this->Aquery->purpose_data();
+        $pro_id = $this->input->get('id');
+        $cat_data['pro_data'] = $this->Aquery->product_databy_id($pro_id);
+        $this->load->view('admin/zumeyesadmin/updateproduct', $cat_data);
+    }
+    public function product_doupdate()
+    {
+        //-----------Image File Section Start Here -----------//
+        $proid = $this->input->post('proid');
+        $this->load->library('upload');
+        $_FILES['file']['name'] = $_FILES['userfile']['name'];
+        $_FILES['file']['type'] = $_FILES['userfile']['type'];
+        $_FILES['file']['tmp_name'] = $_FILES['userfile']['tmp_name'];
+        $_FILES['file']['error'] = $_FILES['userfile']['error'];
+        $_FILES['file']['size'] = $_FILES['userfile']['size'];
+
+        // File upload configuration
+        $uploadPath = './assets/upload/product/';
+        $config['upload_path'] = $uploadPath;
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+
+        // Load and initialize upload library
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+
+        // Upload file to server
+        if ($this->upload->do_upload('file')) {
+            // Uploaded file data
+            $imageData = $this->upload->data();
+            $uploadImgData['userfile'] = $imageData['file_name'];
+
+        }
+//--------------End of Image File  Section------------------------//
+
+//---------Thumbnail Image Upload Section Start Here -----------//
+        $image = array();
+        $ImageCount = count($_FILES['featuredimage']['name']);
+        for ($i = 0; $i < $ImageCount; $i++) {
+            $_FILES['file']['name'] = $_FILES['featuredimage']['name'][$i];
+            $_FILES['file']['type'] = $_FILES['featuredimage']['type'][$i];
+            $_FILES['file']['tmp_name'] = $_FILES['featuredimage']['tmp_name'][$i];
+            $_FILES['file']['error'] = $_FILES['featuredimage']['error'][$i];
+            $_FILES['file']['size'] = $_FILES['featuredimage']['size'][$i];
 
             // File upload configuration
-            $uploadPath = './assets/upload/product/';
-            $config['upload_path'] = $uploadPath;
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $uploadPath = './assets/upload/featuredimage/';
+            $config1['upload_path'] = $uploadPath;
+            $config1['allowed_types'] = 'jpg|jpeg|png|gif';
 
             // Load and initialize upload library
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
+            $this->load->library('upload', $config1);
+            $this->upload->initialize($config1);
 
             // Upload file to server
             if ($this->upload->do_upload('file')) {
                 // Uploaded file data
                 $imageData = $this->upload->data();
-                $uploadImgData['userfile'] = $imageData['file_name'];
+                $uploadImgData[$i]['featuredimage'] = $imageData['file_name'];
 
             }
-//--------------End of Image File  Section------------------------//
-
-//---------Thumbnail Image Upload Section Start Here -----------//
-            $image = array();
-            $ImageCount = count($_FILES['featuredimage']['name']);
-            for ($i = 0; $i < $ImageCount; $i++) {
-                $_FILES['file']['name'] = $_FILES['featuredimage']['name'][$i];
-                $_FILES['file']['type'] = $_FILES['featuredimage']['type'][$i];
-                $_FILES['file']['tmp_name'] = $_FILES['featuredimage']['tmp_name'][$i];
-                $_FILES['file']['error'] = $_FILES['featuredimage']['error'][$i];
-                $_FILES['file']['size'] = $_FILES['featuredimage']['size'][$i];
-
-                // File upload configuration
-                $uploadPath = './assets/upload/featuredimage/';
-                $config1['upload_path'] = $uploadPath;
-                $config1['allowed_types'] = 'jpg|jpeg|png|gif';
-
-                // Load and initialize upload library
-                $this->load->library('upload', $config1);
-                $this->upload->initialize($config1);
-
-                // Upload file to server
-                if ($this->upload->do_upload('file')) {
-                    // Uploaded file data
-                    $imageData = $this->upload->data();
-                    $uploadImgData[$i]['featuredimage'] = $imageData['file_name'];
-
-                }
-            }
+        }
+        if ($this->input->post('sub_sub_cat_id')) {
+            $data11 = array(
+                'sub_sub_catid' => $this->input->post('sub_sub_cat_id'),
+            );
+        }
 //--------End of Thumbnail Upload Section-----------//
-            $less_price = $this->input->post('product_price') * $this->input->post('offer') / 100;
-            $sale_price = $this->input->post('product_price') - $less_price;
-            if ($ImageCount) {
-                // Upload file to server
-                $pid = $this->input->post('id');
-                $data = array(
-                    'featuredimage' => implode("|", $_FILES['featuredimage']['name']),
-                    'pro_image' => $_FILES['userfile']['name'],
-                    'brand' => implode("|", $this->input->post('brand_name')),
-                    'color' => implode("|", $this->input->post('color_name')),
-                    'fit' => implode("|", $this->input->post('fit_name')),
-                    'purpose' => implode("|", $this->input->post('purpose_name')),
-                    'material' => implode("|", $this->input->post('material_name')),
-                    'shape' => implode("|", $this->input->post('shape_type')),
-                    'cat_id' => $this->input->post('cat_name'),
-                    'dimension' => $this->input->post('dimension'),
-                    'weight' => $this->input->post('weight'),
-                    'sub_cat_id' => $this->input->post('sub_cat_id'),
-                    'regular_price' => $this->input->post('product_price'),
-                    'sale_price' => $sale_price,
-                    'product_name' => $this->input->post('product_name'),
-                    'pro_description' => $this->input->post('content'),
-                    'quantity' => $this->input->post('product_quantity'),
-                    'offer' => $this->input->post('offer'),
+        $less_price = $this->input->post('product_price') * $this->input->post('offer') / 100;
+        $sale_price = $this->input->post('product_price') - $less_price;
+        if ($this->input->post('water_content')) {
+            $this->form_validation->set_rules('lense_type', 'Lense Type', 'trim|required');
+            $this->form_validation->set_rules('water_content', 'Water Content', 'trim|required|numeric');
+            $this->form_validation->set_rules('lense_uses', 'Lense Uses', 'trim|required');
+            $this->form_validation->set_rules('lense_inpackage', 'Lense Package', 'trim|required|numeric');
+            $this->form_validation->set_rules('use_duration', 'Lense Use Durartion', 'trim|required');
+            if ($this->form_validation->run() == true) {
+
+                $data1 = array(
+                    'lense_type' => implode("|", $this->input->post('lense_type')),
+                    'water_content' => $this->input->post('water_content'),
+                    'uses' => $this->input->post('lense_uses'),
+                    'packaging' => $this->input->post('lense_inpackage'),
+                    'uses_duration' => $this->input->post('use_duration'),
                 );
 
-                $this->load->database();
-                $this->load->model('Aquery');
-                $this->Aquery->product_update($data, $pid); //Transfering data to Model
-                $this->session->set_flashdata('form_succ_msg', 'Form Submited');
-                redirect('admin/addproduct');
-
-            } else {
-                $upload_error = $this->upload->display_errors();
-                $this->load->view('admin/zumeyesadmin/update_product', compact('upload_error'));
             }
-        } else {
-            $this->load->database();
-            $id = $this->input->get('id');
-            $this->load->model('Aquery');
-            $product_data['product_data'] = $this->Aquery->product_databy_id($id);
-            $product_data['cat_data'] = $this->Aquery->cat_list();
-            $product_data['subcat_data'] = $this->Aquery->subcat_list();
-            $product_data['brand_name'] = $this->Aquery->brand_data();
-            $product_data['color_name'] = $this->Aquery->color_data();
-            $product_data['fit_name'] = $this->Aquery->fit_data();
-            $product_data['style_name'] = $this->Aquery->style_data();
-            $product_data['shape_name'] = $this->Aquery->shape_data();
-            $product_data['material_name'] = $this->Aquery->material_data();
-            $product_data['purpose_name'] = $this->Aquery->purpose_data();
-            $this->load->view('admin/zumeyesadmin/update_product', $product_data);
         }
+        if ($this->input->post('frame_style')) {
+            $this->form_validation->set_rules('frame_width', 'Frame Width', 'trim|required');
+            $this->form_validation->set_rules('lense_width', 'Lense width', 'trim|required');
+            $this->form_validation->set_rules('temple_length', 'Temple Length', 'trim|required');
+            $this->form_validation->set_rules('bridge', 'Bridge', 'trim|required');
+            $this->form_validation->set_rules('fit_name', 'Fit Type', 'trim|required');
+            $this->form_validation->set_rules('purpose_name', 'Purpose', 'trim|required');
+            $this->form_validation->set_rules('shape_type', 'Shape', 'trim|required');
+            $this->form_validation->set_rules('frame_style', 'Frame Style', 'trim|required');
+            $this->form_validation->set_rules('features', 'Features', 'trim|required');
+            $this->form_validation->set_rules('tag', 'Tag', 'trim|required');
+            $this->form_validation->set_rules('lense_height', 'Lense Height', 'trim|required');
+
+            if ($this->form_validation->run() == true) {
+
+                $data2 = array(
+                    'frame_width' => $this->input->post('frame_width'),
+
+                    'lense_width' => $this->input->post('lense_width'),
+                    'temple_length' => $this->input->post('temple_length'),
+                    'bridge' => $this->input->post('bridge'),
+                    'fit' => implode("|", $this->input->post('fit_name')),
+                    'purpose' => implode("|", $this->input->post('purpose_name')),
+                    'shape' => implode("|", $this->input->post('shape_type')),
+                    'frame_style' => $this->input->post('frame_style'),
+                    'features' => $this->input->post('features'),
+                    'tags' => $this->input->post('tag'),
+                    'lense_height' => $this->input->post('lense_height'),
+
+                );
+            }
+
+        }
+
+        $this->form_validation->set_rules('material_name', 'Material Name', 'trim|required');
+        $this->form_validation->set_rules('color_name', 'Color Name', 'trim|required');
+        $this->form_validation->set_rules('brand_name', 'Brand Name', 'trim|required');
+        $this->form_validation->set_rules('offer', 'offer', 'trim|required');
+        $this->form_validation->set_rules('product_quantity', 'product quantity', 'trim|required|numeric');
+        $this->form_validation->set_rules('product_price', 'product Price', 'trim|required');
+        $this->form_validation->set_rules('weight', 'Product weight', 'trim|required');
+        $this->form_validation->set_rules('sub_cat_id', 'sub category name', 'trim|required');
+        $this->form_validation->set_rules('cat_name', 'Category name', 'trim|required');
+        $this->form_validation->set_rules('product_name', 'product name', 'trim|required');
+
+        if ($this->form_validation->run() == true) {
+
+            $data = array(
+                'featuredimage' => implode("|", $_FILES['featuredimage']['name']),
+                'pro_image' => $_FILES['userfile']['name'],
+                'product_name' => $this->input->post('product_name'),
+                'cat_id' => $this->input->post('cat_name'),
+                'sub_cat_id' => $this->input->post('sub_cat_id'),
+                'weight' => $this->input->post('weight'),
+                'regular_price' => $this->input->post('product_price'),
+                'sale_price' => $sale_price,
+                'pro_description' => $this->input->post('content'),
+                'quantity' => $this->input->post('product_quantity'),
+                'offer' => $this->input->post('offer'),
+                'brand' => implode("|", $this->input->post('brand_name')),
+                'color' => implode("|", $this->input->post('color_name')),
+                'material' => implode("|", $this->input->post('material_name')),
+                'status' => 1,
+
+            );
+            if (isset($data1)) {
+                $data = array_merge($data1, $data);
+            }
+            if (isset($data2)) {
+                $data = array_merge($data2, $data);
+            }
+            if (isset($data11) && isset($data2)) {
+                $data = array_merge($data2, $data11, $data);
+            }
+            if (isset($data11) && isset($data1)) {
+                $data = array_merge($data1, $data, $data11);
+            }
+
+            $this->Aquery->product_update($data, $proid);
+            $this->session->set_flashdata('form_succ_msg', 'Form Submited');
+        }
+        redirect('admin/product_list');
+
     }
     public function addblog()
     {
@@ -966,7 +1018,7 @@ class Admin extends CI_Controller
                 redirect('admin/category');
             } else {
                 $upload_error = $this->upload->display_errors();
-                $this->load->view('admin/zumeyesadmin/addcategory', compact('upload_error'));
+                redirect('admin/category');
             }
         } else {
             $this->load->database();
@@ -1206,6 +1258,142 @@ class Admin extends CI_Controller
         redirect('admin/homepage');
 
     }
+    public function update_slider()
+    {
+        $this->load->database();
+        $this->load->model('Aquery');
+        if ($this->input->post('sliderupdate')) {
+            $image = array();
+            $ImageCount = count($_FILES['sliderimage']['name']);
+            for ($i = 0; $i < $ImageCount; $i++) {
+                $_FILES['file']['name'] = $_FILES['sliderimage']['name'][$i];
+                $_FILES['file']['type'] = $_FILES['sliderimage']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['sliderimage']['tmp_name'][$i];
+                $_FILES['file']['error'] = $_FILES['sliderimage']['error'][$i];
+                $_FILES['file']['size'] = $_FILES['sliderimage']['size'][$i];
+
+                // File upload configuration
+                $uploadPath = './assets/upload/';
+                $config1['upload_path'] = $uploadPath;
+                $config1['allowed_types'] = 'jpg|jpeg|png|gif';
+
+                // Load and initialize upload library
+                $this->load->library('upload', $config1);
+                $this->upload->initialize($config1);
+
+                // Upload file to server
+                if ($this->upload->do_upload('file')) {
+                    // Uploaded file data
+                    $imageData = $this->upload->data();
+                    $uploadImgData[$i]['sliderimage'] = $imageData['file_name'];
+
+                }
+            }
+            //--------------End of Image File  Section------------------------//
+            $data = array(
+                'sliderimage' => $_FILES['sliderimage']['name'],
+            );
+            $sid = $this->input->post('id');
+            $this->Aquery->slider_update($data, $sid); //Transfering data to Model
+            $this->session->set_flashdata('sliderform_succ_msg', 'Form Updated');
+            redirect('admin/homepage');
+        }
+        $id = $this->input->get('id');
+        $slider['slider'] = $this->Aquery->get_slider_byid($id);
+        $this->load->view('admin/zumeyesadmin/update_homepage_slider', $slider);
+
+    }
+
+    public function update_Offerimage()
+    {
+        $this->load->database();
+        $this->load->model('Aquery');
+        if ($this->input->post('updateofferimage')) {
+            $image = array();
+            $ImageCount = count($_FILES['offerimage']['name']);
+            for ($i = 0; $i < $ImageCount; $i++) {
+                $_FILES['file']['name'] = $_FILES['offerimage']['name'][$i];
+                $_FILES['file']['type'] = $_FILES['offerimage']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['offerimage']['tmp_name'][$i];
+                $_FILES['file']['error'] = $_FILES['offerimage']['error'][$i];
+                $_FILES['file']['size'] = $_FILES['offerimage']['size'][$i];
+
+                // File upload configuration
+                $uploadPath = './assets/upload/';
+                $config1['upload_path'] = $uploadPath;
+                $config1['allowed_types'] = 'jpg|jpeg|png|gif';
+
+                // Load and initialize upload library
+                $this->load->library('upload', $config1);
+                $this->upload->initialize($config1);
+
+                // Upload file to server
+                if ($this->upload->do_upload('file')) {
+                    // Uploaded file data
+                    $imageData = $this->upload->data();
+                    $uploadImgData[$i]['offerimage'] = $imageData['file_name'];
+
+                }
+            }
+            //--------------End of Image File  Section------------------------//
+            $data = array(
+                'offerimage' => $_FILES['offerimage']['name'],
+            );
+            $sid = $this->input->post('id');
+            $this->Aquery->offerimage_update($data, $sid); //Transfering data to Model
+            $this->session->set_flashdata('offerform_succ_msg', 'Form Updated');
+            redirect('admin/homepage');
+        }
+        $id = $this->input->get('id');
+        $offerimage['offerimage'] = $this->Aquery->get_offerimage_byid($id);
+        $this->load->view('admin/zumeyesadmin/update_offerimage', $offerimage);
+
+    }
+    public function update_bannerimage()
+    {
+        $this->load->database();
+        $this->load->model('Aquery');
+        if ($this->input->post('updatebannerimage')) {
+            $image = array();
+            $ImageCount = count($_FILES['bannerimage']['name']);
+            for ($i = 0; $i < $ImageCount; $i++) {
+                $_FILES['file']['name'] = $_FILES['bannerimage']['name'][$i];
+                $_FILES['file']['type'] = $_FILES['bannerimage']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['bannerimage']['tmp_name'][$i];
+                $_FILES['file']['error'] = $_FILES['bannerimage']['error'][$i];
+                $_FILES['file']['size'] = $_FILES['bannerimage']['size'][$i];
+
+                // File upload configuration
+                $uploadPath = './assets/upload/';
+                $config1['upload_path'] = $uploadPath;
+                $config1['allowed_types'] = 'jpg|jpeg|png|gif';
+
+                // Load and initialize upload library
+                $this->load->library('upload', $config1);
+                $this->upload->initialize($config1);
+
+                // Upload file to server
+                if ($this->upload->do_upload('file')) {
+                    // Uploaded file data
+                    $imageData = $this->upload->data();
+                    $uploadImgData[$i]['bannerimage'] = $imageData['file_name'];
+
+                }
+            }
+            //--------------End of Image File  Section------------------------//
+            $data = array(
+                'bannerimage' => $_FILES['bannerimage']['name'],
+            );
+            $sid = $this->input->post('id');
+            $this->Aquery->bannerimage_update($data, $sid); //Transfering data to Model
+            $this->session->set_flashdata('offerform_succ_msg', 'Form Updated');
+            redirect('admin/homepage');
+        }
+        $id = $this->input->get('id');
+        $bannerimage['bannerimage'] = $this->Aquery->get_bannerimage_byid($id);
+        $this->load->view('admin/zumeyesadmin/update_bannerimage', $bannerimage);
+
+    }
 
     public function blog_insertData()
     {
@@ -1276,13 +1464,16 @@ class Admin extends CI_Controller
     public function about_insertData()
     {
         $this->load->database();
-
-        $about_data = array(
-            'description' => $this->input->post('content'),
-        );
-        $this->load->model('Aquery');
-        $this->Aquery->insert_about_data($about_data);
-        $this->session->set_flashdata('form_succ_msg', 'Form Submited');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('content', 'About description', 'required');
+        if ($this->form_validation->run()) {
+            $about_data = array(
+                'description' => $this->input->post('content'),
+            );
+            $this->load->model('Aquery');
+            $this->Aquery->insert_about_data($about_data);
+            $this->session->set_flashdata('form_succ_msg', 'Form Submited');
+        }
         redirect('admin/addabout');
 
     }
@@ -1312,8 +1503,8 @@ class Admin extends CI_Controller
     public function glasses_product_list()
     {
         $this->load->database();
-        $this->load->model('aquery');
-        $product_data['product_data'] = $this->aquery->product_data();
+        $this->load->model('Aquery');
+        $product_data['product_data'] = $this->Aquery->product_data();
         $this->load->view('admin/zumeyesadmin/glassesproduct_list', $product_data);
 
     }
@@ -1381,151 +1572,374 @@ class Admin extends CI_Controller
 
         }
     }
-    //-------------------Delete Function--------------//
-    public function delete_about()
+
+    //-----------------Status----------------------------//
+    public function status_category()
     {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_about($id);
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_category($status, $id);
+
+        redirect('admin/category');
+    }
+    public function status_subcategory()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_subcategory($status, $id);
+
+        redirect('admin/category');
+    }
+    public function status_slider()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_slider($status, $id);
+
+        redirect('admin/homepage');
+    }
+    public function status_banner()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_banner($status, $id);
+
+        redirect('admin/homepage');
+    }
+    public function status_offer()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_offer($status, $id);
+
+        redirect('admin/homepage');
+    }
+    public function status_about()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_about($status, $id);
+
         redirect('admin/addabout');
     }
-    public function delete_blog()
+    public function status_blog()
     {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_blog($id);
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_blog($status, $id);
+
         redirect('admin/addblog');
     }
-    public function delete_bannerimage()
+    public function status_color()
     {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_bannerimage($id);
-        redirect('admin/homepage');
-    }
-    public function delete_brand()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_brand($id);
-        redirect('admin/filter');
-    }
-    public function delete_category()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_category($id);
-        redirect('admin/category');
-    }
-    public function delete_color()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_color($id);
-        redirect('admin/filter');
-    }
-    public function delete_fit()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_fit($id);
-        redirect('admin/filter');
-    }
-    public function delete_lensebrand()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_lensebrand($id);
-        redirect('admin/lensefilter');
-    }
-    public function delete_material()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_material($id);
-        redirect('admin/filter');
-    }
-    public function delete_shape()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_shape($id);
-        redirect('admin/filter');
-    }
-    public function delete_style()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_style($id);
-        redirect('admin/filter');
-    }
-    public function delete_subcategory()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_subcategory($id);
-        redirect('admin/category');
-    }
-    public function delete_purpose()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_purpose($id);
-        redirect('admin/filter');
-    }
-    public function delete_offerimage()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_offerimage($id);
-        redirect('admin/homepage');
-    }
-    public function delete_lensecolor()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_lensecolor($id);
-        redirect('admin/lensefilter');
-    }
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
 
-    public function delete_lensetype()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_lensetype($id);
-        redirect('admin/lensefilter');
-    }
-    public function delete_blog_header_image()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_blog_header_image($id);
-        redirect('admin/addblog');
-    }
-    public function delete_product()
-    {
-        $id = $this->input->get('id');
-        $this->load->database();
-        $this->load->model('aquery');
-        $this->aquery->delete_product($id);
-        redirect('admin/glasses_product_list');
-    }
+        $this->Status->status_color($status, $id);
 
+        redirect('admin/filter');
+    }
+    public function status_brand()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_brand($status, $id);
+
+        redirect('admin/filter');
+    }
+    public function status_shape()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_shape($status, $id);
+
+        redirect('admin/filter');
+    }
+    public function status_fit()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_fit($status, $id);
+
+        redirect('admin/filter');
+    }
+    public function status_material()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_material($status, $id);
+
+        redirect('admin/filter');
+    }
+    public function status_purpose()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_purpose($status, $id);
+
+        redirect('admin/filter');
+    }
+    public function status_lense_type()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_lense_type($status, $id);
+
+        redirect('admin/filter');
+    }
+    public function status_product()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_product($status, $id);
+
+        redirect('admin/product_list');
+    }
+    public function status_prescription_type()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_prescription_type($status, $id);
+
+        redirect('admin/addprescription');
+    }
+    public function status_prescription_package()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_prescription_package($status, $id);
+
+        redirect('admin/addprescription');
+    }
+    public function product_list()
+    {
+
+        $this->load->model('Aquery');
+        $pro_list['cat_list'] = $this->Aquery->cat_list();
+        $pro_list['subcat_list'] = $this->Aquery->subcat_list();
+
+        $pro_list['pro_list'] = $this->Aquery->product_data();
+
+        $this->load->view('admin/zumeyesadmin/productlist', $pro_list);
+    }
+    public function status_axis()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_axis($status, $id);
+
+        redirect('admin/lenseinfo');
+    }
+    public function status_sphere()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_sphere($status, $id);
+
+        redirect('admin/lenseinfo');
+    }
+    public function status_cylinder()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_cylinder($status, $id);
+
+        redirect('admin/lenseinfo');
+    }
+    public function status_nearaddition()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_nearaddition($status, $id);
+
+        redirect('admin/lenseinfo');
+    }
 }
