@@ -19,20 +19,18 @@
 			<!-- Wrapper for Slides -->
 			<div class="carousel-inner">
 
-				<?php foreach ($slider_data as $key => $slider_dat) {
-    $slider = explode("|", $slider_dat->sliderimage);
-    $active = 1;
-    foreach ($slider as $key => $value) {
+			<?php $active = 1;
+foreach ($slider_data as $key => $slider) {
 
-        ?>
-				<div class="item <?php if ($active == 1) {?>active<?php $active++;}?>">
+    ?>
+				<div class="item <?php if ($active == 1) {?>active<?php }?>">
 					<div class="mask"></div>
 					<div class="fill">
-						<img src="<?php echo base_url('assets/upload/') ?><?php echo $value ?>" alt="Banner">
+						<img src="<?php echo base_url('assets/upload/') ?><?php echo $slider->sliderimage ?>" alt="Banner">
 					</div>
 
 				</div>
-			<?php }}?>
+			<?php $active++;}?>
 
 			</div>
 
@@ -53,16 +51,14 @@
 	</div>
 
 	<section class="col-sm-12 offerSection clearfix">
-	<?php foreach ($offer_data as $key => $offer_dat) {
-    $offer = explode("|", $offer_dat->offerimage);
-    foreach ($offer as $key => $offerimages) {
-        ?>
+	<?php foreach ($offer_data as $key => $offerimages) {
+    ?>
 		<div class="col-sm-6 col-xs-12 offerBox">
 
-			<img src="<?php echo base_url('assets/upload/') ?><?php echo $offerimages ?>" alt="Offer">
+			<img src="<?php echo base_url('assets/upload/') ?><?php echo $offerimages->offerimage ?>" alt="Offer">
 
 		</div>
-		<?php }}?>
+		<?php }?>
 
 	</section>
 
