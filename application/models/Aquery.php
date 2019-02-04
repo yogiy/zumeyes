@@ -61,10 +61,20 @@ class Aquery extends CI_Model
             return false;
         }
     }
-    public function update_userpass($data, $user, $cpass)
+    public function authpass($password, $useremail)
+    {
+        $query = $this->db->query("SELECT * FROM `adminuser` where `password`='" . $password . "' AND `email`='" . $useremail . "'");
+        if ($query->num_rows() > 0) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+    public function update_userpass($data, $user, $acpass)
     {
         $this->db->where('email', $user);
-        $this->db->where('password', $cpass);
+        $this->db->where('password', $acpass);
         $query = $this->db->update('adminuser', $data);
 
         if (isset($query)) {
@@ -348,7 +358,7 @@ class Aquery extends CI_Model
         $query = $this->db->query("SELECT DISTINCT `sub_cat_name`,`id` FROM `subcategory`  WHERE `cat_name` = '" . $cat_id . "' ");
         if ($query->num_rows() > 0) {
 
-            $output = '<option>Select Sub Category Name...</option>';
+            $output = '<option value="">Select Sub Category Name...</option>';
 
             foreach ($query->result() as $sub_cat_name) {
 
@@ -356,7 +366,7 @@ class Aquery extends CI_Model
             }
 
         } else {
-            $output = '<option>Sub Category Name Is Empty...</option>';
+            $output = '<option value="">Sub Category Name Is Empty...</option>';
         }
         return $output;
     }
@@ -549,6 +559,39 @@ class Aquery extends CI_Model
             return false;
         }
     }
+    public function slider_update($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('sliderimage', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function offer_update($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('offerimage', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function banner_update($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('bannerimage', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function get_offerimage_byid($id)
     {
         $query = $this->db->query("SELECT * FROM `offerimage` where `id`='" . $id . "'");
@@ -584,6 +627,26 @@ class Aquery extends CI_Model
         $query = $this->db->query("SELECT * FROM `subcategory` where `id`='" . $id . "'");
         if ($query->num_rows() > 0) {
             return $query->row();
+
+        } else {
+            return false;
+        }
+    }
+    public function sub_subcat_name_by_id($id)
+    {
+        $query = $this->db->query("SELECT * FROM `sub_subcategory` where `id`='" . $id . "'");
+        if ($query->num_rows() > 0) {
+            return $query->row();
+
+        } else {
+            return false;
+        }
+    }
+    public function sub_subcat($id)
+    {
+        $query = $this->db->query("SELECT * FROM `sub_subcategory` where `id`='" . $id . "'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
 
         } else {
             return false;
@@ -808,6 +871,17 @@ class Aquery extends CI_Model
     {
         $this->db->where('id', $id);
         $query = $this->db->update('subcategory', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function update_sub_subcat($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('sub_subcategory', $data);
 
         if (isset($query)) {
             return true;

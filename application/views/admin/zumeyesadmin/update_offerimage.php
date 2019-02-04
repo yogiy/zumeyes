@@ -52,8 +52,8 @@ echo form_open_multipart('admin/update_Offerimage', $attributes);
   <div class="form-group">
                        <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['name' => 'offerimage', 'class' => 'file-upload-default', 'value' => '' . $offerimage . '']) ?>
-                      <input type="hidden" value="<?php echo $id ?>">
+                      <?php echo form_upload(['name' => 'offerimage[]', 'class' => 'file-upload-default', 'id' => 'offerimage']) ?>
+                      <input type="hidden" name="id" value="<?php echo $id ?>">
                       <div class="input-group col-xs-12">
                         <input type="text" value="<?php echo $offerimage ?>" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <div class="input-group-append">
@@ -86,5 +86,12 @@ if (isset($upload_error)) {
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
        <?php include 'footer.php';?>  <!-- End custom js for this page-->
+        <script type="text/javascript">
+  $(document).ready(function(){
+
+  document.getElementById("offerimage").required = true;
+
+});
+</script>
 </body>
 </html>

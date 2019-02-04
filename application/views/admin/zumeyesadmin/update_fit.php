@@ -38,7 +38,7 @@
                 <div class="col-12 grid-margin">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title">Update Brand Names
+                      <h4 class="card-title">Update Fit Type
                       <span style="color:blue;padding-left:70px">
               <?php echo $this->session->flashdata('form_succ_msg1'); ?></span></h4>
                       <?php $attributes = array('class' => 'forms-sample');

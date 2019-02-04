@@ -47,25 +47,7 @@
                   <?php
 echo form_open_multipart('admin/about_insertData');
 ?>
-                  <div class="form-group">
-                       <div class="form-group" style="margin-top: 1rem;">
-
-                      <?php echo form_upload(['name' => 'rightaboutimage', 'class' => 'file-upload-default']) ?>
-                      <div class="input-group col-xs-12">
-                        <input type="text" required class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <div class="input-group-append">
-                          <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                        </div>
-                      </div>
-                    </div>
-                        <?php
-if (isset($upload_error)) {
-    echo $upload_error;
-
-}?>
-
-                      </div>
-                  <textarea id="summernoteExample" required name="content"></textarea>
+                                   <textarea id="summernoteExample" required name="content"></textarea>
                    <?php echo form_error('content'); ?>
 
                   <input type="submit" name="about_Submit" class="btn btn-primary btn-rounded btn-fw" value="Submit"/>
@@ -101,13 +83,11 @@ $sr_no = 1;
 if (@$about_data) {
     foreach ($about_data as $key => $about_dat) {
         $id = $about_dat->id;
-        $description = $about_dat->description;
-        $limitedstring = substr($description, 1, 200);
 
         ?>
                         <tr>
                             <td><?php echo $sr_no; ?></td>
-                            <td><?php echo $limitedstring ?></td>
+                            <td><?php echo 'Paragraph' . $sr_no; ?></td>
                             <td>
                              <form method="post" action="status_about" class="cartupdate">
                   <input type="hidden" name="id"  value="<?php echo $id ?>">

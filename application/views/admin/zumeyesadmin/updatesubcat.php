@@ -75,13 +75,31 @@ echo form_open_multipart('admin/update_subcat', $attributes);
                             </span>
                           </div>
                           <input type="text" class="form-control" value="<?php echo $sub_cat ?>"  placeholder="Sub Category" aria-label="Category" name="sub_cat_name" id="sub_cat_name" aria-describedby="colored-addon1">
-                          <input type="Hidden" name="id" value="<?php echo $id; ?>">
+                          <input type="hidden" name="id" value="<?php echo $id; ?>">
                         </div>
-                        <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default', 'value' => '' . $bg_image . '']) ?>
+                      </div>
+                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                     <a href=<?php echo base_url('admin/category'); ?>>Back</a>
+                </form>
+              </div>
+            </div>
+
+          </div>
+         <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Update Sub Category Background Image
+                <span style="color:blue;padding-left:70px"></span>
+                   <?php $attributes = array('class' => 'forms-sample');
+echo form_open_multipart('admin/update_subcatbg', $attributes);
+?>
+   <div class="form-group" style="margin-top: 1rem;">
+
+                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default', 'id' => 'bg_image']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" value="<?php echo $bg_image ?>" disabled placeholder="Upload Image">
+                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                         <div class="input-group-append">
                           <button class="file-upload-browse btn btn-info" type="button">Upload</button>
                         </div>
@@ -92,59 +110,26 @@ if (isset($upload_error)) {
 }?>
                       </div>
                     </div>
-                      </div>
+
                       <button type="submit" class="btn btn-success mr-2">Submit</button>
                      <a href=<?php echo base_url('admin/category'); ?>>Back</a>
+                     </div>
                 </form>
               </div>
             </div>
-
-          </div>
-
+            </div>
     </div>
 
   </div>
-  <div class="content-wrapper">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Data table</h4>
-              <div class="row">
-                <div class="col-12">
-                  <div class="table-responsive">
-                    <table id="order-listing" class="table">
-                      <thead>
-                        <tr>
-                            <th>Sr No.</th>
-                            <th>Category Name</th>
 
-                            <th>Delete</th>
-                            <th>Update</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php if ($cat_data) {
-    foreach ($cat_data as $key => $cat_dat) {
-        $id = $cat_dat->id;
-        ?>
-                        <tr>
-                            <td>1</td>
-                            <td><?php echo $cat_dat->cat_name ?></td>
-                            <td>
-                              <label class="badge badge-info"><a href="">Delete</a></label>
-                            </td>
-                            <td>
-                              <a href="<?php echo site_url() ?>update_category?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
-                            </td>
-                        </tr><?php }}?>
-                              </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
        <?php include 'footer.php';?></body>
+       <script type="text/javascript">
+  $(document).ready(function(){
+
+  document.getElementById("bg_image").required = true;
+
+});
+</script>
 </html>

@@ -19,7 +19,7 @@
 			<!-- Wrapper for Slides -->
 			<div class="carousel-inner">
 
-			<?php $active = 1;
+				<?php $active = 1;
 foreach ($slider_data as $key => $slider) {
 
     ?>
@@ -51,7 +51,7 @@ foreach ($slider_data as $key => $slider) {
 	</div>
 
 	<section class="col-sm-12 offerSection clearfix">
-	<?php foreach ($offer_data as $key => $offerimages) {
+ <?php foreach ($offer_data as $key => $offerimages) {
     ?>
 		<div class="col-sm-6 col-xs-12 offerBox">
 
@@ -340,13 +340,13 @@ foreach ($pro_data as $key => $produc_dat) {
 					<h4><?php echo $blog_dat->title; ?></h4>
 					<div class="info clearfix">
 
-						<span>Narinder Singh</span>
-						<small>Jun 2018 |
+						<span><?php echo $blog_dat->username; ?></span>
+						<small><?php echo $blog_dat->date; ?> |
 							<a href="#">18 Comments</a>
 						</small>
 
 					</div>
-					<?php echo $blog_dat->description; ?>
+					<?php echo $blog_dat->shortdescription; ?>
                 <a href="<?php echo site_url('blogDetails') ?>?id=<?php echo $blog_dat->id ?>">
 					<button>Read More</button> </a>
 				</div>

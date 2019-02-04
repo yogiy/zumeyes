@@ -58,7 +58,7 @@ echo form_open_multipart('admin/addprescription', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" required  placeholder="Prescription Name" aria-label="Category" name="pres_name" id="pres_name" aria-describedby="colored-addon1">
+                          <input type="text" required class="form-control" required  placeholder="Prescription Name" aria-label="Category" name="pres_name" id="pres_name" aria-describedby="colored-addon1">
                         </div>
                        <?php echo form_error('pres_name'); ?>
                       </div>
@@ -85,8 +85,8 @@ echo form_open_multipart('admin/addprescription', $attributes);
 ?>
 
                          <div class="form-group" style="margin-top: 1rem;">
-                          <select class="js-example-basic-single" required  name="pres_name" id="pres_name" style="width:100%">
-                            <option>Select Prescription Name</option>
+                          <select class="js-example-basic-single" name="pres_name" id="pres_name" style="width:100%" required>
+                            <option value="">Select Prescription Name</option>
                          <?php if (@$pres_data) {
     foreach ($pres_data as $key => $pres_dat) {
         ?>
@@ -122,7 +122,7 @@ echo form_open_multipart('admin/addprescription', $attributes);
 
                       <div class="form-group" style="margin-top: 1rem;">
                          <h4 class="card-title">Product Description</h4>
-                       <textarea id="summernoteExample" required name="content" placeholder="Product Description..."></textarea>
+                       <textarea id="summernoteExample" name="content" placeholder="Product Description..." required></textarea>
 
                     </div>
                   </div>

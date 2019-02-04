@@ -48,7 +48,7 @@
                 <span style="color:blue;padding-left:70px">
               <?php echo $this->session->flashdata('form_succ_msg'); ?></span></h4>
                       <?php $attributes = array('class' => 'forms-sample');
-echo form_open_multipart('admin/product_insert', $attributes);
+echo form_open_multipart('admin/addproduct', $attributes);
 ?>
      <div class="input-group">
                           <div class="input-group-prepend">
@@ -56,12 +56,12 @@ echo form_open_multipart('admin/product_insert', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Product Name" aria-label="Category" name="product_name" id="product_name" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Product Name" aria-label="Category" name="product_name" id="product_name" aria-describedby="colored-addon1">
                            <?php echo form_error('product_name'); ?>
                         </div>
                          <div class="form-group" style="margin-top: 1rem;">
-                          <select class="js-example-basic-single"  name="cat_name" id="cat_name" style="width:100%">
-                            <option>Select Category Name</option>
+                          <select class="js-example-basic-single" required name="cat_name" id="cat_name" style="width:100%">
+                            <option value="">Select Category Name</option>
                          <?php if (@$cat_data) {
     foreach ($cat_data as $key => $cat_dat) {
         ?>
@@ -73,14 +73,14 @@ echo form_open_multipart('admin/product_insert', $attributes);
                       </div>
                       <div id="allhide">
                       <div class="form-group" style="margin-top: 1rem;">
-                        <select class="js-example-basic-single" name="sub_cat_id" style="width:100%" id="sub_cat_name">
-                            <option>Select Category Name First</option>
+                        <select required class="js-example-basic-single" name="sub_cat_id" style="width:100%" id="sub_cat_name">
+                            <option value="">Select Category Name First</option>
 
                         </select>
                                           <?php echo form_error('sub_cat_id'); ?>
                       </div>
                        <div class="form-group" style="margin-top: 1rem;">
-                        <select class="js-example-basic-single" name="sub_sub_cat_id" style="width:100%" id="sub_sub_cat_name">
+                        <select required class="js-example-basic-single" name="sub_sub_cat_id" style="width:100%" id="sub_sub_cat_name">
                             <option>Select Sub Category Name First</option>
 
                         </select>
@@ -200,7 +200,7 @@ if (isset($lense_uses)) {
                               <input type="checkbox" class="form-check-input" name="lense_type[]" value="<?php echo $lense->uses; ?>">
                                <?php echo @$lense->uses; ?>
                             </label>
-                           type="reset"
+
                             </div>
                           </div>
                           <?php }}?>
@@ -234,7 +234,7 @@ foreach ($material_name as $key => $material) {
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Product Weight" aria-label="Category" name="weight" aria-describedby="colored-addon1">
+                          <input type="text" class="form-control" required placeholder="Product Weight" aria-label="Category" name="weight" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('weight'); ?>
                       </div>
@@ -427,7 +427,7 @@ foreach ($material_name as $key => $material) {
                       </div>
                         <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default']) ?>
+                      <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default', 'id' => 'userfile1']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload product Image">
                         <div class="input-group-append">
@@ -441,7 +441,7 @@ if (isset($upload_error)) {
                       </div>
                     </div>
                     <div class="form-group" style="margin-top: 1rem;">
-                    <?php echo form_upload(['multiple' => '', 'name' => 'featuredimage[]', 'class' => 'file-upload-default']) ?>
+                    <?php echo form_upload(['multiple' => '', 'name' => 'featuredimage[]', 'class' => 'file-upload-default', 'id' => 'userfile2']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Fetured Images">
                         <div class="input-group-append">
@@ -460,7 +460,7 @@ if (isset($fupload_error)) {
                     </div>
                   </div>
 
-                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                      <button type="submit" name="addproduct" value="addproduct" class="btn btn-success mr-2">Submit</button>
                     <button type="reset" class="btn btn-light">Cancel</button>
                     </div>
                   </div>
@@ -609,6 +609,13 @@ $(document).ready(function(){
   <script src="<?php echo base_url(); ?>assets/zumeyes/js/select2.js"></script>
   <script src="<?php echo base_url(); ?>assets/zumeyes/js/editorDemo.js"></script>
   <!-- End custom js for this page-->
+   <script type="text/javascript">
+  $(document).ready(function(){
 
+  document.getElementById("userfile1").required = true;
+   document.getElementById("userfile2").required = true;
+
+});
+</script>
 </body>
 </html>

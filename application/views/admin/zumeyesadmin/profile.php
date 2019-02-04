@@ -143,13 +143,19 @@ if (isset($upload_error)) {
                         </form>
                       </div>
                       <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
-                        <form action="profile" method="post">
+                        <form action="profilepass" method="post">
                           <div class="form-group">
                             <label for="change-password">Change password</label>
-                            <input type="password" name="cpass" class="form-control" id="change-password" placeholder="Enter you current password">
+                            <input type="password" name="acpass" class="form-control" id="change-password" required="" placeholder="Enter you current password">
+                            <?php echo $this->session->flashdata('wrong_pass'); ?>
                           </div>
                           <div class="form-group">
-                            <input type="password" name="newpass" class="form-control" id="new-password" placeholder="Enter you new password">
+                            <input type="password" name="newpass" class="form-control" id="new-password" required="" placeholder="Enter you new password">
+                            <?php echo form_error('newpass'); ?>
+                          </div>
+                           <div class="form-group">
+                            <input type="password" name="rnewpass" class="form-control"  required="" placeholder="Re Enter you new password">
+                            <?php echo form_error('rnewpass'); ?>
                           </div>
                           <div class="form-group mt-5">
                             <button type="submit" name="profilepass" value="profilepass" class="btn btn-success mr-2">Update</button>

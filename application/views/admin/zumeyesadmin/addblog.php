@@ -58,6 +58,17 @@ echo form_open_multipart('admin/blog_insertData');
                         </div>
                         <?php echo form_error('title'); ?>
                       </div>
+                       <div class="form-group" style="margin-top: 1rem;">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text bg-info bg-info" id="colored-addon1">
+                              <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                          </div>
+                          <textarea class="form-control" required placeholder="Blog Short Description" aria-label="Category" name="scontent" aria-describedby="colored-addon1"></textarea>
+                        </div>
+                        <?php echo form_error('scontent'); ?>
+                      </div>
                       <div class="form-group">
                        <div class="form-group" style="margin-top: 1rem;">
 

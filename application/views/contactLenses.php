@@ -4,11 +4,11 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Zumeyes</title>
+	<title>Zumeyes Contact Lenses</title>
 	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
+		<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
 	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
 
 </head>
@@ -210,7 +210,7 @@
 
 
 		<input type="hidden" id="pageid" value="<?php echo $this->session->userdata('lense_page'); ?>">
-		<input type="hidden" id="sid" value="<?php echo @$sid; ?>">
+		<input type="hidden" id="sid" value="<?php echo $this->session->userdata('last_subid'); ?>">
 <?php include 'footer.php';?>
 </body>
 <script src="<?php echo base_url('assets/js/script.js'); ?>">

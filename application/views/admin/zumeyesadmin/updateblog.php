@@ -59,25 +59,19 @@ foreach ($blog_data as $key => $blog_dat) {
                         </div>
                         <?php echo form_error('title'); ?>
                       </div>
-                      <input type="hidden" name="id" value="<?php echo $blog_dat->id ?>">
-                      <div class="form-group">
-                       <div class="form-group" style="margin-top: 1rem;">
-
-                      <?php echo form_upload(['name' => 'blogimage', 'class' => 'file-upload-default', 'value' => '' . $blog_dat->image . '']) ?>
-                      <div class="input-group col-xs-12">
-                        <input type="text" value="<?php echo $blog_dat->image ?>" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <div class="input-group-append">
-                          <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                      <div class="form-group" style="margin-top: 1rem;">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text bg-info bg-info" id="colored-addon1">
+                              <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                          </div>
+                          <textarea class="form-control" required placeholder="Blog Short Description" aria-label="Category" name="scontent" aria-describedby="colored-addon1"><?php echo $blog_dat->shortdescription; ?></textarea>
                         </div>
+                        <?php echo form_error('scontent'); ?>
                       </div>
-                    </div>
-                        <?php
-if (isset($upload_error)) {
-    echo $upload_error;
+                      <input type="hidden" name="id" value="<?php echo $blog_dat->id ?>">
 
-}?>
-
-                      </div>
                   <textarea id="summernoteExample" name="content"><?php echo $blog_dat->description; ?></textarea>
 
                   <input type="submit" name="blog_update" class="btn btn-primary btn-rounded btn-fw" value="Submit"/>
@@ -87,13 +81,52 @@ if (isset($upload_error)) {
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
+                <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Update Blog Image
+                <span style="color:blue;padding-left:70px"></span>
+                   <?php $attributes = array('class' => 'forms-sample');
+echo form_open_multipart('admin/update_blogbg', $attributes);
+?>
+   <div class="form-group" style="margin-top: 1rem;">
+
+                      <?php echo form_upload(['name' => 'blogimage', 'class' => 'file-upload-default', 'id' => 'bg_image']) ?>
+                      <div class="input-group col-xs-12">
+                        <input type="text" class="form-control file-upload-info" value="<?php echo $blog_dat->image ?>" disabled placeholder="Upload Image">
+                         <input type="hidden" name="id" value="<?php echo $id; ?>">
+                        <div class="input-group-append">
+                          <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                        </div>
+                        <?php
+if (isset($upload_error)) {
+    echo $upload_error;
+
+}?>
+                      </div>
+                    </div>
+
+                      <button type="submit" class="btn btn-success mr-2">Submit</button>
+                     <a href=<?php echo base_url('admin/category'); ?>>Back</a>
+                     </div>
+                </form>
+              </div>
+            </div>
+            </div>
 
   </div>
 
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
         <?php include 'footer.php';?>
+          <script type="text/javascript">
+  $(document).ready(function(){
+
+  document.getElementById("bg_image").required = true;
+
+});
+</script>
 </body>
 </html>

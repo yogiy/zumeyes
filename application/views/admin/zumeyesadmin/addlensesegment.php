@@ -52,7 +52,7 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Cylinder(CYL)" aria-label="Category" name="cylinder" aria-describedby="colored-addon1">
+                          <input type="text" required class="form-control" placeholder="Cylinder(CYL)" aria-label="Category" name="cylinder" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('cylinder'); ?>
                       </div>
@@ -83,7 +83,7 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="sphere(SPH)" aria-label="Category" name="sphere" id="sphere" aria-describedby="colored-addon1">
+                          <input type="text" required class="form-control"  placeholder="sphere(SPH)" aria-label="Category" name="sphere" id="sphere" aria-describedby="colored-addon1">
                         </div>
                        <?php echo form_error('sphere'); ?>
                       </div>
@@ -114,7 +114,7 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Axis" aria-label="Category" name="axis" aria-describedby="colored-addon1">
+                          <input type="text" required class="form-control" placeholder="Axis" aria-label="Category" name="axis" aria-describedby="colored-addon1">
                         </div>
                         <?php echo form_error('axis'); ?>
                       </div>
@@ -145,7 +145,7 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                               <i class="mdi mdi-shield-outline text-white"></i>
                             </span>
                           </div>
-                          <input type="text" class="form-control"  placeholder="nearaddition" aria-label="Category" name="nearaddition" id="nearaddition" aria-describedby="colored-addon1">
+                          <input type="text" required class="form-control"  placeholder="nearaddition" aria-label="Category" name="nearaddition" id="nearaddition" aria-describedby="colored-addon1">
                         </div>
                        <?php echo form_error('nearaddition'); ?>
                       </div>

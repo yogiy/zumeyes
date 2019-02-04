@@ -49,7 +49,7 @@ echo form_open_multipart('admin/slider_insert', $attributes);
  <div class="form-group">
                        <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['multiple' => '', 'name' => 'sliderimage[]', 'class' => 'file-upload-default', 'id' => 'userfile1']) ?>
+                      <?php echo form_upload(['name' => 'sliderimage[]', 'class' => 'file-upload-default', 'id' => 'userfile1']) ?>
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <div class="input-group-append">

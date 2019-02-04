@@ -45,7 +45,7 @@ class Vquery extends CI_Model
             $query .= "AND `sale_price` >= 500";
         }
         if ($byPrize == 'l') {
-            $query .= "AND `sale_price` <= 500";
+            $query .= " AND `sale_price` <= 500";
         }
         if ($byPrize == 'l_to_h') {
             $query .= "ORDER BY `sale_price` ASC";
@@ -256,7 +256,7 @@ $(document).ready(function(){
         $data = $this->db->query($query);
         return $data->num_rows();
     }
-
+    
     public function fetch_lensedata($limit, $start, $pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_lensequery($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid);
@@ -437,7 +437,7 @@ $(document).ready(function(){
 
     public function cat_list()
     {
-        $query = $this->db->query("SELECT * FROM `category`");
+        $query = $this->db->query("SELECT * FROM `category` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -447,7 +447,17 @@ $(document).ready(function(){
     }
     public function subcat_list()
     {
-        $query = $this->db->query("SELECT * FROM `subcategory`");
+        $query = $this->db->query("SELECT * FROM `subcategory` where status ='1'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function about_list()
+    {
+        $query = $this->db->query("SELECT * FROM `about` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -458,7 +468,7 @@ $(document).ready(function(){
 
     public function sub_subcat_list()
     {
-        $query = $this->db->query("SELECT * FROM `sub_subcategory`");
+        $query = $this->db->query("SELECT * FROM `sub_subcategory` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -469,7 +479,7 @@ $(document).ready(function(){
 
     public function sub_subcat_row($catid)
     {
-        $query = $this->db->query("SELECT distinct `sub_cat_name` FROM `sub_subcategory` Where `sub_cat_name` = '" . $catid . "'");
+        $query = $this->db->query("SELECT distinct `sub_cat_name` FROM `sub_subcategory` Where `sub_cat_name` = '" . $catid . "' AND status ='1' ");
         if ($query->num_rows() > 0) {
             return true;
 
@@ -479,7 +489,7 @@ $(document).ready(function(){
     }
     public function sub_subcat_data($subcatid)
     {
-        $query = $this->db->query("SELECT * FROM `sub_subcategory` where `sub_cat_name` = '" . $subcatid . "' ");
+        $query = $this->db->query("SELECT * FROM `sub_subcategory` where `sub_cat_name` = '" . $subcatid . "' AND status ='1' ");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -489,7 +499,7 @@ $(document).ready(function(){
     }
     public function get_cat_id($subid)
     {
-        $query = $this->db->query("SELECT `cat_name` FROM `subcategory` where `id` = '" . $subid . "' ");
+        $query = $this->db->query("SELECT `cat_name` FROM `subcategory` where `id` = '" . $subid . "' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->row();
 
@@ -499,7 +509,7 @@ $(document).ready(function(){
     }
     public function product_data()
     {
-        $query = $this->db->query("SELECT * FROM `product`");
+        $query = $this->db->query("SELECT * FROM `product` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -509,7 +519,7 @@ $(document).ready(function(){
     }
     public function slider_data()
     {
-        $query = $this->db->query("SELECT * FROM `sliderimage`");
+        $query = $this->db->query("SELECT * FROM `sliderimage` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -519,7 +529,7 @@ $(document).ready(function(){
     }
     public function offer_data()
     {
-        $query = $this->db->query("SELECT * FROM `offerimage`");
+        $query = $this->db->query("SELECT * FROM `offerimage` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -529,7 +539,7 @@ $(document).ready(function(){
     }
     public function banner_data()
     {
-        $query = $this->db->query("SELECT * FROM `bannerimage`");
+        $query = $this->db->query("SELECT * FROM `bannerimage` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -557,21 +567,9 @@ $(document).ready(function(){
             return false;
         }
     }
-
-    public function about_get()
-    {
-        $query = $this->db->query("SELECT * FROM `about`");
-        if ($query->num_rows() > 0) {
-            return $query->result();
-
-        } else {
-            return false;
-        }
-    }
-
     public function blog_data()
     {
-        $query = $this->db->query("SELECT * FROM `blog`");
+        $query = $this->db->query("SELECT * FROM `blog` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -581,7 +579,7 @@ $(document).ready(function(){
     }
     public function blog_databy_id($id)
     {
-        $query = $this->db->query("SELECT * FROM `blog` WHERE `id`='" . $id . "'");
+        $query = $this->db->query("SELECT * FROM `blog` WHERE `id`='" . $id . "' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -591,7 +589,7 @@ $(document).ready(function(){
     }
     public function checkuser_newsletter($email)
     {
-        $query = $this->db->query("SELECT * FROM `newsletter` WHERE `email`='" . $email . "'");
+        $query = $this->db->query("SELECT * FROM `newsletter` WHERE `email`='" . $email . "' AND status ='1'");
         if ($query->num_rows() == 1) {
             return true;
 
@@ -601,7 +599,7 @@ $(document).ready(function(){
     }
     public function product_databy_subid($id)
     {
-        $query = $this->db->query("SELECT * FROM `product` WHERE `sub_cat_id`='" . $id . "'");
+        $query = $this->db->query("SELECT * FROM `product` WHERE `sub_cat_id`='" . $id . "' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -611,7 +609,7 @@ $(document).ready(function(){
     }
     public function sub_sub_page_byid($id)
     {
-        $query = $this->db->query("SELECT `sub_sub_cat` FROM `subcategory` WHERE `id`='" . $id . "' AND `sub_sub_cat` IS NOT NULL");
+        $query = $this->db->query("SELECT `sub_sub_cat` FROM `subcategory` WHERE `id`='" . $id . "' AND status ='1' AND `sub_sub_cat` IS NOT NULL ");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -622,7 +620,7 @@ $(document).ready(function(){
 
     public function prescription_package($prescription_id)
     {
-        $query = $this->db->query("SELECT * FROM `lensepackages` WHERE `id`='" . $prescription_id . "'");
+        $query = $this->db->query("SELECT * FROM `lensepackages` WHERE `id`='" . $prescription_id . "' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->row();
 
@@ -632,7 +630,7 @@ $(document).ready(function(){
     }
     public function prescription()
     {
-        $query = $this->db->query("SELECT * FROM `lensepackages`");
+        $query = $this->db->query("SELECT * FROM `lensepackages` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -642,7 +640,7 @@ $(document).ready(function(){
     }
     public function sphere_list()
     {
-        $query = $this->db->query("SELECT * FROM `sphere`");
+        $query = $this->db->query("SELECT * FROM `sphere` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -652,7 +650,7 @@ $(document).ready(function(){
     }
     public function cylinder_list()
     {
-        $query = $this->db->query("SELECT * FROM `cylinder`");
+        $query = $this->db->query("SELECT * FROM `cylinder` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -662,7 +660,7 @@ $(document).ready(function(){
     }
     public function axis_list()
     {
-        $query = $this->db->query("SELECT * FROM `axis`");
+        $query = $this->db->query("SELECT * FROM `axis` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -672,7 +670,7 @@ $(document).ready(function(){
     }
     public function nearaddition_list()
     {
-        $query = $this->db->query("SELECT * FROM `nearaddition`");
+        $query = $this->db->query("SELECT * FROM `nearaddition` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -682,7 +680,7 @@ $(document).ready(function(){
     }
     public function uses_data()
     {
-        $query = $this->db->query("SELECT * FROM `lenseuses`");
+        $query = $this->db->query("SELECT * FROM `lenseuses` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -712,7 +710,7 @@ $(document).ready(function(){
     }
     public function category_name($id)
     {
-        $query = $this->db->query("SELECT * FROM `category` where `id`='" . $id . "'");
+        $query = $this->db->query("SELECT * FROM `category` where `id`='" . $id . "' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -722,7 +720,7 @@ $(document).ready(function(){
     }
     public function pro_data_byid($id)
     {
-        $query = $this->db->query("SELECT * FROM `product` where `id`='" . $id . "'");
+        $query = $this->db->query("SELECT * FROM `product` where `id`='" . $id . "' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -773,7 +771,7 @@ $(document).ready(function(){
     public function product_data_color($color, $brand, $purpose, $material, $fit, $shape)
     {
 
-        $query = $this->db->query("SELECT * FROM `product` where `color` regexp '[[:<:]]" . $color . "[[:>:]]' OR `brand` regexp '[[:<:]]" . $brand . "[[:>:]]' OR `purpose` regexp '[[:<:]]" . $purpose . "[[:>:]]' OR `fit` regexp '[[:<:]]" . $fit . "[[:>:]]' OR `material` regexp '[[:<:]]" . $material . "[[:>:]]' OR `shape` regexp '[[:<:]]" . $shape . "[[:>:]]' ");
+        $query = $this->db->query("SELECT * FROM `product` where `color` regexp '[[:<:]]" . $color . "[[:>:]]' OR `brand` regexp '[[:<:]]" . $brand . "[[:>:]]' OR `purpose` regexp '[[:<:]]" . $purpose . "[[:>:]]' OR `fit` regexp '[[:<:]]" . $fit . "[[:>:]]' OR `material` regexp '[[:<:]]" . $material . "[[:>:]]' OR `shape` regexp '[[:<:]]" . $shape . "[[:>:]]' AND status ='1' ");
 
         if ($query->num_rows() > 0) {
             return $query->result();
@@ -784,7 +782,7 @@ $(document).ready(function(){
     }
     public function product_data_brand($brand)
     {
-        $query = $this->db->query("SELECT * FROM `product` where `brand` LIKE '%" . $brand . "%'");
+        $query = $this->db->query("SELECT * FROM `product` where `brand` LIKE '%" . $brand . "%' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -794,7 +792,7 @@ $(document).ready(function(){
     }
     public function searchproduct($search)
     {
-        $query = $this->db->query("SELECT * FROM `product` where `product_name` LIKE '%" . $search . "%' OR `brand` LIKE '%" . $search . "%' OR `uses` LIKE '%" . $search . "%' OR `purpose` LIKE '%" . $search . "%' OR `shape` LIKE '%" . $search . "%'");
+        $query = $this->db->query("SELECT * FROM `product` where `product_name` LIKE '%" . $search . "%' OR `brand` LIKE '%" . $search . "%' OR `uses` LIKE '%" . $search . "%' OR `purpose` LIKE '%" . $search . "%' OR `shape` LIKE '%" . $search . "%' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -804,7 +802,7 @@ $(document).ready(function(){
     }
     public function product_data_shape($shape)
     {
-        $query = $this->db->query("SELECT * FROM `product` where `shape` LIKE '%" . $shape . "%'");
+        $query = $this->db->query("SELECT * FROM `product` where `shape` LIKE '%" . $shape . "%' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -813,7 +811,7 @@ $(document).ready(function(){
         }
     }public function product_data_material($material)
     {
-        $query = $this->db->query("SELECT * FROM `product` where `material` LIKE '%" . $material . "%'");
+        $query = $this->db->query("SELECT * FROM `product` where `material` LIKE '%" . $material . "%' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -822,7 +820,7 @@ $(document).ready(function(){
         }
     }public function product_data_fit($fit)
     {
-        $query = $this->db->query("SELECT * FROM `product` where `fit` LIKE '%" . $fit . "%'");
+        $query = $this->db->query("SELECT * FROM `product` where `fit` LIKE '%" . $fit . "%' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -831,7 +829,7 @@ $(document).ready(function(){
         }
     }public function product_data_purpose($purpose)
     {
-        $query = $this->db->query("SELECT * FROM `product` where `purpose` LIKE '%" . $purpose . "%'");
+        $query = $this->db->query("SELECT * FROM `product` where `purpose` LIKE '%" . $purpose . "%' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -841,7 +839,7 @@ $(document).ready(function(){
     }
     public function brand_data()
     {
-        $query = $this->db->query("SELECT * FROM `brand`");
+        $query = $this->db->query("SELECT * FROM `brand` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -851,7 +849,7 @@ $(document).ready(function(){
     }
     public function color_data()
     {
-        $query = $this->db->query("SELECT * FROM `color`");
+        $query = $this->db->query("SELECT * FROM `color` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -861,7 +859,7 @@ $(document).ready(function(){
     }
     public function fit_data()
     {
-        $query = $this->db->query("SELECT * FROM `fit`");
+        $query = $this->db->query("SELECT * FROM `fit` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -871,7 +869,7 @@ $(document).ready(function(){
     }
     public function purpose_data()
     {
-        $query = $this->db->query("SELECT * FROM `purpose`");
+        $query = $this->db->query("SELECT * FROM `purpose` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -881,7 +879,7 @@ $(document).ready(function(){
     }
     public function shape_data()
     {
-        $query = $this->db->query("SELECT * FROM `shape`");
+        $query = $this->db->query("SELECT * FROM `shape` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -891,7 +889,7 @@ $(document).ready(function(){
     }
     public function material_data()
     {
-        $query = $this->db->query("SELECT * FROM `material`");
+        $query = $this->db->query("SELECT * FROM `material` where status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 

@@ -1,11 +1,4 @@
- <script type="text/javascript">
-  $(document).ready(function(){
-
-  document.getElementById("userfile1").required = true;
-   document.getElementById("userfile2").required = true;
-    document.getElementById("userfile3").required = true;
-});
-</script><!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Required meta tags -->
@@ -86,7 +79,7 @@ echo form_open_multipart('admin/sub_cat_insert', $attributes);
 ?>
  <div class="form-group">
                           <select class="js-example-basic-single" required onclick="document.getElementById('sub_cat_name').disabled = true;" name="cat_name" style="width:100%">
-                            <option>Select Category Name</option>
+                            <option value="">Select Category Name</option>
                          <?php if ($cat_data) {
     foreach ($cat_data as $key => $cat_dat) {
         ?>
@@ -126,9 +119,9 @@ if (isset($upload_error)) {
               </div>
             </div>
           </div>
-           <div class="col-md-6 grid-margin stretch-card">
+       <div class="col-md-6 grid-margin stretch-card">
              <div class="card">
-                <div class="card-body">
+           <div class="card-body">
                   <h4 class="card-title">Add Sub About Sub Category
                 <span style="color:blue;padding-left:70px">
               <?php echo $this->session->flashdata('form_succ_msg3'); ?></span></h4>
@@ -137,7 +130,7 @@ echo form_open_multipart('admin/sub_sub_cat_insert', $attributes);
 ?>
   <div class="form-group" style="margin-top: 1rem;">
                           <select class="js-example-basic-single" required name="cat_id" id="cat_name" style="width:100%">
-                            <option>Select Category Name</option>
+                            <option value="">Select Category Name</option>
                          <?php if (@$cat_data) {
     foreach ($cat_data as $key => $cat_dat) {
         ?>
@@ -149,7 +142,7 @@ echo form_open_multipart('admin/sub_sub_cat_insert', $attributes);
 
                        <div class="form-group" style="margin-top: 1rem;">
                         <select class="js-example-basic-single" required name="sub_cat_id" style="width:100%" id="sub_cat_data">
-                            <option>Select Category Name First</option>
+                            <option value="">Select Category Name First</option>
 
                         </select>
                       </div>
@@ -309,10 +302,15 @@ if ($sub_subcat_data) {
                         <tr>
                             <td><?php echo $sr_no; ?></td>
                             <?php foreach ($cat_data as $key => $cat_dat) {
-            if ($cat_dat->cat_name == $sub_subcat_dat->cat_name) {?>
+            if ($cat_dat->id == $sub_subcat_dat->cat_name) {?>
                             <td><?php echo $cat_dat->cat_name ?></td>
                           <?php }}?>
-                            <td><?php echo $subcat_dat->sub_cat_name ?></td>
+
+                            <td> <?php foreach ($subcat_data as $key => $subcat_dataa) {
+            if ($sub_subcat_dat->sub_cat_name == $subcat_dataa->id) {?><?php echo $subcat_dataa->sub_cat_name ?>
+                               <?php }}?>
+                            </td>
+
                             <td><?php echo $sub_subcat_dat->sub_sub_cat ?></td>
                             <td><form method="post" action="status_subcategory" class="cartupdate">
                   <input type="hidden" name="id"  value="<?php echo $subcat_dat->id ?>">
@@ -324,7 +322,7 @@ if ($sub_subcat_data) {
 
                             </td>
                             <td>
-                              <a href="<?php echo site_url() ?>admin/update_subcategory?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
+                              <a href="<?php echo site_url() ?>admin/update_sub_subcategory?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
                             </td>
                         </tr><?php $sr_no++;}}?>
                               </tbody>

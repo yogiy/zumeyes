@@ -52,8 +52,8 @@ echo form_open_multipart('admin/update_slider', $attributes);
   <div class="form-group">
                        <div class="form-group" style="margin-top: 1rem;">
 
-                      <?php echo form_upload(['name' => 'sliderimage', 'class' => 'file-upload-default', 'value' => '' . $slider . '']) ?>
-                      <input type="hidden" value="<?php echo $id ?>">
+                      <?php echo form_upload(['name' => 'sliderimage[]', 'class' => 'file-upload-default', 'id' => 'sliderimage']) ?>
+                      <input type="hidden" name="id" value="<?php echo $id ?>">
                       <div class="input-group col-xs-12">
                         <input type="text" value="<?php echo $slider ?>" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <div class="input-group-append">
@@ -86,5 +86,12 @@ if (isset($upload_error)) {
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
         <?php include 'footer.php';?><!-- End custom js for this page-->
+         <script type="text/javascript">
+  $(document).ready(function(){
+
+  document.getElementById("sliderimage").required = true;
+
+});
+</script>
 </body>
 </html>

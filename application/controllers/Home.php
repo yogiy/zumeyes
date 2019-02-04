@@ -50,12 +50,12 @@ class Home extends CI_Controller
         $this->load->view('home', $data);
     }
 
-
     public function aboutus()
     {
+
         $cat_data['cat_data'] = $this->Vquery->cat_list();
         $cat_data['subcat_data'] = $this->Vquery->subcat_list();
-        $cat_data['about_data'] = $this->Vquery->about_get();
+        $cat_data['about_data'] = $this->Vquery->about_list();
         $this->load->view('aboutus', $cat_data);
 
     }
@@ -121,14 +121,23 @@ class Home extends CI_Controller
             foreach ($cat_id as $key => $value) {
                 $cat_idd = $value->cat_name;
             }
-            if ($cat_idd == 15) {
-                $this->session->set_userdata('lense_page', $catid);
-                redirect('contactLense');
-            }
+
             $true = $this->Vquery->sub_subcat_row($catid);
             if ($true == true) {
+                if ($cat_idd == 15) {
+                    $sid = $this->input->get('sid');
+                    $this->session->set_userdata('last_subid', $sid);
+                    $this->session->set_userdata('lense_page', $cat_idd);
+
+                }
                 $this->session->set_userdata('last_subid', $catid);
                 redirect('subProduct');
+            } elseif ($true == false && $cat_idd == 15) {
+                $sid = $this->input->get('sid');
+                $this->session->set_userdata('last_subid', $sid);
+                $this->session->set_userdata('lense_page', $cat_idd);
+
+                redirect('contactLense');
             }
 
         }

@@ -24,8 +24,11 @@
 
     ?>
 		<div class="col-sm-6 sunglassMen clearfix">
-
-			<a href="<?php echo site_url('productList') ?>?sid=<?php echo $subcatdata->id ?>">
+			<?php if ($this->session->flashdata('lense_page') == 15) {?>
+			<a href="<?php echo site_url('contactLense') ?>?sid=<?php echo $subcatdata->id ?>">
+			<?php } else {?>
+            <a href="<?php echo site_url('productList') ?>?sid=<?php echo $subcatdata->id ?>">
+            	<?php }?>
 				<div class="img clearfix"><img src="<?php echo base_url('assets/upload/') ?><?php echo $subcatdata->bg_image; ?>" alt="Men Sunglasses"></div>
 
 				<h3><?php echo $subcatdata->sub_sub_cat; ?></h3>
@@ -46,7 +49,7 @@
 
 			<div class="row copyrightBlock">
 
-				<span>© 2018 Zumeyes. All rights resereved</span>
+				<span>© <?php echo date('Y') ?> Zumeyes. All rights resereved</span>
 
 			</div>
 
