@@ -154,15 +154,22 @@ if ($this->session->userdata('isUserLoggedIn') == false) {
 								<div class="field">
 							<form method="post" action="update_product_from_cart" class="cartupdate">
 									<input type="hidden" name="crowid" value="<?php echo $items['rowid'] ?>">
-								  <input type="text" list="qty" value="<?php echo $items['qty'] ?>" name="qantity" id="cylL" placeholder="01" onchange="this.form.submit()">
-								  <i class="icon icon-angle-down"></i>
-								  <datalist id="qty" >
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
+								 <select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
 
-								 </datalist>
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 40px;
+    margin: 0 0 0 25px;
+    padding: 10px;
+    width: 110px;" onchange="this.form.submit()" name="qantity">
+    <option value="<?php echo $items['qty'] ?>"><?php echo $items['qty'] ?></option>
+    <option value="1">1</option>
+								<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option></select>
 								</form>
 								</div>
 							</div>
@@ -297,20 +304,29 @@ if (isset($cart_data) && !empty($cart_data)) {
 							<form method="post" action="update_product_from_usercart" id="usercartupdate">
 									<input type="hidden" name="crowid" value="<?php echo $items->pro_id ?>">
 									<input type="hidden" name="email" value="<?php echo $items->email ?>">
-								  <input type="text" list="qty" value="<?php echo $items->qty ?>" name="qantity" id="cylL" placeholder="01" onchange="this.form.submit()">
-								  <i class="icon icon-angle-down"></i>
-								  <datalist id="qty" >
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
+								  <select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
 
-								 </datalist>
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 40px;
+    margin: 0 0 0 25px;
+    padding: 10px;
+    width: 110px;" onchange="this.form.submit()" name="qantity">
+    <option value="<?php echo $items->qty ?>"><?php echo $items->qty ?></option>
+    <option value="1">1</option>
+								<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option></select>
 								</form>
 								</div>
 							</div>
 
-							<div class="col-sm-2 col-xs-12 boxThird clearfix"><em class="amount">Rs <?php if (isset($items->lense_price)) {echo $subtotal = ($items->lense_price + $items->price) * $items->qty;} else {
+							<div class="col-sm-2 col-xs-12 boxThird clearfix"><em class="amount">
+							Rs <?php if (isset($items->lense_price) && !empty($items->lense_price)) {
+            echo $subtotal = (trim($items->lense_price)) + (trim($items->price)) * (trim($items->qty));} else {
 
             ?><?php
 echo $subtotal = $items->price * $items->qty;

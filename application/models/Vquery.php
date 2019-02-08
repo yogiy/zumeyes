@@ -131,17 +131,13 @@ class Vquery extends CI_Model
                                 </div>
                                 <div class="productAction">
                              </a>
-                                    <div class="cart icon">
+                                     <div class="productAction productActionHome">
 
-
-                                <i style="cursor: pointer" class="icon-shopping-cart add_cart" proprice="' . $pro_dat->sale_price . '" pro_id="' . $pro_dat->id . '" pro_name="' . $pro_dat->product_name . '"pro_image="' . $pro_dat->pro_image . '"></i>
-
-
-                                    </div>
                                     <div class="wishlist icon">
 
 
                                      <i style="cursor: pointer" class="icon-favorite-heart-button class" proprice="' . $pro_dat->sale_price . '" pro_id="' . $pro_dat->id . '" pro_name="' . $pro_dat->product_name . '"pro_image="' . $pro_dat->pro_image . '"></i>
+                                     </div>
                                      </div>
 
                                 </div>
@@ -302,20 +298,15 @@ $(document).ready(function(){
                 $pro_dat->sale_price .
                 '</span>
                                 </div>
-                                <div class="productAction">
+                               <div class="productAction productActionHome">
 
-                                    <div class="cart icon">
-                                      <i style="cursor: pointer" class="icon-shopping-cart add_cart" proprice="' . $pro_dat->sale_price . '" pro_id="' . $pro_dat->id . '" pro_name="' . $pro_dat->product_name . '"pro_image="' . $pro_dat->pro_image . '"></i>
-
-
-                                    </div>
                                     <div class="wishlist icon">
 
 
                                      <i style="cursor: pointer" class="icon-favorite-heart-button class" proprice="' . $pro_dat->sale_price . '" pro_id="' . $pro_dat->id . '" pro_name="' . $pro_dat->product_name . '"pro_image="' . $pro_dat->pro_image . '"></i>
 
                                     </div>
-
+                               </div>
                                 </div>
                             </div>
                         </div>

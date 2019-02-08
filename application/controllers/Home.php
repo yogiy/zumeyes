@@ -21,8 +21,8 @@ class Home extends CI_Controller
             foreach ($user as $key => $user) {
                 $gfname = $user->fname;
                 $gemail = $user->email;
-                $countwish = array();
-                $countwish = $this->Vquery->wishlist($gemail);
+
+                $countwish['countwish'] = $this->Vquery->wishlist($gemail);
                 $count_wish = count($countwish);
 
                 $count_cart = $this->Vquery->get_cart_count($gemail);
@@ -49,7 +49,6 @@ class Home extends CI_Controller
         $data['blog_data'] = $this->Vquery->blog_data();
         $this->load->view('home', $data);
     }
-
     public function aboutus()
     {
 
@@ -57,9 +56,7 @@ class Home extends CI_Controller
         $cat_data['subcat_data'] = $this->Vquery->subcat_list();
         $cat_data['about_data'] = $this->Vquery->about_list();
         $this->load->view('aboutus', $cat_data);
-
     }
-
     public function blogDetails()
     {
 
@@ -448,38 +445,39 @@ class Home extends CI_Controller
     }
     public function frameOnly()
     {
-
-        $data = array('id' => $_POST['pro_id'],
-            'name' => $_POST['pro_name'],
-            'price' => $_POST['sale_price'],
-            'pro_image' => $_POST['pro_image'],
-            'prescription_type' => $_POST['prescription_type'],
-
-            'qty' => 1,
-        );
-        $this->session->set_userdata('cdata', $data);
-        $counter = array();
-        $counter = $this->cart->insert($data);
-        if (($this->session->userdata('isUserLoggedIn') &&
-            $this->session->userdata('userId'))) {
-            $email = $this->session->userdata('user_email');
-            $datae1 = array(
-                'email' => $email,
+        if ($_POST['frameOnly']) {
+            $data = array('id' => $_POST['pro_id'],
+                'name' => $_POST['pro_name'],
+                'price' => $_POST['sale_price'],
+                'pro_image' => $_POST['pro_image'],
+                'prescription_type' => "Frame Only",
+                'qty' => 1,
             );
-            $dataa = array_merge($data, $datae1);
-            $this->Vquery->cart_insert($dataa);
+            $this->session->set_userdata('cdata', $data);
+            $counter = array();
+            $counter = $this->cart->insert($data);
+            if (($this->session->userdata('isUserLoggedIn') &&
+                $this->session->userdata('userId'))) {
+                $email = $this->session->userdata('user_email');
+                $datae1 = array(
+                    'email' => $email,
+                );
+                $dataa = array_merge($data, $datae1);
+                $this->Vquery->cart_insert($dataa);
 
+            }
+            $i = 1;
+            $total_product = 0;
+            foreach ($this->cart->contents() as $items) {
+                echo form_hidden($i . '[rowid]', $items['rowid']);
+
+                $total_product++;
+
+            }
+            redirect('shoppingCart');
         }
-        $i = 1;
-        $total_product = 0;
-        foreach ($this->cart->contents() as $items) {
-            echo form_hidden($i . '[rowid]', $items['rowid']);
 
-            $total_product++;
-
-        }
-
-        echo $total_product;
+        redirect('index');
     }
     public function wishframeOnly()
     {
@@ -1114,6 +1112,16 @@ class Home extends CI_Controller
                     $this->load->model('Vquery');
                     $insert = $this->Vquery->insert_user($userData);
                     if ($insert) {
+                        $senderemail = 'gajendray9@gmail.com';
+                        $msg = "<h4>Welcome To Zumeyes<h4>You Have Successfully Registered Zumeyes Account";
+                        $headers = 'From: ' . $senderemail . "\r\n" .
+                        'Reply-To: ' . $senderemail . "\r\n" .
+                        'cc: ' . $senderemail . "\r\n" .
+                        'bcc: ' . $senderemail . "\r\n" .
+                        'X-Mailer: PHP/' . phpversion();
+
+                        mail($this->input->post('cemail'), "Successfully Registered Your Zumeyes Account", $msg, $headers);
+
                         $msg = $this->session->set_flashdata('rsuccess_msg', 'Registered successfully. Please login to your account.');
 
                     } else {

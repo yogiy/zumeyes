@@ -226,7 +226,7 @@ $i = 1;
 
 
 
-						<li style="padding:0px"><a href="<?php echo base_url('login_and_registration') ?>" class="signIn">Sign In</a></li>
+						<li style="padding:0px"><a href="<?php echo base_url('guestdelete') ?>" class="signIn">Signout as Guest</a></li>
 					</ul>
 
 					</div>

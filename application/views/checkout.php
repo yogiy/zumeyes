@@ -49,7 +49,7 @@
 						<span>Delivery Address</span>
 
 						<div class="addrsBlock clearfix">
-						<?php if (isset($useraddress)) {
+						<?php if (isset($useraddress) && !empty($useraddress)) {
     $i = 1;
     foreach ($useraddress as $user_address) {?>
 							<div class="addrsBox clearfix">
@@ -107,7 +107,7 @@
 
 					</div>
 
-					<?php if (isset($useraddress)) {
+					<?php if (isset($useraddress) && !empty($useraddress)) {
     $i = 1;if ($i <= 1) {
         foreach ($useraddress as $user_address) {?>
 
@@ -244,15 +244,22 @@ if (!$cart_data) {
 										<div class="field">
 										 <form method="post" action="update_product_from_cartcheckout" class="cartupdate">
 									<input type="hidden" name="crowid" value="<?php echo $items['rowid'] ?>">
-								  <input type="text" list="qty" value="<?php echo $items['qty'] ?>" name="qantity" id="cylL" placeholder="01" onchange="this.form.submit()">
-								  <i class="icon icon-angle-down"></i>
-								  <datalist id="qty" >
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
+								  <select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
 
-								 </datalist>
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 40px;
+    margin: 0 0 0 25px;
+    padding: 10px;
+    width: 110px;" onchange="this.form.submit()" name="qantity">
+    <option value="<?php echo $items['qty'] ?>"><?php echo $items['qty'] ?></option>
+    <option value="1">1</option>
+								<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option></select>
 								</form>
 										</div>
 									</div>
@@ -306,15 +313,22 @@ if ($this->cart->contents()) {
 										 <form method="post" action="update_product_from_usercartcheckout" id="usercartupdate">
 									<input type="hidden" name="crowid" value="<?php echo $items->pro_id ?>">
 									<input type="hidden" name="email" value="<?php echo $items->email ?>">
-								  <input type="text" list="qty" value="<?php echo $items->qty ?>" name="qantity" id="cylL" placeholder="01" onchange="this.form.submit()">
-								  <i class="icon icon-angle-down"></i>
-								  <datalist id="qty" >
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
+								 <select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
 
-								 </datalist>
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 40px;
+    margin: 0 0 0 25px;
+    padding: 10px;
+    width: 110px;" onchange="this.form.submit()" name="qantity">
+    <option value="<?php echo $items->qty ?>"><?php echo $items->qty ?></option>
+    <option value="1">1</option>
+								<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option></select>
 								</form>
 										</div>
 									</div>
@@ -324,7 +338,7 @@ if ($this->cart->contents()) {
 
 							</div>
 							<?php $total_product = $items->qty;
-        if (isset($items->lense_price)) {$subtotal = ($items->lense_price + $items->price) * $items->qty;} else {
+        if (isset($items->lense_price) && !empty($items->lense_price)) {$subtotal = ($items->lense_price + $items->price) * $items->qty;} else {
 
             $subtotal = $items->price * $items->qty;
         }
@@ -350,9 +364,9 @@ if ($this->cart->contents()) {
 								<li id="creditCard">Credit Card</li>
 								<li id="debitCard">Debit Card</li>
 								<li id="netBanking">Net Banking</li>
-								<li id="cod">Cash on Delivery</li>
+							<!--	<li id="cod">Cash on Delivery</li>
 								<li id="bhimUPI">PhonePe/BHIM UPI</li>
-								<li id="emi">EMI (Easy Installments)</li>
+								<li id="emi">EMI (Easy Installments)</li>-->
 
 							</ul>
 

@@ -664,7 +664,7 @@
        <input type="hidden" name="pro_image" value="<?php echo $pro_dat->pro_image; ?>">
      <input type="hidden" name="sale_price" value="<?php echo $pro_dat->sale_price; ?>">
      <input type="hidden" name="lense_price" value="<?php echo $pro_dat->sale_price; ?>">
-     <input type="hidden" name="id" value="<?php echo $pro_dat->id; ?>">
+     <input type="hidden" name="pro_id" value="<?php echo $pro_dat->id; ?>">
 
     <button class="hvr-wobble-top" type="submit" name="frameOnly" value="frameOnly "> <i class="icon icon-shopping-cart"></i> <span>Add to Cart</span> </button>
     <div class="whislistIcon"><i class="icon icon-heart class"></i> </div>
@@ -727,7 +727,7 @@
 }?>
           </div>
           <div class="col-sm-6 detailsBlock clearfix">
-            <?php if (isset($pro_style)) {?>
+            <?php if (isset($pro_style) && !empty($pro_style)) {?>
             <h3>Frame Details</h3>
             <ul class="list clearfix">
               <li>Frame Width: <em><?php
@@ -1116,9 +1116,9 @@
           <div class="itemBottom">
             <h3> <a class="productName" href="#"><?php echo $relate->product_name ?></a> </h3>
             <div class="priceBox"> <span>Rs <?php echo $relate->sale_price ?></span> </div>
-            <div class="productAction">
-              <div class="cart icon"> <i class="icon-shopping-cart"></i> </div>
-              <div class="wishlist icon"> <i class="icon-heart"></i> </div>
+            <div class="productAction" stype="padding-left:23px">
+
+              <div class="wishlist icon class"> <i class="icon-heart"></i> </div>
             </div>
           </div>
         </div>
@@ -1160,5 +1160,26 @@
 });
   });
 	</script>
+	<script type="text/javascript">
+
+   $(".class").click(function(){
+        $(this).toggleClass("'.$this->session->userdata('active').'");
+      var sale_price =  $(this).attr("proprice");
+      var pro_id=  $(this).attr("pro_id");
+      var pro_name=  $(this).attr("pro_name");
+      var pro_image=  $(this).attr("pro_image");
+       var prescription_type="Contact Lenses";
+
+        $.ajax({
+                type:"POST",
+                url:"'.base_url('wishframeOnly').'",
+            data:{pro_id:pro_id,pro_name:pro_name,sale_price:sale_price,pro_image:pro_image,prescription_type:prescription_type},
+                success:function(data){
+
+                }
+            });
+
+    });
+</script>
 </body>
 </html>
