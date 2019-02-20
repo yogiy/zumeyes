@@ -29,7 +29,7 @@ class Admin extends CI_Controller
             redirect('auth/login');
 
         }
-        
+
     }
 
     public function profile()
@@ -39,13 +39,13 @@ class Admin extends CI_Controller
 
             $this->form_validation->set_rules('name', 'Name', 'required');
             $this->form_validation->set_rules('designation', 'Designation', 'required');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
+
             $this->form_validation->set_rules('address', 'Address', 'required');
             $this->form_validation->set_rules('phone', 'Phone No', 'required');
 
             $data = array(
                 'name' => $this->input->post('name'),
-                'email' => $this->input->post('email'),
+
                 'designation' => $this->input->post('designation'),
                 'phone' => $this->input->post('phone'),
                 'address' => $this->input->post('address'),
@@ -278,6 +278,49 @@ class Admin extends CI_Controller
             $filter['lense_uses'] = $this->Aquery->lenseuses_data();
             $filter['material_data'] = $this->Aquery->material_data();
             $this->load->view('admin/zumeyesadmin/filter', $filter);
+        }
+
+    }
+    public function socialmedia()
+    {
+
+        if ($this->input->post('twitterlink')) {
+            $data = array(
+                'twitter_page' => $this->input->post('twitter'),
+                'status' => '1',
+            );
+            $this->load->database();
+            $this->load->model('Aquery');
+            $this->Aquery->twitter_entry($data);
+            $this->session->set_flashdata('form_succ_msg2', 'Form Submited');
+            redirect('admin/socialmedia');
+        } elseif ($this->input->post('fb')) {
+            $data = array(
+                'facebook_page' => $this->input->post('facebook'),
+                'status' => '1',
+            );
+            $this->load->database();
+            $this->load->model('Aquery');
+            $this->Aquery->facebook_entry($data);
+            $this->session->set_flashdata('form_succ_msg1', 'Form Submited');
+            redirect('admin/socialmedia');
+        } elseif ($this->input->post('gplus')) {
+            $data = array(
+                'googleplus_page' => $this->input->post('googleplus'),
+                'status' => '1',
+            );
+            $this->load->database();
+            $this->load->model('Aquery');
+            $this->Aquery->googleplus_entry($data);
+            $this->session->set_flashdata('form_succ_msg3', 'Form Submited');
+            redirect('admin/socialmedia');
+        } else {
+            $this->load->database();
+            $this->load->model('Aquery');
+            $filter['twitter_data'] = $this->Aquery->twitter_data();
+            $filter['facebook_data'] = $this->Aquery->facebook_data();
+            $filter['googleplus_data'] = $this->Aquery->googleplus_data();
+            $this->load->view('admin/zumeyesadmin/socialmedia', $filter);
         }
 
     }
@@ -679,6 +722,11 @@ class Admin extends CI_Controller
                 );
             }
 //--------End of Thumbnail Upload Section-----------//
+            if ($this->input->post('prescription')) {
+                $prescription = array(
+                    'prescription_id' => implode("|", $this->input->post('prescription')),
+                );
+            }
             $less_price = $this->input->post('product_price') * $this->input->post('offer') / 100;
             $sale_price = $this->input->post('product_price') - $less_price;
             if ($this->input->post('cat_name') == '15') {
@@ -751,6 +799,8 @@ class Admin extends CI_Controller
                     'pro_description' => $this->input->post('content'),
                     'quantity' => $this->input->post('product_quantity'),
                     'offer' => $this->input->post('offer'),
+                    'discount' => $this->input->post('discount'),
+                    'tax' => $this->input->post('tax_slab'),
                     'brand' => implode("|", $this->input->post('brand_name')),
                     'color' => implode("|", $this->input->post('color_name')),
                     'material' => implode("|", $this->input->post('material_name')),
@@ -760,14 +810,26 @@ class Admin extends CI_Controller
                 if (isset($data1)) {
                     $data = array_merge($data1, $data);
                 }
+                if (isset($data1) && $prescription) {
+                    $data = array_merge($data1, $data, $prescription);
+                }
+                if (isset($data2) && $prescription) {
+                    $data = array_merge($data2, $data, $prescription);
+                }
                 if (isset($data2)) {
                     $data = array_merge($data2, $data);
                 }
                 if (isset($data11) && isset($data2)) {
                     $data = array_merge($data2, $data11, $data);
                 }
+                if (isset($data11) && isset($data2) && $prescription) {
+                    $data = array_merge($data2, $data11, $data, $prescription);
+                }
                 if (isset($data11) && isset($data1)) {
                     $data = array_merge($data1, $data, $data11);
+                }
+                if (isset($data11) && isset($data1) && $prescription) {
+                    $data = array_merge($data1, $data, $data11, $prescription);
                 }
 
                 $this->Aquery->product_entry($data);
@@ -777,7 +839,10 @@ class Admin extends CI_Controller
         $this->load->database();
         $this->load->model('Aquery');
         $cat_data['cat_data'] = $this->Aquery->cat_list();
-
+        $cat_data['offer'] = $this->Aquery->offer_list();
+        $cat_data['tax'] = $this->Aquery->tax_list();
+        $cat_data['discount'] = $this->Aquery->discount_list();
+        $cat_data['prescription'] = $this->Aquery->prescription_type();
         $cat_data['subcat_data'] = $this->Aquery->subcat_list();
         $cat_data['brand_name'] = $this->Aquery->brand_data();
         $cat_data['color_name'] = $this->Aquery->color_data();
@@ -2058,4 +2123,277 @@ class Admin extends CI_Controller
 
         redirect('admin/lenseinfo');
     }
+    public function statusfacebook()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->updatefacebook($status, $id);
+
+        redirect('admin/socialmedia');
+    }
+    public function statustwitter()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->updatetwitter($status, $id);
+
+        redirect('admin/socialmedia');
+    }
+    public function statusgoogleplus()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->updategoogleplus($status, $id);
+
+        redirect('admin/socialmedia');
+    }
+    public function register_users()
+    {
+
+        $userdata['user_list'] = $this->Aquery->user_list();
+
+        $this->load->view('admin/zumeyesadmin/userlist', $userdata);
+    }
+    public function tax_and_offer()
+    {
+        if ($this->input->post('taxinfo')) {
+            $data = array(
+                'tax_slab' => $this->input->post('tax_slab'),
+                'status' => 1,
+            );
+            $query = $this->Aquery->insert_tax($data);
+            if ($query) {
+                $this->session->set_flashdata('form_succ_msg1', 'Form Submited');
+                redirect('admin/tax_and_offer');
+            }
+        }
+        if ($this->input->post('offer_info')) {
+            $data = array(
+                'offer' => $this->input->post('offer'),
+                'status' => 1,
+            );
+            $query2 = $this->Aquery->insert_offer($data);
+            if ($query2) {
+                $this->session->set_flashdata('form_succ_msg2', 'Form Submited');
+                redirect('admin/tax_and_offer');
+            }
+        }
+        if ($this->input->post('discount_info')) {
+            $data = array(
+                'discount' => $this->input->post('discount'),
+                'status' => 1,
+            );
+            $query = $this->Aquery->insert_discount($data);
+            if ($query) {
+                $this->session->set_flashdata('form_succ_msg3', 'Form Submited');
+                redirect('admin/tax_and_offer');
+            }
+        }
+        $pro_data['offer_list'] = $this->Aquery->offer_list();
+        $pro_data['tax_list'] = $this->Aquery->tax_list();
+        $pro_data['discount_list'] = $this->Aquery->discount_list();
+        $this->load->view('admin/zumeyesadmin/tax_discount_offer', $pro_data);
+
+    }
+    public function status_pro_offer()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_prooffer($status, $id);
+
+        redirect('admin/tax_and_offer');
+    }
+    public function status_discount()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_discount($status, $id);
+
+        redirect('admin/tax_and_offer');
+    }
+    public function status_tax()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_tax($status, $id);
+
+        redirect('admin/tax_and_offer');
+    }
+    public function update_offer()
+    {
+        $id = $this->input->get('id');
+        $sph['offer'] = $this->Aquery->get_proofferbyid($id);
+        $this->load->view('admin/zumeyesadmin/update_pro_offer', $sph);
+        if ($this->input->post('update_offer')) {
+            $offer = array(
+                'offer' => $this->input->post('offer'));
+            $sid = $this->input->post('id');
+            $this->Aquery->update_offerbyid($offer, $sid);
+            redirect('admin/tax_and_offer');
+        }
+    }
+    public function update_discount()
+    {
+        $id = $this->input->get('id');
+        $sph['discount'] = $this->Aquery->get_discountbyid($id);
+        $this->load->view('admin/zumeyesadmin/update_discount', $sph);
+        if ($this->input->post('discountupdate')) {
+            $discount = array(
+                'discount' => $this->input->post('discount'));
+            $sid = $this->input->post('id');
+            $this->Aquery->update_discountbyid($discount, $sid);
+            redirect('admin/tax_and_offer');
+        }
+    }
+    public function update_taxslab()
+    {
+        $id = $this->input->get('id');
+        $sph['tax'] = $this->Aquery->get_taxbyid($id);
+        $this->load->view('admin/zumeyesadmin/update_taxslab', $sph);
+        if ($this->input->post('update_tax_slab')) {
+            $tax_slab = array(
+                'tax_slab' => $this->input->post('tax_slab'));
+            $sid = $this->input->post('id');
+            $this->Aquery->update_taxbyid($tax_slab, $sid);
+            redirect('admin/tax_and_offer');
+        }
+    }
+    public function orderlist()
+    {
+        $this->load->model('Aquery');
+        $this->load->model('Order');
+        $pro_list['cat_list'] = $this->Aquery->cat_list();
+        $pro_list['subcat_list'] = $this->Aquery->subcat_list();
+        $pro_list['user_order'] = $this->Order->userorder_list();
+
+        $this->load->view('admin/zumeyesadmin/orderlist', $pro_list);
+
+    }
+    public function orderDetail()
+    {
+        $id = $this->input->get('id');
+        if ($this->input->get('id')) {
+
+            $this->load->model('Order');
+            $cat_data['user_order'] = $this->Order->user_orderbyid($id);
+            $userorder = $this->Order->userorderbyid($id);
+
+            foreach ($userorder as $key => $userorderr) {
+                $cart_id = $userorderr->cart_id;
+            }
+            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id);
+            $this->load->view('admin/zumeyesadmin/orderDetail', $cat_data);
+        } else {
+            redirect('admin/homepage');
+        }
+
+    }
+
+    public function order_status_type()
+    {
+        if ($this->input->post('order_statuss')) {
+
+            $data = array(
+                'status_type' => $this->input->post('status_type'),
+                'status' => 1,
+            );
+            $query = $this->Aquery->order_status_type($data);
+            if ($query) {
+                $this->session->set_flashdata('form_succ_msg1', 'Form Submited');
+                redirect('admin/Order_status_type');
+            } else {
+                redirect('admin/Order_status_type1');
+            }
+        }
+
+        $orderstatus['order_status'] = $this->Aquery->orderstatus_list();
+        $this->load->view('admin/zumeyesadmin/order_status', $orderstatus);
+
+    }
+    public function status_order_type()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_order_type($status, $id);
+
+        redirect('admin/order_status_type');
+    }
+    public function update_order_status_type()
+    {
+        $id = $this->input->get('id');
+        $sph['order_status'] = $this->Aquery->get_orderstatusbyid($id);
+        $this->load->view('admin/zumeyesadmin/update_order_status', $sph);
+        if ($this->input->post('statusupdate')) {
+            $order_status = array(
+                'status_type' => $this->input->post('status_type'));
+            $sid = $this->input->post('id');
+            $this->Aquery->update_orderstatusbyid($order_status, $sid);
+            redirect('admin/order_status_type');
+
+        }
+    }
+
 }

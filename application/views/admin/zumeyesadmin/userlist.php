@@ -36,32 +36,14 @@
         <!-- partial -->
          <div class="content-wrapper" style="min-height:145px;">
 
-         <div class="row grid-margin">
-            <div class="col-lg-12">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">About Description
-                     <span style="color:blue;padding-left:70px">
-              <?php echo $this->session->flashdata('form_succ_msg'); ?></span></h4>
 
-                  <form action="admin/about_insertData" id="myForm" method="post">
-                                   <textarea id="summernoteExample" required name="content"></textarea>
-                   <?php echo form_error('content'); ?>
-
-                  <input type="submit" name="about_Submit" id="description" class="btn btn-primary btn-rounded btn-fw" value="Submit"/>
-                   <button type="reset" class="btn btn-light" id="reset">Cancel</button>
-                </form>
-                </div>
-              </div>
-            </div>
-          </div>
 
 
 
 
  <div class="card">
             <div class="card-body">
-              <h4 class="card-title">About Us Page Content</h4>
+              <h4 class="card-title">User List</h4>
               <div class="row">
                 <div class="col-12">
                   <div class="table-responsive">
@@ -69,34 +51,34 @@
                       <thead>
                         <tr>
                             <th>Sr No.</th>
-                            <th>Content</th>
+                            <th>User Name</th>
+                            <th>User Email</th>
+                             <th>User Phone No</th>
+                              <th>DOB</th>
 
-                            <th>Status</th>
-                            <th>Update</th>
+                            <th>View</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
 $sr_no = 1;
-if (@$about_data) {
-    foreach ($about_data as $key => $about_dat) {
-        $id = $about_dat->id;
+if (@$user_list) {
+    foreach ($user_list as $key => $user_listt) {
+        $id = $user_listt->id;
+        $email = $user_listt->email;
+        $fname = $user_listt->fname;
+        $phone = $user_listt->phone;
+        $dob = $user_listt->dob;
 
         ?>
                         <tr>
                             <td><?php echo $sr_no; ?></td>
-                            <td><?php echo 'Paragraph' . $sr_no; ?></td>
-                            <td>
-                             <form method="post" action="status_about" class="cartupdate">
-                  <input type="hidden" name="id"  value="<?php echo $id ?>">
-                  <input type="hidden" name="status"  value="<?php echo $about_dat->status ?>">
-                <input type="checkbox" name="status" value="<?php echo $about_dat->status ?>" <?php if ($about_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
-                 <label for="flat-checkbox-2">Active</label>
-                </form>
-                            </td>
-                            <td>
-                              <a href="<?php echo site_url() ?>admin/updateabout?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
-                            </td>
+                            <td><?php echo $fname; ?></td>
+                            <td><?php echo $email; ?></td>
+                            <td><?php echo $phone; ?></td>
+              <td><?php echo $dob ?></td>
+
+
                         </tr><?php $sr_no++;}}?>
                               </tbody>
                     </table>
@@ -112,12 +94,4 @@ if (@$about_data) {
         <!-- partial:../../partials/_footer.html -->
        <?php include 'footer.php';?>
 </body>
-<script type="text/javascript">
-  $(document).ready(function(){
-$("#reset").click(function(){
-    location.reload();
-});
-});
-</script>
 </html>
-

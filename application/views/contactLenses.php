@@ -5,12 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zumeyes Contact Lenses</title>
-	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-		<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
-
+	<?php include 'head.php';?>
 </head>
 
 <body>
@@ -113,17 +108,18 @@
 				<div class="bar clearfix" id="colorFilterContent">
 
 					<div class="filterList clearfix" style="display: none;">
-            <?php foreach ($color_name as $key => $color_dat) {?>
+         <?php foreach ($color_name as $key => $color_dat) {?>
            					<label>
 
+
+
+
+						<input id="color" value="<?php echo $color_dat->color_name; ?>" class="checkbox-custom color"  type="checkbox">
+						<span for="brand1" class="checkbox-custom-label"><?php echo $color_dat->color_name; ?>&nbsp&nbsp
+					</span>
 						<div class="circle">
 							<div class="color" style="background: <?php echo $color_dat->color_name; ?>"></div>
 						</div>
-
-						<div class="select"></div>
-						<input id="color" value="<?php echo $color_dat->color_name; ?>" class="checkbox-custom color"  type="checkbox">
-						<?php echo $color_dat->color_name; ?>
-
 					</label>
 
 				<?php }?>
@@ -213,8 +209,8 @@
 		<input type="hidden" id="sid" value="<?php echo $this->session->userdata('last_subid'); ?>">
 <?php include 'footer.php';?>
 </body>
-<script src="<?php echo base_url('assets/js/script.js'); ?>">
-</script>
+	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 <style>
 #loading
 {

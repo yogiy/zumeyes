@@ -52,7 +52,7 @@
 
 			<div class="row copyrightBlock">
 
-				<span>© 2018 Zumeyes. All rights resereved</span>
+				<span>© <?php echo date('Y') ?> Zumeyes. All rights resereved</span>
 
 			</div>
 

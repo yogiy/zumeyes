@@ -275,6 +275,45 @@ class Status extends CI_Model
         }
 
     }
+    public function status_discount($status, $id)
+    {
+
+        $this->db->where('id', $id);
+        $query = $this->db->update('discount', $status);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+    public function status_prooffer($status, $id)
+    {
+
+        $this->db->where('id', $id);
+        $query = $this->db->update('offer', $status);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+    public function status_tax($status, $id)
+    {
+
+        $this->db->where('id', $id);
+        $query = $this->db->update('taxslab', $status);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     public function frgpass($email, $phone)
     {
         $query = $this->db->query("SELECT `id` FROM `adminuser` where `email`='" . $email . "' AND `phone`='" . $phone . "'");
@@ -295,5 +334,51 @@ class Status extends CI_Model
         } else {
             return false;
         }
+    }
+    public function updatefacebook($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('facebook', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function updatetwitter($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('twitter', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function updategoogleplus($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('googleplus', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function status_order_type($status, $proid)
+    {
+
+        $this->db->where('id', $proid);
+        $query = $this->db->update('order_status_type', $status);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

@@ -5,15 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zumeyes</title>
-	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/js/slider/slider.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url(); ?>/assets/js/slider/slider.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
-
-
+	<?php include 'head.php';?>
 </head>
 
 <body>
@@ -24,7 +16,7 @@
 
     ?>
 		<div class="col-sm-6 sunglassMen clearfix">
-			<?php if ($this->session->flashdata('lense_page') == 15) {?>
+			<?php if ($this->session->userdata('lense_page') && $subcatdata->cat_name == 15) {?>
 			<a href="<?php echo site_url('contactLense') ?>?sid=<?php echo $subcatdata->id ?>">
 			<?php } else {?>
             <a href="<?php echo site_url('productList') ?>?sid=<?php echo $subcatdata->id ?>">
@@ -55,7 +47,8 @@
 
 		</div>
 	</footer>
-<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 
 </body>
 

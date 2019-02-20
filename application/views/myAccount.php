@@ -1,15 +1,17 @@
 <!doctype html>
 <html>
+<?php if (isset($user) && !empty($user)) {
+    foreach ($user as $key => $userdata) {
+        $gender = $userdata->gender;
+    }
+}
+?>
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zumeyes</title>
-	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
+	<?php include 'head.php';?>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('.wishid').click(function(){
@@ -29,7 +31,6 @@
 
 
 		</script>
-		<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 
 </head>
 
@@ -53,7 +54,7 @@
 					<i class="icon icon-user-circle"></i>
 					<div class="userInfo clearfix">
 
-						<span><?php echo $this->session->userdata('user_name'); ?> </span>
+						<span><?php echo $this->session->userdata('user_name'); ?>&nbsp <?php echo $this->session->userdata('user_lname'); ?> </span>
 						<em><?php echo $this->session->userdata('user_email'); ?> </em>
 
 					</div>
@@ -69,13 +70,13 @@
 					<li id="manageAddrs"><a href="#">Manage Address</a></li>
 					<li id="saveCards"><a href="#">Saved Cards</a></li>
 					<li id="bankDetails"><a href="#">Bank Details</a></li>
-					<span>Payment</span>
+					<!--<span>Payment</span>
 					<li id="phonePe"><a href="#">PhonePe Wallet</a></li>
-					<li id="giftCards"><a href="#">Gift Cards</a></li>
+					<li id="giftCards"><a href="#">Gift Cards</a></li>-->
 					<span>Other Stuff</span>
 					<li id="wishlist"><a href="#">My Wishlist</a></li>
 					<li id="notification"><a href="#">All Notifications</a></li>
-					<li id="rewards"><a href="#">My Rewards</a></li>
+				<!--	<li id="rewards"><a href="#">My Rewards</a></li>-->
 
 				</ul>
 
@@ -95,6 +96,8 @@
 
 					<div class="myOrderContent clearfix">
 
+						<?php if (!empty($user_order)) {
+    foreach ($user_order as $userorder) {?>
 						<div class="orderBar clearfix">
 
 							<div class="barTop clearfix">
@@ -102,89 +105,18 @@
 								<div class="boxT clearfix">
 
 									<span>Order ID</span>
-									<em>402-1028188-6637912</em>
+									<em><?php echo $userorder->order_id; ?></em>
 
 								</div>
 								<div class="boxT clearfix">
 
 									<span>Order Placed</span>
-									<em>Tue, Mar 14th '17</em>
+									<em><?php echo $userorder->order_date; ?></em>
 
 								</div>
 								<div class="buttonBlock clearfix">
 
-									<a href="orderDetails.html">
-									<button>Order Details</button>
-                                    </a>
-								  	<button>Invoice</button>
-									<button>Track</button>
-
-								</div>
-
-							</div>
-
-							<div class="itemBar clearfix">
-
-								<div class="itemImg"><img src="images/cart_proImg1.jpg" alt="Item One"></div>
-
-								<div class="itemInfo clearfix">
-
-									<h2>Square-Eye Glasses </h2>
-									<div class="info clearfix">
-										<span>Single Vision</span>
-										<span>Quantity <strong>01</strong></span>
-										<em>$ 23.99</em>
-									</div>
-
-								</div>
-
-							</div>
-
-							<div class="itemBar clearfix">
-
-								<div class="itemImg"><img src="images/cart_proImg2.jpg" alt="Item One"></div>
-
-								<div class="itemInfo clearfix">
-
-									<h2>Square-Eye Glasses </h2>
-									<div class="info clearfix">
-										<span>Single Vision</span>
-										<span>Quantity <strong>01</strong></span>
-										<em>$ 23.99</em>
-									</div>
-
-								</div>
-
-							</div>
-
-							<div class="barFoot clearfix">
-
-								<span class="deliverText">Delivered On: <em>Friday, Mar 17th '17</em></span>
-								<span class="deliverAmtText"><em>Total Amount &nbsp;</em> $ 47.98</span>
-
-							</div>
-
-						</div>
-
-						<div class="orderBar clearfix">
-
-							<div class="barTop clearfix">
-
-								<div class="boxT clearfix">
-
-									<span>Order ID</span>
-									<em>402-1028188-6637912</em>
-
-								</div>
-								<div class="boxT clearfix">
-
-									<span>Order Placed</span>
-									<em>Tue, Mar 14th '17</em>
-
-								</div>
-								<div class="buttonBlock clearfix">
-
-									<a href="orderDetails.html">
+									<a href="<?php echo base_url('orderDetails'); ?>?id=<?php echo $userorder->id; ?>">
 									<button>Order Details</button>
                                     </a>
 									<button>Invoice</button>
@@ -193,50 +125,52 @@
 								</div>
 
 							</div>
-
+								<?php if (!empty($order_cart_data)) {
+        foreach ($order_cart_data as $order_cartdata) {?>
 							<div class="itemBar clearfix">
 
-								<div class="itemImg"><img src="images/cart_proImg1.jpg" alt="Item One"></div>
+								<div class="itemImg"><img src="<?php echo base_url() ?>assets/upload/product/<?php echo str_replace(" ", '_', $order_cartdata->pro_image) ?>" alt="Item One"></div>
 
 								<div class="itemInfo clearfix">
 
-									<h2>Square-Eye Glasses </h2>
+									<h2><?php echo $order_cartdata->name ?> </h2>
 									<div class="info clearfix">
-										<span>Single Vision</span>
-										<span>Quantity <strong>01</strong></span>
-										<em>$ 23.99</em>
+										<span><?php echo $order_cartdata->prescription_type ?></span>
+										<span>Quantity <strong><?php echo $order_cartdata->qty ?></strong></span>
+										<em>Rs <?php if (!empty($order_cart_data)) {$qty = 0;
+            $taxx = 0;
+            foreach ($order_cart_data as $order_cartdata) {
+                $qty = $order_cartdata->qty + $qty;
+
+                if (empty($order_cartdata->lense_price)) {
+                    if ($order_cartdata->tax != 0) {
+                        $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->tax / 100;}
+                    echo $order_cartdata->price * $order_cartdata->qty + $taxx;
+
+                } else {
+                    if ($order_cartdata->tax != 0) {
+                        $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price * $order_cartdata->tax / 100;
+                    }
+                    echo $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price + $taxx;
+                }
+            }}?>
+										</em>
 									</div>
 
 								</div>
 
 							</div>
-
-							<div class="itemBar clearfix">
-
-								<div class="itemImg"><img src="images/cart_proImg2.jpg" alt="Item One"></div>
-
-								<div class="itemInfo clearfix">
-
-									<h2>Square-Eye Glasses </h2>
-									<div class="info clearfix">
-										<span>Single Vision</span>
-										<span>Quantity <strong>01</strong></span>
-										<em>$ 23.99</em>
-									</div>
-
-								</div>
-
-							</div>
+							<?php }}?>
 
 							<div class="barFoot clearfix">
 
-								<span class="deliverText">Delivered On: <em>Friday, Mar 17th '17</em></span>
-								<span class="deliverAmtText"><em>Total Amount &nbsp;</em> $ 47.98</span>
+								<span class="deliverText">Delivered On: <em><?php echo $userorder->deliverydate; ?></em></span>
+								<span class="deliverAmtText"><em>Total Amount &nbsp;</em> Rs <?php echo $userorder->amount; ?></span>
 
 							</div>
 
 						</div>
-
+					<?php }}?>
 					</div>
 
 				</div>
@@ -316,19 +250,19 @@
 						<div class="infoBar clearfix">
 
 							<label>First Name</label>
-							<div class="field clearfix"><input type="text" required name="name" id="cfname" placeholder="<?php echo $this->session->userdata('user_name'); ?> "></div>
-						<?php echo form_error('name'); ?>
+							<div class="field clearfix"><input type="text" required name="name" id="fname" value="<?php echo $this->session->userdata('user_name'); ?> "></div>
+						<span class="error_cemail" style="font-size:15px" id="fname_error_message"></span>
 						</div>
 						<div class="infoBar clearfix">
 
 							<label>Gender</label>
 							<div class="radioBlock clearfix">
 								<div class="option">
-									<input id="male" class="radio-custom" name="radio-group" type="radio" checked>
+									<input id="male" value="Male" class="radio-custom" name="radio-group" type="radio" <?php if ($gender == 'Male') {?>checked <?php }?> >
             						<span for="male" class="radio-custom-label"><em>Male</em></span>
 								</div>
 								<div class="option">
-									<input id="female" class="radio-custom" name="radio-group" type="radio">
+									<input id="female" value="Female" class="radio-custom" name="radio-group" <?php if ($gender == 'Female') {?>checked <?php }?> type="radio">
             						<span for="female" class="radio-custom-label"><em>Female</em></span>
 								</div>
 							</div>
@@ -337,19 +271,19 @@
 						<div class="infoBar clearfix">
 
 							<label>Mobile Number</label>
-							<div class="field clearfix"><input type="text" required name="phone" id="cnum" placeholder="+91 2874001122"></div>
-						<?php echo form_error('phone'); ?>
+							<div class="field clearfix"><input type="text"  required name="phone" id="num" value="<?php echo $this->session->userdata('phone'); ?>" placeholder="xxxxxxxxxx"></div>
+						<span class="error_cemail" style="font-size:15px" id="phone_error_message"></span>
 						</div>
 						<div class="infoBar clearfix">
 
 							<label>Date of Birth</label>
-							<div class="field clearfix"><input type="text" required name="dob" id="cdob" placeholder="31/02/1983"></div>
-						<?php echo form_error('dob'); ?>
+							<div class="field clearfix"><input type="text" pattern="^\d{2}/\d{2}/\d{4}$" required name="dob" id="cdob" value="<?php echo $this->session->userdata('dob'); ?>" placeholder="31/02/19xx"></div>
+
 						</div>
 
 						<div class="buttonBlock clearfix">
 
-							<div class="button"><input type="submit" name="update_personal_info" name="save" value="Save"></div>
+							<div class="button"><input type="submit" name="update_personal_info" id="editpinfo" name="save" value="Save"></div>
 							<button class="cancel">Cancel</button>
 
 						</div>
@@ -363,35 +297,36 @@
 						<div class="infoBar clearfix">
 
 							<label>Type Current Password</label>
-							<div class="field clearfix"><input type="text" required name="cpass" id="oldpwd" placeholder="">
-								<?php echo form_error('cpass'); ?></div>
+							<div class="field clearfix"><input type="password" required name="cpass" id="oldpwd" placeholder="">
+								<span class="error_cemail" style="font-size:15px" id="c_pwd_error_message"></span></div>
 
 						</div>
 						<div class="infoBar clearfix">
 
 							<label>Type New Password</label>
-							<div class="field clearfix" ><input type="text" required name="pass" id="newpwd" placeholder="">
-								<?php echo form_error('newpass'); ?></div>
+							<div class="field clearfix" ><input type="password" required name="pass" id="cpwds" placeholder="">
+								<span class="error_cemail" style="font-size:15px" id="cpwds_error_message"></span></div>
 
 						</div>
 						<div class="infoBar clearfix">
 
 							<label>Retype New Password</label>
-							<div class="field clearfix"><input type="text" required name="rnewpass" id="rtypnewpwd" placeholder="">
-								<?php echo form_error('rnewpass'); ?></div>
+							<div class="field clearfix"><input type="password" required name="rnewpass" id="ccpwds" placeholder="">
+								<span class="error_cemail" style="font-size:15px" id="ccpwds_error_message"></span></div>
 
 						</div>
 
 						<div class="buttonBlock clearfix ">
 
-							<button type="submit" name="changepass" value="changepass">Change</button>
-							<button class="cancel">Cancel</button>
+							<button type="submit" name="changepass" id="submitbutton" value="changepass">Change</button>
+							<button id="reloadfrompass" class="cancel" >Cancel</button>
 
 						</div>
 					</form>
 					</div>
 
 				</div>
+
 
 				<div class="acodinOption manageAddrsOption"><span>Manage Address</span></div>
 
@@ -415,45 +350,51 @@
 							<div class="clearfix addNewAddrs" id="newAddressBlock">
 
 								<span>Add New Address</span>
-						<form method="post" action="myAccount">
+						<form method="post" action="myAccount" autocomplete="off">
 
 								<div class="addrsDetails clearfix">
 
 
 								<div class="detailsBar clearfix">
 
-									<div class="field"><input type="text" required name="name" id="cfname" placeholder="Full Name"></div>
-									<div class="field right"><input type="text" required name="phone" id="cnum" placeholder="Phone Number"></div>
-								<?php echo form_error('name'); ?>
+									<div class="field"><input type="text" autocomplete="off" required name="name" id="nfname" placeholder="Full Name">
+										<span class="error_cemail" style="font-size:15px" id="nname_error_message"></span></div>
+									<div class="field right"><input type="text" pattern="^[0-9]+$" placeholder="Phone Number" minlength="8" maxlength="15" autocomplete="off" required name="phone" id="nnum" placeholder="Phone Number"><span class="error_cemail" style="font-size:15px" id="cphone_error_message"></span></div>
+
 								</div>
 								<div class="detailsBar clearfix">
 
-									<div class="field full"><textarea required name="address" id="caddrs" placeholder="Address"></textarea></div>
-								<?php echo form_error('address'); ?>
-								</div>
+									<div class="field full"><textarea required name="address" id="naddr" placeholder="Address"></textarea>
+									<span class="error_cemail" style="font-size:15px" id="naddress_error_message"></span></div>
 
-								<div class="detailsBar clearfix">
-
-									<div class="field"><input type="text" required name="cpin" id="cpin" placeholder="Pincode"></div>
-									<?php echo form_error('cpin'); ?>
-									<div class="field right"><input type="text" id="clocality" name="locality" required placeholder="Locality"></div>
-								<?php echo form_error('locality'); ?>
 								</div>
 
 								<div class="detailsBar clearfix">
 
-									<div class="field"><input type="text" required name="city" id="ccity" placeholder="City"></div>
-									<?php echo form_error('city'); ?>
-									<div class="field right"><input name="state" required type="text" id="cstate" placeholder="State"></div>
-								<?php echo form_error('state'); ?>
+									<div class="field"><input type="text" autocomplete="off" required name="cpin" id="npin" placeholder="Pincode">
+									<span class="error_cemail" style="font-size:15px" id="npin_error_message"></span></div>
+
+									<div class="field right"><input type="text" autocomplete="off" id="nlocality" name="locality" required placeholder="Locality">
+									<span class="error_cemail" style="font-size:15px" id="nlocality_error_message"></span></div>
+
 								</div>
 
 								<div class="detailsBar clearfix">
 
-									<div class="field"><input type="text" required name="landmark" id="clandm" placeholder="Landmark"></div>
-									<?php echo form_error('landmark'); ?>
-									<div class="field right"><input name="alternatephone" required type="text" id="caltnum" placeholder="Alternate Number"></div>
-								<?php echo form_error('alternatephone'); ?>
+									<div class="field"><input type="text" autocomplete="off" required name="city" id="ncity" placeholder="City">
+									<span class="error_cemail" style="font-size:15px" id="ncity_error_message"></span></div>
+
+									<div class="field right"><input name="state" autocomplete="off" required type="text" id="nstate" placeholder="State">
+										<span class="error_cemail" style="font-size:15px" id="nstate_error_message"></span> </div>
+
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" autocomplete="off" required name="landmark" id="nlandm" placeholder="Landmark"><span class="error_cemail" style="font-size:15px" id="nlandm_error_message"></span></div>
+
+									<div class="field right"><input name="alternatephone" autocomplete="off" required type="text" placeholder="Alternate Number" pattern="^[0-9]+$" placeholder="Phone Number" minlength="10" maxlength="10"></div>
+
 								</div>
 
 								<div class="detailsBar clearfix">
@@ -477,7 +418,7 @@
 
 								<div class="buttonBlock clearfix">
 
-									<div class="button"><input name="addnewaddress" value="Save" type="submit"></div>
+									<div class="button"><input name="addnewaddress" value="Save" type="submit" id="addaddress"></div>
 									<button class="cancelBtn">Cancel</button>
 
 								</div>
@@ -498,7 +439,7 @@
 
 								<div class="detailsBar clearfix">
 
-									<div class="field"><input type="text" name="name" id="cfname" placeholder="<?php echo $this->session->userdata('user_name'); ?> "></div>
+									<div class="field"><input type="text" name="name" id="cfname" value="<?php echo $this->session->userdata('user_name'); ?> "></div>
 									<div class="field right"><input type="text" name="phone" id="cnum" placeholder="+91 2875469872"></div>
 
 								</div>
@@ -536,12 +477,85 @@
 									<div class="addrsType clearfix">
 
 										<div class="radioBlock">
-										<input id="homeD" class="radio-custom" name="radio-group" type="radio" checked>
-            							<span for="homeD" class="radio-custom-label"><em>Home (All day delivery)</em></span>
+										<input id="homeED" class="radio-custom" name="radio-group" type="radio" checked>
+            							<span for="homeED" class="radio-custom-label"><em>Home (All day delivery)</em></span>
 										</div>
 										<div class="radioBlock">
-										<input id="officeD" class="radio-custom" name="radio-group" type="radio">
-            							<span for="officeD" class="radio-custom-label"><em>Office (Delivery Between 10am - 7pm)</em></span>
+										<input id="officeED" class="radio-custom" name="radio-group" type="radio">
+            							<span for="officeED" class="radio-custom-label"><em>Office (Delivery Between 10am - 7pm)</em></span>
+										</div>
+
+									</div>
+
+								</div>
+
+
+								<div class="buttonBlock clearfix">
+
+									<div class="button selectAndDeliveryAddress"><input name="addressupdate" value="Save" type="submit"></div>
+									<button class="cancelBtn">Cancel</button>
+
+								</div>
+
+							</form>
+
+						</div>
+
+							</div>
+							<div class="clearfix addNewAddrs editAddrs" class="updateAddressBlock" >
+
+								<span>Edit Address</span>
+
+								<div class="addrsDetails clearfix">
+
+							<form method="post" action="myAccount">
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" name="name" class="cfname" value="Ravi"></div>
+									<div class="field right"><input type="text" name="phone" class="cnum" placeholder="+91 2875469872"></div>
+
+								</div>
+								<div class="detailsBar clearfix">
+
+									<div class="field full"><textarea name="address" class="caddrs" placeholder="D Block 201, Ground Floor, Gali No.1,West Dawarka"></textarea></div>
+
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" name="pincode" class="cpin" placeholder="110048"></div>
+									<div class="field right"><input type="text" class="clocality" name="locakity" placeholder="South Delhi"></div>
+
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" name="city" class="ccity" placeholder="New Delhi"></div>
+									<div class="field right"><input type="text" name="state" class="cstate" placeholder="New Delhi"></div>
+
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" name="landmark" class="clandm" placeholder="Near DAV School"></div>
+									<div class="field right"><input type="text" name="alternatephone" class="caltnum" placeholder="+91 8745000036"></div>
+
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<label>Addresss Type</label>
+
+									<div class="addrsType clearfix">
+
+										<div class="radioBlock">
+										<input id="homeEOD" class="radio-custom" name="radio-group" type="radio" checked>
+            							<span for="homeEOD" class="radio-custom-label"><em>Home (All day delivery)</em></span>
+										</div>
+										<div class="radioBlock">
+										<input id="officeEOD" class="radio-custom" name="radio-group" type="radio">
+            							<span for="officeEOD" class="radio-custom-label"><em>Office (Delivery Between 10am - 7pm)</em></span>
 										</div>
 
 									</div>
@@ -562,7 +576,7 @@
 
 							</div>
 
-							<?php if (isset($useraddress)) {
+							<?php if (isset($useraddress) && !empty($useraddress)) {
     foreach ($useraddress as $user_address) {?>
 							<div class="addrsBox clearfix">
 
@@ -582,9 +596,9 @@
 
 
 
-<form method="post" action="delete_user_address">
+<form method="post" action="delete_user_addressmyaccount">
 		     <input type="hidden" name="addressid" value="<?php echo $user_address->id ?>">
-											<button class="deleteClass"><i class="icon icon-delete-button"></i><em>Remove</em></button></form>
+											<button class="" type="submit" value="deleteClass"><i class="icon icon-delete-button"></i><em>Remove</em></button></form>
 
 										</div>
 
@@ -619,7 +633,7 @@
 				<div class="accContent clearfix" id="saveCardsContent">
 
 					<div class="head clearfix">
-						<h1>Manage Address</h1>
+						<h1>Manage Card Detail</h1>
 						<div class="addNewAddrs addNewCard clearfix">
 							<a id="btnAddCard" href="#" class="clearfix">
 								<i class="icon icon-plus-button"></i>
@@ -634,51 +648,71 @@
 						<div class="addCard clearfix" id="newCardBlock">
 
 						<span>Add New Card</span>
-
+						<form action="card_save" method="post" id="card_save">
 						<div class="detailsBar clearfix">
 
-							<div class="field full"><input type="text" id="ccardnum" placeholder="Card Number"></div>
+						<div class="field full"><input type="text" id="cardNumber" placeholder="Card Number" name="cardno" required>
+								</div>
 
 						</div>
 
 						<div class="detailsBar clearfix">
 
 						<div class="field">
-											<input type="text" id="ccardexpM" placeholder="Expiry Month">
-											<i class="icon icon-angle-down"></i>
-										  	<ul class="list">
-												<li><a href="#">01</a></li>
-												<li><a href="#">02</a></li>
-												<li><a href="#">03</a></li>
-												<li><a href="#">04</a></li>
-												<li><a href="#">05</a></li>
-												<li><a href="#">06</a></li>
-												<li><a href="#">07</a></li>
-												<li><a href="#">08</a></li>
-												<li><a href="#">09</a></li>
-												<li><a href="#">10</a></li>
-												<li><a href="#">11</a></li>
-												<li><a href="#">12</a></li>
-										  	</ul>
+											 <select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 50px;
+    margin: 0 0 0 0px;
+    padding: 10px;
+    width:100%" name="exp_month" id="ccardexpM" required>
+    <option value="">Expiry Month</option>
+    <option value="01">01</option>
+						   <option value="02">02</option>
+							<option value="03">03</option>
+							<option value="04">04</option>
+                            <option value="05">05</option>
+							<option value="06">06</option>
+							<option value="07">07</option>
+                            <option value="08">08</option>
+							<option value="09">09</option>
+							<option value="10">10</option>
+                            <option value="11">11</option>
+							<option value="12">12</option>
+						</select>
 										</div>
 
 										<div class="field right">
-											<input type="text" id="ccardexpY" placeholder="Expiry Year">
-											<i class="icon icon-angle-down"></i>
-										  	<ul class="list">
-												<li><a href="#">2018</a></li>
-												<li><a href="#">2019</a></li>
-												<li><a href="#">2020</a></li>
-												<li><a href="#">2021</a></li>
-												<li><a href="#">2022</a></li>
-												<li><a href="#">2023</a></li>
-												<li><a href="#">2024</a></li>
-												<li><a href="#">2025</a></li>
-												<li><a href="#">2026</a></li>
-												<li><a href="#">2027</a></li>
-												<li><a href="#">2028</a></li>
-												<li><a href="#">2029</a></li>
-										  	</ul>
+
+											 <select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 50px;
+    margin: 0 0 0 0px;
+    padding: 10px;
+    width:100%" name="exp_year" id="ccardexpY" required>
+    <option value="">Expiry Year</option>
+    <option value="2019">2019</option>
+						   <option value="2020">2020</option>
+							<option value="2021">2021</option>
+							<option value="2022">2022</option>
+                            <option value="2023">2023</option>
+							<option value="2024">2024</option>
+							<option value="2025">2025</option>
+                            <option value="2026">2026</option>
+							<option value="2027">2027</option>
+							<option value="2028">2028</option>
+                            <option value="2029">2029</option>
+							<option value="2030">2030</option>
+						</select>
 										</div>
 
 									</div>
@@ -686,54 +720,62 @@
 						<div class="detailsBar clearfix">
 
 										<div class="field">
-											<input type="text" id="cccvv" placeholder="CVV Number">
+											<input type="text" id="cvv" required placeholder="CVV Number">
+
 										</div>
 										<div class="field right">
-											<input type="text" id="cctype" placeholder="Card Type">
-											<i class="icon icon-angle-down"></i>
-										  	<ul class="list">
-												<li><a href="#">Master</a></li>
-												<li><a href="#">Visa</a></li>
-												<li><a href="#">American Express</a></li>
-										  	</ul>
+
+										  	<select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px 5px 5px 5px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 50px;
+    margin: 0 0 0 0px;
+    padding: 10px;
+    width:100%" name="cardtype" id="cctype" required>
+    <option value="">Card Type</option>
+    <option value="Master">Master</option>
+						   <option value="Visa">Visa</option>
+							<option value="American Express">American Express</option>
+
+						</select>
 										</div>
 
 									</div>
 
 						<div class="detailsBar clearfix">
 
-										<div class="field full"><input type="text" id="ccname" placeholder="Name on Card"></div>
+										<div class="field full"><input type="text" id="owner" name="name_oncard" placeholder="Name on Card" required>
+										</div>
 
 									</div>
 
-						<div class="buttonBlock clearfix">
-
-							<button class="saveBtn">Save</button>
+						<div class="buttonBlock clearfix" id="pay-now">
+								<input type="hidden" name="email" value="<?php echo $this->session->userdata('user_email'); ?>">
+							<button type="submit" class="" name="savecard" id="confirm-purchase" >Save</button>
 							<button class="cancelBtn">Cancel</button>
 
 						</div>
-
+					</form>
 					</div>
 
 						<div class="saveCardList clearfix">
-
+					<?php if (isset($card_info) && !empty($card_info)) {
+    foreach ($card_info as $cardinfo) {
+        ?>
 						<div class="cardBar clearfix">
 
-							<div class="img"><img src="images/visa.png" alt="Visa Card"></div>
-							<span>4854 98** **** 1470</span>
-							<em>Expires : 08/21</em>
-							<a href="#" class="icon icon-delete-button"></a>
+						<div class="img"><img src="<?php echo base_url() ?>/assets/images/<?php if ($cardinfo->cardtype == 'Visa') {?>visa.png<?php }if ($cardinfo->cardtype == 'Master') {?>master.png<?php }if ($cardinfo->cardtype == 'American Express') {?>amex.png<?php }?>" alt="Card"></div>
+							<span><?php echo $cardinfo->card1; ?> **** **** <?php echo $cardinfo->card4; ?></span>
+							<em>Expires : <?php echo $cardinfo->exp_month; ?>/<?php echo $cardinfo->exp_year; ?></em>
+							<a href="<?php echo site_url('card_remove') ?>?id=<?php echo $cardinfo->id; ?>" class="icon icon-delete-button"></a>
 
 						</div>
+						<?php }}?>
 
-						<div class="cardBar clearfix">
-
-							<div class="img"><img src="images/visa.png" alt="Visa Card"></div>
-							<span>5884 20** **** 2304</span>
-							<em>Expires : 06/20</em>
-							<a href="#" class="icon icon-delete-button"></a>
-
-						</div>
 
 					</div>
 
@@ -762,7 +804,7 @@
 
 				</div>
 
-				<div class="acodinOption phonePeOption"><span>PhonePe Wallet</span></div>
+		<!--		<div class="acodinOption phonePeOption"><span>PhonePe Wallet</span></div>
 
 				<div class="accContent clearfix" id="phonePeContent">
 
@@ -869,7 +911,7 @@
 
 					</div>
 
-				</div>
+				</div>-->
 
 				<div class="acodinOption wishlistOption"><span>My Wishlist</span></div>
 
@@ -882,7 +924,7 @@
 					<div class="wishlist clearfix">
 
 						<div class="wishlistBar clearfix">
-						<?php if (@$wishlist) {
+						<?php if (isset($wishlist) && !empty($wishlist)) {
     foreach ($wishlist as $key => $wishlist) {?>
 							<div class="wishlistBox clearfix">
 
@@ -899,19 +941,20 @@
 									</div>
       								<a href="#" class="reviewLink">99 Review</a>
 								</div>
-								<form method="post" action="wisht_to_shoppingCart">
-								<div class="buttonBlock clearfix">
-									<input type="hidden" name="wish_id" value="<?php echo @$wishlist->id ?>">
 
-									<button class="hvr-wobble-top" name="<?php echo @$wishlist->prescription_type; ?>" type="submit">
+								<div class="buttonBlock clearfix">
+
+
+									<a href="<?php echo site_url('productDetails') ?>?id=<?php echo @$wishlist->id ?>"><button class="hvr-wobble-top" name="<?php echo @$wishlist->prescription_type; ?>" type="submit">
 										<i class="icon icon-shopping-cart"></i> <span>Add to Cart</span>
-									</button>
+									</button></a>
 
 									<div class="whislistIcon"> <i class="icon icon-heart active wishid " wishid="<?php echo @$wishlist->id ?>">
 
 									</i> </div>
+
 								</div>
-								</form>
+
 							</div>
 							<?php }} else {?>
 							<div class="wishlistBox clearfix">
@@ -978,7 +1021,7 @@
 
 				</div>
 
-				<div class="acodinOption rewardsOption"><span>My Rewards</span></div>
+		<!--		<div class="acodinOption rewardsOption"><span>My Rewards</span></div>
 
 				<div class="accContent clearfix" id="rewardsContent">
 
@@ -995,7 +1038,7 @@
 
 					</div>
 
-				</div>
+				</div>-->
 
 
 			</div>
@@ -1025,6 +1068,340 @@
 						);
 </script>
 	<?php }?>
+	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+         var error_name=false;
+		     var error_naddress=false;
+		     var error_nnum=false;
+		     var error_npin=false;
+		      var error_nlocality=false;
+		       var error_ncity=false;
+		        var error_nstate=false;
+		         var error_nlandm=false;
+                  var error_nalter=false;
+
+
+		     $('#nname_error_message').hide();
+		     $('#naddress_error_message').hide();
+         	$('#cphone_error_message').hide();
+         	$('#npin_error_message').hide();
+         	$('#ncity_error_message').hide();
+         	$('#nstate_error_message').hide();
+         	$('#nlandm_error_message').hide();
+         	$('#nalter_error_message').hide();
+         	$('#nlocality_error_message').hide();
+
+         	$("#cfname").focusin(function(){
+          	$('#nname_error_message').hide();
+          });
+
+         	$("#npin").focusin(function(){
+          	$('#npin_error_message').hide();
+          });
+
+         	$("#nnum").focusin(function(){
+          	$('#cphone_error_message').hide();
+          });
+         	$("#nstate").focusin(function(){
+          	$('#nstate_error_message').hide();
+          });
+         	$("#ncity").focusin(function(){
+          	$('#ncity_error_message').hide();
+          });
+
+         	$("#naddr").focusin(function(){
+          	$('#naddress_error_message').hide();
+          });
+         	$("#naddr").focusout(function(){
+          	check_address();
+          });
+         	$("#npin").focusout(function(){
+          	check_npin();
+          });
+         	$("#nfname").focusout(function(){
+          	check_fname();
+          });
+         	$("#nstate").focusout(function(){
+          	check_state();
+          });
+         	$("#ncity").focusout(function(){
+          	check_city();
+          });
+
+
+         	$("#nnum").focusout(function(){
+          	check_num();
+          });
+         	$("#naltnum").focusout(function(){
+          	check_altnum();
+          });
+
+		   function check_fname(){
+          	var pattern= /^[A-Za-z\s]+$/;
+          	var fname =$("#nfname").val();
+          	if(pattern.test(fname) && fname !== ''){
+          		$("#nname_error_message").hide();
+          		document.getElementById('addaddress').disabled = '';
+
+          	}
+          	else{
+          		$("#nname_error_message").html("First Name Should Be Letter");
+          		$("#nname_error_message").show();
+          		$("#nname_error_message").css("color","red");
+          		error_fname = true;
+          		document.getElementById('addaddress').disabled = 'disabled';
+          	}
+          }
+
+           function check_city(){
+          	var pattern= /^[A-Za-z\s]+$/;
+          	var ncity =$("#ncity").val();
+          	if(pattern.test(ncity) && ncity !== ''){
+          		$("#ncity").hide();
+          		document.getElementById('addaddress').disabled = '';
+
+          	}
+          	else{
+          		$("#ncity_error_message").html("City Name Should Be Letter");
+          		$("#ncity_error_message").show();
+          		$("#ncity_error_message").css("color","red");
+          		error_ncity = true;
+          		document.getElementById('addaddress').disabled = 'disabled';
+          	}
+          }
+
+          function check_state(){
+          	var pattern= /^[A-Za-z\s]+$/;
+          	var nstate =$("#nstate").val();
+          	if(pattern.test(nstate) && nstate !== ''){
+          		$("#nstate").hide();
+          		document.getElementById('addaddress').disabled = '';
+
+          	}
+          	else{
+          		$("#nstate_error_message").html("State Name Should Be Letter");
+          		$("#nstate_error_message").show();
+          		$("#nstate_error_message").css("color","red");
+          		error_nstate = true;
+          		document.getElementById('addaddress').disabled = 'disabled';
+          	}
+          }
+          function check_num1(){
+          	var pattern= /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
+          	var phone =$("#nnum").val();
+          	if(pattern.test(phone) && phone !== ''){
+          		$("#cphone_error_message").hide();
+          		document.getElementById('addaddress').disabled = '';
+
+          	}
+          	else{
+          		$("#cphone_error_message").html("Please enter valid phone number");
+          		$("#cphone_error_message").show();
+          		$("#cphone_error_message").css("color","red");
+          		error_num = true;
+          		document.getElementById('addaddress').disabled = 'disabled';
+          	}
+          }
+          function check_altnum(){
+          	var pattern= /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/;
+          	var naltnum =$("#naltnum").val();
+          	if(pattern.test(naltnum) && naltnum !== ''){
+          		$("#nalter_error_message").hide();
+          		document.getElementById('addaddress').disabled = '';
+
+          	}
+          	else{
+          		$("#nalter_error_message").html("Please enter valid phone number");
+          		$("#nalter_error_message").show();
+          		$("#nalter_error_message").css("color","red");
+          		error_num = true;
+          		document.getElementById('addaddress').disabled = 'disabled';
+          	}
+          }
+
+
+function check_npin(){
+
+          	var pattern= /^\d{6}$/;
+          	var phone =$("#npin").val();
+          	if(pattern.test(phone) && phone !== ''){
+          		$("#npin_error_message").hide();
+          		document.getElementById('addaddress').disabled = '';
+
+          	}
+          	else{
+          		$("#npin_error_message").html("Please enter valid pin code");
+          		$("#npin_error_message").show();
+          		$("#npin_error_message").css("color","red");
+          		error_num = true;
+          		document.getElementById('addaddress').disabled = 'disabled';
+          	}
+          }
+
+          });
+      </script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+         var error_fname=false;
+		     var error_gender=false;
+		     var error_num=false;
+		     var error_dob=false;
+
+		     $('#fname_error_message').hide();
+		     $('#gender_error_message').hide();
+         	$('#phone_error_message').hide();
+         	$('#dob_error_message').hide();
+         	$("#fname").focusout(function(){
+          	check_fname();
+          });
+         	$("#fname").focusin(function(){
+          	$('#fname_error_message').hide();
+          });
+         	$("#num").focusout(function(){
+          	check_num();
+          });
+         	$("#num").focusin(function(){
+          	$('#phone_error_message').hide();
+          });
+		   function check_fname(){
+          	var pattern= /^[A-Za-z]+$/;
+          	var fname =$("#fname").val();
+          	if(pattern.test(fname) && fname !== ''){
+          		$("#name_error_message").hide();
+          		document.getElementById('editpinfo').disabled = '';
+
+          	}
+          	else{
+          		$("#fname_error_message").html("First Name Should Be Letter");
+          		$("#fname_error_message").show();
+          		$("#fname_error_message").css("color","red");
+          		error_fname = true;
+          		document.getElementById('editpinfo').disabled = 'disabled';
+          	}
+          }
+          function check_num(){
+          	var pattern= /^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/;
+          	var phone =$("#num").val();
+          	if(pattern.test(phone) && phone !== ''){
+          		$("#phone_error_message").hide();
+          		document.getElementById('editpinfo').disabled = '';
+
+          	}
+          	else{
+          		$("#phone_error_message").html("Please enter valid phone number");
+          		$("#phone_error_message").show();
+          		$("#phone_error_message").css("color","red");
+          		error_num = true;
+          		document.getElementById('editpinfoeditpinfo').disabled = 'disabled';
+          	}
+          }
+
+          });
+      </script>
+
+<script type="text/javascript">
+
+		$(document).ready(function(){
+         var error_cpwds=false;
+		     var error_ccpwds=false;
+		     var error_oldpwd=false;
+
+		     $('#c_pwd_error_message').hide();
+		     $('#cpwds_error_message').hide();
+         	$('#ccpwds_error_message').hide();
+		    $("#cpwd").focusin(function(){
+          	$('#disapper').hide();
+          	$('.statusMsg').hide();
+          });
+		    $("#oldpwd").focusout(function(){
+          	auth_password();
+          });
+		     $("#oldpwd").focusin(function(){
+          	$('#c_pwd_error_message').hide();
+          });
+            $("#cpwds").focusout(function(){
+          	check_password();
+          });
+           $("#ccpwds").keyup(function(){
+          	match_password();
+          });
+           $("#cpwds").focusin(function(){
+          	$('#cpwds_error_message').hide();
+          });
+$("#reloadfrompass").focusin(function(){
+          	window.location.reload();
+          });
+            function check_password(){
+          	var pattern= /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+          	var cpass =$("#cpwds").val();
+          	if(pattern.test(cpass) && cpass !== ''){
+          		$("#cpwds_error_message").hide();
+          		document.getElementById('submitbutton').disabled = '';
+
+          	}
+          	else{
+          		$("#cpwds_error_message").html("Password combination Should have 1 Cap,1 small,1 Numeric,1 special charecter and minimum length 8.");
+          		$("#cpwds_error_message").show();
+          		$("#cpwds_error_message").css("color","red");
+          		error_cpwds = true;
+          		document.getElementById('submitbutton').disabled = 'disabled';
+          	}
+          }
+			 function match_password(){
+
+          	var cpass =$("#cpwds").val();
+          	var ccpass =$("#ccpwds").val();
+          	if(cpass == ccpass){
+          		$("#ccpwds_error_message").hide();
+          		document.getElementById('submitbutton').disabled = '';
+
+          	}
+          	else{
+          		$("#ccpwds_error_message").html("Password didn't match.");
+          		$("#ccpwds_error_message").show();
+          		$("#ccpwds_error_message").css("color","red");
+          		error_ccpwds = true;
+          		document.getElementById('submitbutton').disabled = 'disabled';
+          	}
+          }
+ function auth_password(){
+          var oldpwd =$("#oldpwd").val();
+              $.ajax({
+                type:"POST",
+                url:"<?php echo base_url('authajax_password'); ?>",
+            data:{cpass:oldpwd},
+                success:function(data){
+                  $("#c_pwd_error_message").html(data);
+          		$("#c_pwd_error_message").show();
+          		$("#c_pwd_error_message").css("color","red");
+          		error_oldpwd = true;
+          		if(data =='Your Current Password Is Wrong.')  {
+                     document.getElementById('submitbutton').disabled = 'disabled';
+          	}
+          	else{
+          		document.getElementById('submitbutton').disabled = '';
+
+                }
+          	}
+            });
+
+
+
+ }
+
+
+		});
+	</script>
+	<script src="<?php echo base_url('assets/js/jquery.payform.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/pay_script.js'); ?>"></script>
+
+
 </body>
 
 </html>

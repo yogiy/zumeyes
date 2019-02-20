@@ -5,18 +5,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zumeyes</title>
-	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
-</head>
+	<?php include 'head.php';?></head>
 
 <body>
 <?php include 'header.php';?>
 	<div class="col-sm-12 pageNavigator clearfix">
+		<?php if (!empty($user_order)) {
+    foreach ($user_order as $userorder) {?>
 
-		<a href="home.html">Home  /</a>  <a href="myAccount.html">My Account  /</a> <a href="myAccount.html">My Order  /</a>  <span>402-1028188-6637912</span>
+		<a href="<?php echo base_url('index'); ?>">Home  /</a>  <a href="<?php echo base_url('myAccount'); ?>">My Account  /</a> <a href="<?php echo base_url('myAccount'); ?>">My Order  /</a>  <span><?php echo $userorder->order_id; ?></span>
 
 	</div>
 
@@ -24,8 +21,8 @@
 
 		<div class="orderBar clearfix">
         	<div class="top clearfix">
-				<span>Order ID<em>402-1028188-6637912</em></span>
-				<span>Order Placed<em>Tue, Mar 14th '17</em></span>
+				<span>Order ID<em><?php echo $userorder->order_id; ?></em></span>
+				<span>Order Placed<em><?php echo $userorder->order_date; ?></em></span>
 				<button>Invoice</button>
           	</div>
 
@@ -34,23 +31,42 @@
 				<div class="col-sm-6 deliverAddrs clearfix">
 
 					<h3>Shipping Address</h3>
-					<span>Narinder Singh</span>
-					<p>D Block 201, Ground Floor, Gali No.1</p>
-					<p>West Dawarka,</p>
-					<p>New Delhi</p>
-					<p>Delhi110048</p>
-					<p>Mobile: 1879523687</p>
+					<span><?php echo $userorder->username; ?></span>
+					<p><?php echo $userorder->address; ?></p>
+					<p><?php echo $userorder->city; ?>:<?php echo $userorder->pincode; ?></p>
+					<p><?php echo $userorder->state; ?></p>
+					<p>Mobile: <?php echo $userorder->phone; ?></p>
+					<p>Alternate Phone: <?php echo $userorder->altphone; ?></p>
 
 				</div>
+				<?php }}?>
 				<div class="col-sm-6 orderSummary  clearfix">
+				<?php if (!empty($order_cart_data)) {$qty = 0;
+    $taxx = 0;
+    foreach ($order_cart_data as $order_cartdata) {
+        $qty = $order_cartdata->qty + $qty;
 
+        if (empty($order_cartdata->lense_price)) {
+            if ($order_cartdata->tax != 0) {
+                $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->tax / 100;}
+            $subtotal = $order_cartdata->price * $order_cartdata->qty;
+            $total = $order_cartdata->price * $order_cartdata->qty + $taxx;
+
+        } else {
+            if ($order_cartdata->tax != 0) {
+                $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price * $order_cartdata->tax / 100;
+            }
+            $subtotal = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price;
+            $total = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price + $taxx;
+        }
+    }}?>
 					<h3>Order Summary</h3>
-					<div class="amount clearfix"><span>Item Count</span><em>02</em></div>
-					<div class="amount clearfix"><span>Sub Total</span><em>$35.93</em></div>
-					<div class="amount clearfix"><span>Tax</span><em>$10.00</em></div>
-					<div class="amount clearfix"><span>Shipping</span><em>$0.00</em></div>
-					<div class="amount clearfix"><span>Coupon</span><em>$0.00</em></div>
-					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">$45.93</em></div>
+					<div class="amount clearfix"><span>Item Count</span><em><?php echo $qty; ?></em></div>
+					<div class="amount clearfix"><span>Sub Total</span><em>Rs <?php echo $subtotal; ?></em></div>
+					<div class="amount clearfix"><span>Tax</span><em>Rs <?php echo $taxx; ?></em></div>
+					<div class="amount clearfix"><span>Shipping</span><em>Rs 0.00</em></div>
+					<div class="amount clearfix"><span>Coupon</span><em>Rs 0.00</em></div>
+					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs <?php echo $total ?></em></div>
 
 				</div>
 
@@ -151,24 +167,44 @@
 
 			<div class="bar clearfix">
 
-				<h3>2 Item Shipments</h3>
+				<h3><?php echo $qty; ?> Item Shipments</h3>
 
 			</div>
 
 			<div class="itemsList clearfix">
+			<?php if (!empty($order_cart_data)) {
+    foreach ($order_cart_data as $order_cartdata) {?>
 
 				<div class="col-sm-6 col-xs-12 clearfix item">
 
 					<div class="itemBar clearfix">
-						<div class="itemImg"><img src="images/cart_proImg1.jpg" alt="Item One"></div>
+						<div class="itemImg"><img src="<?php echo base_url() ?>assets/upload/product/<?php echo str_replace(" ", '_', $order_cartdata->pro_image) ?>" alt="Item One"></div>
 						<div class="itemInfo clearfix">
-							<h4>Square-Eye Glasses </h4>
+							<h4><?php echo $order_cartdata->name ?> </h4>
 							<div class="info clearfix">
 								<div class="bar clearfix">
-								<span>Single Vision</span>
-								<span>Quantity <strong>01</strong></span>
+								<span><?php echo $order_cartdata->prescription_type ?></span>
+								<span>Quantity <strong><?php echo $order_cartdata->qty ?></strong></span>
 								</div>
-								<em>$ 23.99</em>
+								<em>Rs
+									<?php if (!empty($order_cart_data)) {$qty = 0;
+        $taxx = 0;
+        foreach ($order_cart_data as $order_cartdata) {
+            $qty = $order_cartdata->qty + $qty;
+
+            if (empty($order_cartdata->lense_price)) {
+                if ($order_cartdata->tax != 0) {
+                    $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->tax / 100;}
+                echo $order_cartdata->price * $order_cartdata->qty + $taxx;
+
+            } else {
+                if ($order_cartdata->tax != 0) {
+                    $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price * $order_cartdata->tax / 100;
+                }
+                echo $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price + $taxx;
+            }
+        }}?>
+								</em>
 							</div>
 						</div>
 					</div>
@@ -176,26 +212,8 @@
 					<button>Rate & Review Product</button>
 
 				</div>
+			<?php }}?>
 
-				<div class="col-sm-6 col-xs-12 clearfix item">
-
-					<div class="itemBar clearfix">
-						<div class="itemImg"><img src="images/cart_proImg1.jpg" alt="Item One"></div>
-						<div class="itemInfo clearfix">
-							<h4>Square-Eye Glasses </h4>
-							<div class="info clearfix">
-								<div class="bar clearfix">
-								<span>Single Vision</span>
-								<span>Quantity <strong>01</strong></span>
-								</div>
-								<em>$ 23.99</em>
-							</div>
-						</div>
-					</div>
-
-					<button>Rate & Review Product</button>
-
-				</div>
 
 			</div>
 
@@ -207,8 +225,15 @@
 
 
 <?php include 'footer.php';?>
-<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
 
+     console.log("Success");
+
+});
+</script>
 </body>
 
 </html>

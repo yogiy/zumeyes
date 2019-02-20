@@ -12,6 +12,8 @@
 
 	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
 	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
+	<script src="//platform-api.sharethis.com/js/sharethis.js#property=5c5f1ef883748d001131544f&product=inline-share-buttons"></script>
+
 </head>
 
 <body>
@@ -48,11 +50,12 @@
     <div class="reviewRatingBar clearfix">
       <div class="rating clearfix"> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full"></i> <i class="icon icon-star-full"></i> </div>
       <a href="#" class="reviewLink">99 Review</a> </div>
-    <div class="shareBlock clearfix"> <span class="shareText">Share</span> <i class="icon icon-facebook"></i> <i class="icon icon-twitter"></i> <i class="icon icon-google-plus"></i> </div>
+    <div class="shareBlock clearfix"> <span class="shareText">Share</span><div class="sharethis-inline-share-buttons"></div>
+				 </div>
     <div class="colorBlock clearfix">
       <div class="colorList clearfix">
         <?php foreach ($pro_colors as $key => $color) {?>
-        <label>
+        <label class="colorclick" color="<?php echo $color; ?>">
         <div class="circle">
           <div class="color" style="background-color:<?php echo $color; ?>"></div>
         </div>
@@ -88,14 +91,20 @@
               			<div class="valueBox valueBox1 clearfix">
 						<label>Boxes</label>
 						<div class="field">
-						  <input type="text" list="box" required id="boxL" name="lbox" placeholder="1 Box">
-						  <i class="icon icon-angle-down"></i>
-						  <datalist id="box">
-							<option value="1 Box">1 Box</option>
-							<option value="2 Box">2 Box</option>
-							<option value="3 Box">3 Box</option>
-							<option value="4 Box">4 Box</option>
-						 </datalist>
+						  <select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 20px 20px 20px 20px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 40px;
+    margin: 0 0 0 25px;
+    padding: 10px;
+    width: 90%;"  name="lbox" id="lbox">
+   <option value="0">0.0</option>
+								<option value="1">1</option>
+						</select>
 						</div>
 					  	</div>
 						<div class="valueBox valueBox1 clearfix">
@@ -155,14 +164,20 @@
              <div class="valueBox valueBox1 clearfix">
 						<label>Boxes</label>
 						<div class="field">
-						  <input type="text" id="boxR" list="rbox" required name="rbox" placeholder="1 Box">
-						  <i class="icon icon-angle-down"></i>
-						   <datalist id="rbox">
-              <option value="1 Box">1 Box</option>
-              <option value="2 Box">2 Box</option>
-              <option value="3 Box">3 Box</option>
-              <option value="4 Box">4 Box</option>
-             </datalist>
+						   <select style="background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 20px 20px 20px 20px;
+   border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+
+    box-shadow: 0 0 10px #E8E8E8 inset;
+    height: 40px;
+    margin: 0 0 0 25px;
+    padding: 10px;
+    width: 90%;"  name="rbox" id="rbox">
+   <option value="0">0.0</option>
+								<option value="1">1</option>
+						</select>
 						</div>
 					  	</div>
 						<div class="valueBox valueBox1 clearfix">
@@ -225,10 +240,13 @@
 	 <input type="hidden" name="pro_name" id="pro_name" value="<?php echo $pro_dat->product_name; ?>">
        <input type="hidden" name="pro_image" id="pro_image" value="<?php echo $pro_dat->pro_image; ?>">
      <input type="hidden" name="sale_price" id="sale_price" value="<?php echo $pro_dat->sale_price; ?>">
+      <input type="hidden" name="tax" id="sale_price" value="<?php echo $pro_dat->tax; ?>">
+       <input  type="hidden" value="" name="color_name" class="color_name1">
+
      <input type="hidden" name="id" id="id" value="<?php echo $pro_dat->id; ?>">
 
   <div class="buttonBlock clearfix">
-    <button class="hvr-wobble-top" type="submit" name="contactlense" value="contactlense "> <i class="icon icon-shopping-cart class"></i> <span>Add to Cart</span> </button>
+    <button class="hvr-wobble-top" type="submit" name="contactlense" value="contactlense " id="addlense"> <i class="icon icon-shopping-cart class"></i> <span>Add to Cart</span> </button>
 
     <div class="whislistIcon"><i style="cursor: pointer" class="icon icon-heart class" proprice="<?php echo $pro_dat->sale_price ?>" pro_id="<?php echo $pro_dat->id ?>" pro_name="<?php echo $pro_dat->product_name ?>" pro_image="<?php echo $pro_dat->pro_image ?>"></i>
   </div>
@@ -626,6 +644,18 @@
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
   $(document).ready(function(){
+    $(".colorclick").click(function(){
+     var color=  $(this).attr("color");
+               $(".color_name1").attr("value", color);
+ });
+    $("#addlense").click(function(){
+       var color_name=document.forms["lenseform"]["color_name"].value;
+       if(color_name== ""){
+       alert("Please select the product color");
+       return false;
+  }
+
+});
    $(".class").click(function(){
 
         $(this).toggleClass("active");
@@ -646,9 +676,12 @@
     });
     });
 </script>
-<script src="<?php echo base_url('assets/js/owl.carousel.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/slick.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+
+  <script src="<?php echo base_url('assets/js/slick.js'); ?>"></script>
+
+
 <script type="text/javascript">
 
 	</script>

@@ -1,3 +1,22 @@
+<?php
+if (!empty($fb)) {
+    echo '<script>alert()</script>';
+    foreach ($fb as $fbb) {
+        $gb_link = $fbb->facebook_page;
+    }
+}
+if (!empty($gp)) {
+    foreach ($gp as $gpp) {
+        $gp_link = $gpp->googleplus_page;
+    }
+}
+if (!empty($twitter)) {
+    foreach ($twitter as $twitterr) {
+        $twitter_link = $twitterr->twitter_page;
+    }
+}
+?>
+
 <section class="col-sm-12 companyPolicySection clearfix">
 
 		<div class="container-fluid">
@@ -49,12 +68,12 @@
 
 			<div class="col-sm-6 col-xs-12 formBlock">
                 <span class="successsubscribe"></span>
-				<form method="post">
+				<form method="post" name="myform" id="myform">
 
 					<div class="field clearfix">
-
-						<input type="text" name="email" autocomplete="off" id="email" placeholder="Enter your e-mail">
-					</div>
+    <input type="email" name="email" autocomplete="off" id="email" placeholder="Enter your e-mail">
+						<span class="error_form" id="email_error_message"></span>
+						</div>
 					<button type="button" class="newsletter">Subscribe</button>
 
 				</form>
@@ -96,13 +115,13 @@
 					</div>
 					<div class="bar socialIcons clearfix">
 
-						<a href="#" class="iconCircle">
+						<a href="https://facebook.com" class="iconCircle">
 							<i class="icon icon-facebook"></i>
 						</a>
-						<a href="#" class="iconCircle">
+						<a href="https://twitter.com" class="iconCircle">
 							<i class="icon icon-twitter"></i>
 						</a>
-						<a href="#" class="iconCircle">
+						<a href="" class="iconCircle">
 							<i class="icon icon-google-plus"></i>
 						</a>
 
@@ -136,7 +155,7 @@
 						<ul class="links">
 
 							<li>
-								<a href="#">Contact Us</a>
+								<a href="<?php echo base_url('contactus'); ?>">Contact Us</a>
 							</li>
 							<li>
 								<a href="<?php echo site_url('aboutus'); ?>">About us</a>
@@ -145,7 +164,7 @@
 								<a href="<?php echo site_url('faq'); ?>">FAQs</a>
 							</li>
 							<li>
-								<a href="#">Blog</a>
+								<a href="<?php echo base_url('blog'); ?>">Blog</a>
 							</li>
 							<li>
 								<a href="<?php echo site_url('term_and_condition'); ?>">Terms & Conditions</a>
@@ -160,13 +179,13 @@
 						<ul class="links">
 
 							<li>
-								<a href="#">Shipping Policy</a>
+								<a href="<?php echo base_url('shipping_policy'); ?>">Shipping Policy</a>
 							</li>
 							<li>
-								<a href="#">Cancellations & Modifications</a>
+								<a href="<?php echo base_url('cancel_and_modification'); ?>">Cancellations & Modifications</a>
 							</li>
 							<li>
-								<a href="#">Return & Refund</a>
+								<a href="<?php echo base_url('return_and_refund'); ?>">Return & Refund</a>
 							</li>
 							<li>
 								<a href="<?php echo base_url('privacy_policy'); ?>">Privacy Policy</a>
@@ -189,8 +208,37 @@
 		</div>
 	</footer>
 <script type="text/javascript">
+
 		$(document).ready(function(){
+			var error_email=false;
+			$('#email_error_message').hide();
+
+          $("#email").focusin(function(){
+          $('#email_error_message').hide();
+          });
+           $("#email").focusout(function(){
+          	check_email();
+          });
+
+          function check_email(){
+          	var pattern= /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+          	var email =$("#email").val();
+          	if(pattern.test(email) && email !== ''){
+          		$("#email_error_message").hide();
+
+          	}
+          	else{
+          		$("#email_error_message").html("Invalid Email");
+          		$("#email_error_message").show();
+          		$("#email_error_message").css("color","red");
+          		error_email = true;
+          	}
+          }
+
 			$('.newsletter').click(function(){
+				check_email();
+				if(error_email !== true){
+					alert();
           var email =document.getElementById("email").value;
 
            $.ajax({
@@ -202,6 +250,7 @@
 				}
 
 			});
+       }
 			});
 			});
 

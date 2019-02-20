@@ -1118,6 +1118,37 @@ class Aquery extends CI_Model
             return false;
         }
     }
+    //----------------------------------------------------//
+    public function facebook_entry($color)
+    {
+        $query = $this->db->insert('facebook', $color);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function twitter_entry($color)
+    {
+        $query = $this->db->insert('twitter', $color);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function googleplus_entry($color)
+    {
+        $query = $this->db->insert('googleplus', $color);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     //---------------------------------------------------------------
     public function brand_entry($brand)
     {
@@ -1149,6 +1180,7 @@ class Aquery extends CI_Model
             return false;
         }
     }
+
     public function purpose_entry($purpose)
     {
         $query = $this->db->insert('purpose', $purpose);
@@ -1481,5 +1513,219 @@ class Aquery extends CI_Model
             return false;
         }
     }
+    public function facebook_data()
+    {
+        $query = $this->db->query("SELECT * FROM `facebook`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
 
+        } else {
+            return false;
+        }
+    }
+    public function twitter_data()
+    {
+        $query = $this->db->query("SELECT * FROM `twitter`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function googleplus_data()
+    {
+        $query = $this->db->query("SELECT * FROM `googleplus`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function user_list()
+    {
+        $query = $this->db->query("SELECT * FROM `user`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function tax_list()
+    {
+        $query = $this->db->query("SELECT * FROM `taxslab`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function offer_list()
+    {
+        $query = $this->db->query("SELECT * FROM `offer`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function insert_tax($data)
+    {
+        $query = $this->db->insert('taxslab', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function insert_offer($data)
+    {
+        $query = $this->db->insert('offer', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function insert_discount($data)
+    {
+        $query = $this->db->insert('discount', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function order_status_type($data)
+    {
+        $query = $this->db->insert('order_status_type', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function get_proofferbyid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `offer` where `id`='" . $id . "' ");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function get_taxbyid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `taxslab` where `id`='" . $id . "' ");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function get_discountbyid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `discount` where `id`='" . $id . "' ");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function update_taxbyid($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('taxslab', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function update_offerbyid($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('offer', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function update_discountbyid($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('discount', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function update_orderstatusbyid($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('order_status_type', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function get_orderstatusbyid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `order_status_type` where `id`='" . $id . "' ");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function discount_list()
+    {
+        $query = $this->db->query("SELECT * FROM `discount`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function orderstatus_list()
+    {
+        $query = $this->db->query("SELECT * FROM `order_status_type`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    /*  public function userorder_list()
+{
+$query = $this->db->query("SELECT * FROM `userorder`");
+if($query->num_rows() >0){
+return $query->result();
+
+}
+else{
+return false;
+}
+}*/
 }

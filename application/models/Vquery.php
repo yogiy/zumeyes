@@ -236,7 +236,7 @@ $(document).ready(function(){
         }
         if (isset($lense_uses)) {
             $lense_uses = implode("|", $lense_uses);
-            $query .= "AND fit regexp '[[:<:]]" . $lense_uses . "[[:>:]]'";
+            $query .= "AND lense_type regexp '[[:<:]]" . $lense_uses . "[[:>:]]'";
         }
         if (isset($color)) {
             $color_filter = implode("|", $color);
@@ -417,7 +417,7 @@ $(document).ready(function(){
     }
     public function comment($data)
     {
-        $query = $this->db->insert('usercomments', $data);
+        $query = $this->db->insert('blog_comment', $data);
 
         if (isset($query)) {
             return true;
@@ -568,9 +568,19 @@ $(document).ready(function(){
             return false;
         }
     }
-    public function blog_databy_id($id)
+    public function blog_databy_id($title)
     {
-        $query = $this->db->query("SELECT * FROM `blog` WHERE `id`='" . $id . "' AND status ='1'");
+        $query = $this->db->query("SELECT * FROM `blog` WHERE `title` regexp '[[:<:]]" . $title . "[[:>:]]' AND status ='1'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function blog_comment_id($title)
+    {
+        $query = $this->db->query("SELECT * FROM `blog_comment` WHERE `blog_title` regexp '[[:<:]]" . $title . "[[:>:]]' AND status ='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -940,10 +950,53 @@ $(document).ready(function(){
         }
 
     }
+    public function useraddressguest($user_email)
+    {
+        $query = $this->db->query("SELECT * FROM `useraddress` where `email`='" . $user_email . "' AND `usertype`='guest'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+
+    }
+    public function usercardinfo($user_email)
+    {
+        $query = $this->db->query("SELECT * FROM `cardinfo` where `user_email`='" . $user_email . "' AND `status`='1'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+
+    }
+    public function userdata($user_email)
+    {
+        $query = $this->db->query("SELECT * FROM `user` where `email`='" . $user_email . "'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+
+    }
     public function get_cart_count($user_email)
     {
-        $query = $this->db->query("SELECT * FROM `usercart` where `email`='" . $user_email . "'");
+        $query = $this->db->query("SELECT * FROM `usercart` where `email`='" . $user_email . "' AND `order_status`='1'");
         if ($query->num_rows() >= 0) {
+            return $query->num_rows();
+
+        } else {
+            return false;
+        }
+    }
+    public function cart_countdata($user_email)
+    {
+        $query = $this->db->query("SELECT * FROM `usercart` where `email`='" . $user_email . "'");
+        if ($query) {
             return $query->num_rows();
 
         } else {
@@ -952,7 +1005,7 @@ $(document).ready(function(){
     }
     public function get_cart($user_email)
     {
-        $query = $this->db->query("SELECT * FROM `usercart` where `email`='" . $user_email . "'");
+        $query = $this->db->query("SELECT * FROM `usercart` where `email`='" . $user_email . "' AND `order_status`='1'");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -1045,5 +1098,110 @@ $(document).ready(function(){
             return false;
         }
 
+    }
+    public function insert_review($data)
+    {
+        $query = $this->db->insert('userreview', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function facebook_get()
+    {
+        $query = $this->db->query("SELECT * FROM `facebook`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function twitter_get()
+    {
+        $query = $this->db->query("SELECT * FROM `twitter`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function googleplus_get()
+    {
+        $query = $this->db->query("SELECT * FROM `googleplus`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function blog_list()
+    {
+        $query = $this->db->query("SELECT * FROM `blog`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function insert_carddata($data)
+    {
+        $query = $this->db->insert('cardinfo', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function remove_carddata($data, $card_id)
+    {
+        $this->db->where('id', $card_id);
+        $query = $this->db->update('cardinfo', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //after order cart status for product//
+    public function orderaftercart($data, $email, $id)
+    {
+        $this->db->where('email', $email);
+        $this->db->where('pro_id', $id);
+        $query = $this->db->update('usercart', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //user address by Id
+    public function user_addressbyid($id, $email)
+    {
+        $query = $this->db->query("SELECT * FROM `useraddress` where `id`='" . $id . "' AND `email`='" . $email . "'");
+        if ($query->num_rows() > 0) {
+            return $query->row();
+
+        } else {
+            return false;
+        }
+    }
+    public function userorder($data)
+    {
+        $query = $this->db->insert('userorder', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

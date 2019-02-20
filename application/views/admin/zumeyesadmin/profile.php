@@ -96,23 +96,20 @@
                         <form action="profile" method="post">
                           <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" required name="name" id="name" placeholder="Change user name">
+                            <input type="text" class="form-control" required value="<?php echo $name; ?>" name="name" pattern="^[A-Za-z\s]+$" id="name" placeholder="Change user name">
                           </div>
                           <div class="form-group">
                             <label for="designation">Designation</label>
-                            <input type="text" required class="form-control" name="designation" id="designation" placeholder="Change designation">
+                            <input type="text" required pattern="^[A-Za-z\s]+$" value="<?php echo $designation; ?>" class="form-control" name="designation" id="designation" placeholder="Change designation">
                           </div>
                           <div class="form-group">
                             <label for="mobile">Mobile Number</label>
-                            <input type="text" required class="form-control" name="phone" id="mobile" placeholder="Change mobile number">
+                            <input type="text" required class="form-control" value="<?php echo $phone; ?>" name="phone" id="mobile" pattern="^[0-9]+$" placeholder="Phone Number" minlength="8" maxlength="15">
                           </div>
-                          <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" required class="form-control" name="email" id="email" placeholder="Change email address">
-                          </div>
+
                           <div class="form-group">
                             <label for="address">Address</label>
-                            <textarea name="address" required id="address" name="address" rows="6" class="form-control" placeholder="Change address"></textarea>
+                            <textarea name="address" required id="address" name="address" rows="6" class="form-control" placeholder="Change address"><?php echo $address; ?></textarea>
                           </div>
 
                           <div class="form-group mt-5">

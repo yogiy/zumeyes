@@ -50,6 +50,10 @@
 
                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/addprescription'); ?>">Add Product Prescription</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/product_list'); ?>">Product List</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/register_users'); ?>">Registered Users</a></li>
+                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/tax_and_offer'); ?>">Tax,Offer And Discount</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/orderlist'); ?>">Order List</a></li>
+                 <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/order_status_type'); ?>">Order Status Type</a></li>
 
                 </ul>
               </div>

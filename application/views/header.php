@@ -157,20 +157,7 @@ $i = 1;
 
 
 
-						<?php if ($this->cart->contents() && $this->session->userdata('isUserLoggedIn') == true) {?>
-						<span id="cartno">
-
-					<?php
-$i = 1;
-    $total_product = 0;
-    foreach ($this->cart->contents() as $items) {
-        echo form_hidden($i . '[rowid]', $items['rowid']);
-
-        $total_product++;
-
-    }
-    echo $total_product;?>
-				</span><?php } elseif (!$this->cart->contents() && $this->session->userdata('isUserLoggedIn') == true) {?><span id="cartno">
+						<?php if ($this->session->userdata('isUserLoggedIn') == true) {?><span id="cartno">
 					<?php echo $this->session->userdata('count_cart'); ?>	</span><?php }?>
 
 			</div></a>

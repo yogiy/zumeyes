@@ -5,12 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zumeyes</title>
-	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
-</head>
+	<?php include 'head.php';?></head>
 
 <body>
 
@@ -46,14 +41,14 @@
 
 		<div class="row copyrightBlock">
 
-			<span>© 2018 Zumeyes. All rights resereved</span>
+			<span>© <?php echo date('Y') ?> Zumeyes. All rights resereved</span>
 
 		</div>
 
 
 	</footer>
-<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
-
+	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 </body>
 
 </html>

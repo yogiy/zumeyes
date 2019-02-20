@@ -5,12 +5,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zumeyes</title>
-<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/slick.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
+
+<link href="<?php echo base_url(); ?>/assets/styles/slick.css" rel="stylesheet" type="text/css">
+<?php include 'head.php';?>
 <style type="text/css"></style>
 </head>
 
@@ -73,6 +70,9 @@ if ($this->session->userdata('isUserLoggedIn') == false) {
 								<?php if (isset($items['leftlnearAddi']) || isset($items['rightlnearAddi'])) {?>
 								<em class="mode">Add (Near Addition)</em>
                                <?php }?>
+                              <?php if (isset($items['lbox']) || isset($items['rbox'])) {?>
+								<em class="mode">Eye Boxes</em>
+                               <?php }?>
 							</div>
 
 						</div>
@@ -86,6 +86,9 @@ if ($this->session->userdata('isUserLoggedIn') == false) {
 								<?php if (isset($items['leftlnearAddi'])) {?>
                                 <em class="mode"><?php echo $items['leftlnearAddi'] ?></em>
 									<?php }?>
+									<?php if (isset($items['lbox'])) {?>
+                                <em class="mode"><?php echo $items['lbox'] ?></em>
+								<?php }?>
 							</div>
 						</div>
 						<div class="bar clearfix">
@@ -97,6 +100,9 @@ if ($this->session->userdata('isUserLoggedIn') == false) {
 								<em class="mode"><?php echo $items['raxis'] ?></em>
 								<?php if (isset($items['rightlnearAddi'])) {?>
                                 <em class="mode"><?php echo $items['rightlnearAddi'] ?></em>
+								<?php }?>
+								<?php if (isset($items['rbox'])) {?>
+                                <em class="mode"><?php echo $items['rbox'] ?></em>
 								<?php }?>
 							</div>
 						</div>
@@ -146,6 +152,29 @@ if ($this->session->userdata('isUserLoggedIn') == false) {
 
 						</div>
 					<?php }?>
+					<div class="bar clearfix">
+
+							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Color</span></div>
+							<div class="col-sm-6 col-xs-12 boxSecond clearfix"><span><?php echo $items['color']; ?></span></div>
+							<div class="col-sm-2 col-xs-12 boxThird clearfix"><span><!--Rs 5--></span></div>
+
+						</div>
+						<?php if (!empty($items['prescription_name'])) {?>
+						<div class="bar clearfix">
+							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Prescription Name</span></div>
+							<div class="col-sm-6 col-xs-12 boxSecond clearfix"><span><?php echo $items['prescription_name']; ?></span></div>
+							<div class="col-sm-2 col-xs-12 boxThird clearfix"><span></span></div>
+						</div>
+					<?php }?>
+					<div class="bar clearfix">
+
+							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Tax</span></div>
+							<div class="col-sm-6 col-xs-12 boxSecond clearfix"><span></span></div>
+							<div class="col-sm-2 col-xs-12 boxThird clearfix"><span> &nbsp&nbsp<?php if (!empty($items['tax'])) {?><?php echo $items['tax'];
+            echo '%';} else {echo '0.0%';} ?></span></div>
+
+						</div>
+
 						<div class="bar itemTotalBar clearfix">
 
 							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><h4>Subtotal</h4></div>
@@ -173,11 +202,24 @@ if ($this->session->userdata('isUserLoggedIn') == false) {
 								</form>
 								</div>
 							</div>
-							<div class="col-sm-2 col-xs-12 boxThird clearfix"><em class="amount">Rs <?php if (isset($items['lense_price'])) {echo $subtotal = $items['lense_price'] + $items['subtotal'];} else {
+							<div class="col-sm-2 col-xs-12 boxThird clearfix"><em class="amount">Rs <?php if (isset($items['lense_price'])) {
+            if ($items['tax'] != 0) {
+
+                $tax_rate = (($items['lense_price'] * $items['qty'] + $items['price'] * $items['qty']) * $items['tax']) / 100;
+                echo $subtotal = ($items['lense_price'] * $items['qty'] + $items['price'] * $items['qty']) + $tax_rate;
+            } else {
+                $tax_rate = 0;
+                echo $subtotal = ($items['lense_price'] * $items['qty'] + $items['price'] * $items['qty']);
+            }} else {
 
             ?><?php
-echo $subtotal = $items['subtotal'];
-        }
+if ($items['tax'] != 0) {
+                $tax_rate = ($items['price'] * $items['qty'] * $items['tax']) / 100;
+                echo $subtotal = $items['price'] * $items['qty'] + $tax_rate;
+            } else {
+                $tax_rate = 0;
+                echo $subtotal = $items['price'] * $items['qty'];
+            }}
         ?></em></div>
 
 						</div>
@@ -234,7 +276,7 @@ if (isset($cart_data) && !empty($cart_data)) {
         }?></div><?php }?>
 
 						</div>
-						<?php if (isset($items->lsphere)) {?>
+						<?php if (isset($items->lsphere) && !empty($items->lsphere)) {?>
 						<div class="bar clearfix">
 
 							<div class="right clearfix">
@@ -242,7 +284,12 @@ if (isset($cart_data) && !empty($cart_data)) {
 								<em class="mode">Sphere(SPH)</em>
 								<em class="mode">Cylinder(CYL)</em>
 								<em class="mode">Axis</em>
+								<?php if (!empty($items->leftlnearAddi) || !empty($items->rightlnearAddi)) {?>
 								<em class="mode">Add (Near Addition)</em>
+                               <?php }?>
+                              <?php if (isset($items->lbox) && !empty($items->lbox) || isset($items->rbox) && !empty($items->rbox)) {?>
+								<em class="mode">Eye Boxes</em>
+                               <?php }?>
 							</div>
 
 						</div>
@@ -253,7 +300,12 @@ if (isset($cart_data) && !empty($cart_data)) {
 								<em class="mode"><?php echo $items->lsphere ?></em>
 								<em class="mode"><?php echo $items->lcylinder ?></em>
 								<em class="mode"><?php echo $items->laxis ?></em>
-
+									<?php if (isset($items->leftlnearAddi)) {?>
+                                <em class="mode"><?php echo $items->leftlnearAddi ?></em>
+									<?php }?>
+									<?php if (isset($items->lbox)) {?>
+                                <em class="mode"><?php echo $items->lbox ?></em>
+								<?php }?>
 							</div>
 						</div>
 						<div class="bar clearfix">
@@ -263,10 +315,32 @@ if (isset($cart_data) && !empty($cart_data)) {
 								<em class="mode"><?php echo $items->rsphere ?></em>
 								<em class="mode"><?php echo $items->rcylinder ?></em>
 								<em class="mode"><?php echo $items->raxis ?></em>
+								<?php if (isset($items->rightlnearAddi)) {?>
+                                <em class="mode"><?php echo $items->rightlnearAddi ?></em>
+								<?php }?>
+								<?php if (isset($items->rbox)) {?>
+                                <em class="mode"><?php echo $items->rbox ?></em>
+								<?php }?>
+							</div>
+						</div>
+							<?php if (isset($items->pdsphere) && !empty(!empty($items->pdsphere)) || isset($items->nearpdsphere) && !empty(!empty($items->nearpdsphere))) {?>
+						<div class="bar clearfix">
+							<div class="left clearfix"><span>PD</span></div>
+							<div class="right clearfix">
+
+								<em class="mode"><?php echo $items->pdsphere ?></em>
 
 							</div>
 						</div>
-					<?php }?>
+						<div class="bar clearfix">
+							<div class="left clearfix"><span>Near PD</span></div>
+							<div class="right clearfix">
+
+								<em class="mode"><?php echo $items->nearpdsphere ?></em>
+
+							</div>
+						</div>
+					<?php }}?>
 					</div>
 
 					<div class="itemPrice clearfix">
@@ -279,7 +353,7 @@ if (isset($cart_data) && !empty($cart_data)) {
             echo '/-';} ?></span></div>
 
 						</div>
-						<?php if (isset($items->lense_price)) {?>
+						<?php if (isset($items->lense_price) && !empty($items->lense_price)) {?>
 						<div class="bar clearfix">
 
 							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Lens</span></div>
@@ -287,6 +361,7 @@ if (isset($cart_data) && !empty($cart_data)) {
 							<div class="col-sm-2 col-xs-12 boxThird clearfix"><em><?php if (!empty($items->lense_price)) {?>Rs <?php echo $items->lense_price;} ?></em></div>
 
 						</div>
+
 						<div class="bar clearfix">
 
 							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>AR Anti-Reflection Coating</span></div>
@@ -295,6 +370,27 @@ if (isset($cart_data) && !empty($cart_data)) {
 
 						</div>
 					<?php }?>
+					<div class="bar clearfix">
+
+							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Color</span></div>
+							<div class="col-sm-6 col-xs-12 boxSecond clearfix"><span><?php echo $items->color; ?></span></div>
+							<div class="col-sm-2 col-xs-12 boxThird clearfix"><span><!--Rs 5--></span></div>
+
+						</div>
+						<div class="bar clearfix">
+							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Prescription Name</span></div>
+							<div class="col-sm-6 col-xs-12 boxSecond clearfix"><span><?php echo $items->prescription_name; ?></span></div>
+							<div class="col-sm-2 col-xs-12 boxThird clearfix"><span></span></div>
+						</div>
+
+						<div class="bar clearfix">
+
+							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Tax</span></div>
+							<div class="col-sm-6 col-xs-12 boxSecond clearfix"><span></span></div>
+							<div class="col-sm-2 col-xs-12 boxThird clearfix"><span><?php if (!empty($items->tax)) {?>&nbsp&nbsp <?php echo $items->tax;
+            echo '%';} else {echo '0.0%';} ?></span></div>
+
+						</div>
 						<div class="bar itemTotalBar clearfix">
 
 							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><h4>Subtotal</h4></div>
@@ -326,10 +422,16 @@ if (isset($cart_data) && !empty($cart_data)) {
 
 							<div class="col-sm-2 col-xs-12 boxThird clearfix"><em class="amount">
 							Rs <?php if (isset($items->lense_price) && !empty($items->lense_price)) {
-            echo $subtotal = (trim($items->lense_price)) + (trim($items->price)) * (trim($items->qty));} else {
+            if ($items->tax != 0) {
+                $tax_rate = (((trim($items->lense_price)) * (trim($items->qty)) + (trim($items->price)) * (trim($items->qty))) * $items->tax) / 100;
+                echo $subtotal = ((trim($items->lense_price)) * (trim($items->qty)) + (trim($items->price)) * (trim($items->qty))) + $tax_rate;
+            } else {
+                echo $subtotal = ((trim($items->lense_price)) * (trim($items->qty)) + (trim($items->price)) * (trim($items->qty)));
+                $tax_rate = 0;}} else {
 
             ?><?php
-echo $subtotal = $items->price * $items->qty;
+$tax_rate = (($items->price * $items->qty) * $items->tax) / 100;
+            echo $subtotal = ($items->price * $items->qty) + $tax_rate;
         }
         ?></em></div>
 
@@ -397,7 +499,8 @@ echo $subtotal = $items->price * $items->qty;
 
 
 <?php include 'footer.php';?>
-<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 
 </body>
 </html>

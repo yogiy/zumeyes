@@ -4,23 +4,18 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Zumeyes</title>
-	<link href="<?php echo base_url(); ?>/assets/styles/style.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url(); ?>/assets/js/slider/slider.css" rel="stylesheet" type="text/css">
-	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
-	<script src="<?php echo base_url(); ?>/assets/js/slider/slider.js"></script>
-</head>
+	<?php include 'head.php';?>
+	</head>
 <body>
-	<?php include_once 'header.php';?>
+	<?php include 'header.php';?>
 	<div id="banner" class="bannerSection clearfix">
 		<div id="myCarousel" class="carousel slide">
 			<!-- Wrapper for Slides -->
 			<div class="carousel-inner">
 
 				<?php $active = 1;
-				foreach ($slider_data as $key => $slider) {?>
+foreach ($slider_data as $key => $slider) {
+    ?>
 				<div class="item <?php if ($active == 1) {?>active<?php }?>">
 					<div class="mask"></div>
 					<div class="fill">
@@ -28,7 +23,7 @@
 					</div>
 
 				</div>
-				<?php $active++;}?>
+			<?php $active++;}?>
 
 			</div>
 
@@ -111,31 +106,24 @@ foreach ($product_data as $key => $product_dat) {
 							</h3>
 							<div class="itemOffer clearfix">
 
-								<em>$ <?php echo $product_dat->regular_price ?></em>
+								<em>Rs <?php echo $product_dat->regular_price ?></em>
 								<div class="offer"><span>29% Off</span></div>
 
 							</div>
 							<div class="priceBox">
-								<span>$ <?php echo $product_dat->sale_price ?></span>
+								<span>Rs <?php echo $product_dat->sale_price ?></span>
 							</div>
 							<div class="productAction productActionHome">
-
-										<div class="wishlist icon">
-
-
-                                        <i style="cursor: pointer" class="icon-favorite-heart-button class" proprice="<?php echo $product_dat->sale_price; ?>" pro_id="<?php echo $product_dat->id ?>" pro_name="<?php echo $product_dat->product_name ?>"pro_image="<?php echo $product_dat->pro_image ?>"></i>
-										</div>
-
-									</div>
+								<div class="wishlist icon">
+									<i style="cursor: pointer" class="icon-favorite-heart-button class" proprice="<?php echo $product_dat->sale_price; ?>" pro_id="<?php echo $product_dat->id ?>" pro_name="<?php echo $product_dat->product_name ?>"pro_image="<?php echo $product_dat->pro_image ?>"></i>
+								</div>
+							</div>
 
 						</div>
 					</div>
 				</div>
                 <?php $variable++;}?>
 				<div class="col-sm-6 col-xs-12 proBox noPadding">
-
-
-
                         <div class="row probar clearfix">
                         	               <?php $row_image = 1;
 foreach ($pro_data as $key => $produc_dat) {
@@ -226,7 +214,7 @@ foreach ($pro_data as $key => $produc_dat) {
 								</div>
 								<div class="itemImg">
 									<a href="productDetails.html">
-										<img src="<?php /* echo base_url('assets/images/frame_4.png') */?>" alt="Frame">
+										<img src="<?php echo base_url('assets/images/frame_4.png') ?>" alt="Frame">
 									</a>
 								</div>
 								<div class="itemBottom">
@@ -345,7 +333,7 @@ foreach ($pro_data as $key => $produc_dat) {
 
 					</div>
 					<?php echo $blog_dat->shortdescription; ?>
-                <a href="<?php echo site_url('blogDetails') ?>?id=<?php echo $blog_dat->id ?>">
+                <a href="<?php echo site_url('blogDetails') ?>?title=<?php echo str_replace(' ', '_', $blog_dat->title); ?>">
 					<button>Read More</button> </a>
 				</div>
                     <?php }?>
@@ -371,7 +359,7 @@ foreach ($pro_data as $key => $produc_dat) {
            $.ajax({
 				type:'POST',
 				data:{wishid:wishid},
-				url:"<?php echo base_url('removewishlist') ?>",
+				url:"<?php echo base_url('removewishlist'); ?>",
 				success:function(data){
 					alert('Successfully Remove From The WishList');
 				}
@@ -393,7 +381,7 @@ foreach ($pro_data as $key => $produc_dat) {
       var prescription_type="prescription_type";
         $.ajax({
                 type:"POST",
-                url:"<?php echo base_url('wishframeOnly') ?>'",
+                url:"<?php echo base_url('wishframeOnly'); ?>",
             data:{pro_id:pro_id,pro_name:pro_name,sale_price:sale_price,pro_image:pro_image,prescription_type:prescription_type},
                 success:function(data){
                     $(".wishcount").html(data);

@@ -14,12 +14,15 @@ class Home extends CI_Controller
 
         $this->load->library('cart');
         $this->session->set_userdata('active', 'active');
-
+        $cat_data['fb'] = $this->Vquery->facebook_get();
+        $cat_data['gp'] = $this->Vquery->googleplus_get();
+        $cat_data['twitter'] = $this->Vquery->twitter_get();
         if ($this->session->userdata('isUserLoggedIn') == true &&
             $this->session->userdata('userId')) {
             $user['user'] = $this->Vquery->getRows(array('id' => $this->session->userdata('userId')));
             foreach ($user as $key => $user) {
                 $gfname = $user->fname;
+                $glname = $user->lname;
                 $gemail = $user->email;
 
                 $countwish['countwish'] = $this->Vquery->wishlist($gemail);
@@ -29,7 +32,7 @@ class Home extends CI_Controller
 
                 $this->session->set_userdata('count_wish1', '2');
                 $this->session->set_userdata('count_cart', $count_cart);
-
+                $this->session->set_userdata('user_lname', $glname);
                 $this->session->set_userdata('user_name', $gfname);
                 $this->session->set_userdata('user_email', $gemail);
 
@@ -39,15 +42,15 @@ class Home extends CI_Controller
 
     public function index()
     {
-        $data['cat_data'] = $this->Vquery->cat_list();
-        $data['subcat_data'] = $this->Vquery->subcat_list();
-        $data['slider_data'] = $this->Vquery->slider_data();
-        $data['offer_data'] = $this->Vquery->offer_data();
-        $data['banner_data'] = $this->Vquery->banner_data();
-        $data['pro_data'] = $this->Vquery->prolatest_data();
-        $data['product_data'] = $this->Vquery->product_latest_data();
-        $data['blog_data'] = $this->Vquery->blog_data();
-        $this->load->view('home', $data);
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+        $cat_data['slider_data'] = $this->Vquery->slider_data();
+        $cat_data['offer_data'] = $this->Vquery->offer_data();
+        $cat_data['banner_data'] = $this->Vquery->banner_data();
+        $cat_data['pro_data'] = $this->Vquery->prolatest_data();
+        $cat_data['product_data'] = $this->Vquery->product_latest_data();
+        $cat_data['blog_data'] = $this->Vquery->blog_data();
+        $this->load->view('home', $cat_data);
     }
     public function aboutus()
     {
@@ -60,10 +63,11 @@ class Home extends CI_Controller
     public function blogDetails()
     {
 
-        $id = $this->input->get('id');
+        $title = str_replace('_', ' ', $this->input->get('title'));
         $cat_data['cat_data'] = $this->Vquery->cat_list();
         $cat_data['subcat_data'] = $this->Vquery->subcat_list();
-        $cat_data['blog_data'] = $this->Vquery->blog_databy_id($id);
+        $cat_data['blog_data'] = $this->Vquery->blog_databy_id($title);
+        $cat_data['blog_comment'] = $this->Vquery->blog_comment_id($title);
         $this->load->view('blogDetails', $cat_data);
     }
     public function contactLenses()
@@ -124,7 +128,7 @@ class Home extends CI_Controller
                 if ($cat_idd == 15) {
                     $sid = $this->input->get('sid');
                     $this->session->set_userdata('last_subid', $sid);
-                    $this->session->set_userdata('lense_page', $cat_idd);
+                    $this->session->set_userdata('lense_page', $catid);
 
                 }
                 $this->session->set_userdata('last_subid', $catid);
@@ -132,7 +136,7 @@ class Home extends CI_Controller
             } elseif ($true == false && $cat_idd == 15) {
                 $sid = $this->input->get('sid');
                 $this->session->set_userdata('last_subid', $sid);
-                $this->session->set_userdata('lense_page', $cat_idd);
+                $this->session->set_userdata('lense_page', $catid);
 
                 redirect('contactLense');
             }
@@ -274,15 +278,17 @@ class Home extends CI_Controller
             'prescription_type' => $prescription_type,
             'prescription_name' => $_POST['prescriptionname'],
             'lense_name' => $lense_name,
+            'tax' => $_POST['tax'],
             'price' => $_POST['sale_price'],
             'pro_image' => $_POST['pro_image'],
             'qty' => 1,
-
+            'order_status' => 1,
             'lsphere' => $_POST['lsphere'],
             'rsphere' => $_POST['rsphere'],
             'lcylinder' => $_POST['lcylinder'],
             'rcylinder' => $_POST['rcylinder'],
             'laxis' => $_POST['laxis'],
+            'color' => $_POST['color_name'],
             'raxis' => $_POST['raxis'],
         );
         $this->session->set_userdata('cdata', $data);
@@ -318,9 +324,10 @@ class Home extends CI_Controller
             'prescription_name' => $_POST['prescriptionname'],
             'lense_name' => $lense_name,
             'price' => $_POST['sale_price'],
+            'tax' => $_POST['tax'],
             'pro_image' => $_POST['pro_image'],
             'qty' => 1,
-
+            'order_status' => 1,
             'lsphere' => $_POST['lsphere'],
             'rsphere' => $_POST['rsphere'],
             'leftlnearAddi' => $_POST['leftlnearAddi'],
@@ -330,6 +337,7 @@ class Home extends CI_Controller
             'lcylinder' => $_POST['lcylinder'],
             'rcylinder' => $_POST['rcylinder'],
             'laxis' => $_POST['laxis'],
+            'color' => $_POST['color_name'],
             'raxis' => $_POST['raxis'],
             'description' => $_POST['description'],
         );
@@ -367,6 +375,7 @@ class Home extends CI_Controller
             'prescription_name' => $_POST['prescriptionname'],
             'lense_name' => $lense_name,
             'price' => $_POST['sale_price'],
+            'tax' => $_POST['tax'],
             'pro_image' => $_POST['pro_image'],
             'qty' => 1,
 
@@ -375,7 +384,9 @@ class Home extends CI_Controller
             'lcylinder' => $_POST['lcylinder'],
             'rcylinder' => $_POST['rcylinder'],
             'laxis' => $_POST['laxis'],
+            'color' => $_POST['color_name'],
             'raxis' => $_POST['raxis'],
+            'order_status' => 1,
         );
         $this->session->set_userdata('cdata', $data);
         $this->cart->insert($data);
@@ -419,12 +430,15 @@ class Home extends CI_Controller
             'qty' => $_POST['lbox'] + $_POST['rbox'],
             'lbox' => $_POST['lbox'],
             'rbox' => $_POST['rbox'],
+            'tax' => $_POST['tax'],
             'lsphere' => $_POST['lsphere'],
             'rsphere' => $_POST['rsphere'],
             'lcylinder' => $_POST['lcylinder'],
             'rcylinder' => $_POST['rcylinder'],
             'laxis' => $_POST['laxis'],
+            'color' => $_POST['color_name'],
             'raxis' => $_POST['raxis'],
+            'order_status' => 1,
         );
 
         $this->session->set_userdata('cdata', $data);
@@ -449,9 +463,12 @@ class Home extends CI_Controller
             $data = array('id' => $_POST['pro_id'],
                 'name' => $_POST['pro_name'],
                 'price' => $_POST['sale_price'],
+                'tax' => $_POST['tax'],
                 'pro_image' => $_POST['pro_image'],
+                'color' => $_POST['color_name'],
                 'prescription_type' => "Frame Only",
                 'qty' => 1,
+                'order_status' => 1,
             );
             $this->session->set_userdata('cdata', $data);
             $counter = array();
@@ -830,10 +847,11 @@ class Home extends CI_Controller
     public function guest()
     {
 
-        if ($this->input->post('guest')) {
+        if ($this->session->userdata('guest_email')) {
             $guest = $this->input->post('guest');
             $this->session->set_userdata('guest', $guest);
-            if ($this->input->post('addnewaddress')) {
+            $email = $this->session->userdata('guest_email');
+            if ($email) {
 
                 $this->form_validation->set_rules('name', 'Name', 'trim|alpha|required');
                 $this->form_validation->set_rules('radio-group', 'Address Type', 'trim|required');
@@ -849,7 +867,7 @@ class Home extends CI_Controller
                 if ($this->form_validation->run()) {
 
                     $data = array(
-                        'email' => $gemail,
+                        'email' => $email,
                         'name' => $this->input->post('name'),
                         'addresstype' => $this->input->post('radio-group'),
                         'phone' => $this->input->post('phone'),
@@ -860,10 +878,11 @@ class Home extends CI_Controller
                         'alternatephone' => $this->input->post('alternatephone'),
                         'pincode' => $this->input->post('cpin'),
                         'locality' => $this->input->post('locality'),
+                        'usertype' => 'guest',
                         'status' => '1',
 
                     );
-                    $data = $this->Vquery->entry_guestaddressinfo($data);
+                    $data = $this->Vquery->entry_addressinfo($data);
                     if ($data) {
                         $this->session->set_flashdata('success_address', 'Your Address Information Has Been Added');
                         redirect('checkout');
@@ -890,6 +909,7 @@ class Home extends CI_Controller
             $email = $this->session->userdata('user_email');
             $cat_data['cart_data'] = $this->Vquery->get_cart($email);
             $cat_data['cat_data'] = $this->Vquery->cat_list();
+
             $cat_data['useraddress'] = $this->Vquery->useraddress($email);
 
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();
@@ -900,7 +920,13 @@ class Home extends CI_Controller
                 $this->load->database();
                 $this->load->model('Vquery');
                 $cat_data['cat_data'] = $this->Vquery->cat_list();
+                if ($this->session->userdata('guest_email')) {
+                    $cat_data['useraddress'] = $this->Vquery->useraddressguest($this->session->userdata('guest_email'));
+                }
                 $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+                if ($this->input->post('guest_email')) {
+                    $this->session->set_userdata('guest_email', $this->input->post('guest_email'));
+                }
                 $this->load->view('checkout', $cat_data);
             } else {
                 echo '<script>alert("Your Cart Is Empty")</script>';
@@ -954,8 +980,9 @@ class Home extends CI_Controller
                 $this->form_validation->set_rules('rnewpass', 'confirm password', 'trim|required|matches[pass]');
                 if ($this->form_validation->run()) {
 
-                    $pass = $this->input->post('pass');
-                    $this->session->userdata('user_email');
+                    $pass = array(
+                        'password' => $this->input->post('pass'));
+                    $gemail = $this->session->userdata('user_email');
                     $gemail = $this->Vquery->updatepass($pass, $gemail);
                     $this->session->set_flashdata('success_pass', 'successfully Password Updated');
                     redirect('myAccount');
@@ -996,8 +1023,12 @@ class Home extends CI_Controller
                     );
                     $data = $this->Vquery->entry_addressinfo($data);
                     if ($data) {
-                        $this->session->set_flashdata('success_address', 'Your Address Information Has Been Added');
-                        redirect('myAccount');
+                        if ($this->input->post('addnewaddresscheckout')) {
+                            redirect('checkout');
+                        } else {
+                            $this->session->set_flashdata('success_address', 'Your Address Information Has Been Added');
+                            redirect('myAccount');
+                        }
                     } else {
                         $this->session->set_flashdata('success_address', 'Something Went Wrong...');
                         redirect('myAccount');
@@ -1010,6 +1041,16 @@ class Home extends CI_Controller
             $user_email = $gemail;
             $cat_data['wishlist'] = $this->Vquery->wishlist($user_email);
             $cat_data['useraddress'] = $this->Vquery->useraddress($user_email);
+            $cat_data['user'] = $this->Vquery->userdata($user_email);
+            $this->load->model('Order');
+            $cat_data['user_order'] = $this->Order->user_order($user_email);
+            $userorder = $this->Order->userorder($user_email);
+
+            foreach ($userorder as $key => $userorderr) {
+                $cart_id = $userorderr->cart_id;
+            }
+            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id);
+            $cat_data['card_info'] = $this->Vquery->usercardinfo($user_email);
             $cat_data['cat_data'] = $this->Vquery->cat_list();
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();
             $this->load->view('myAccount', $cat_data);
@@ -1039,14 +1080,6 @@ class Home extends CI_Controller
         }
     }
 
-    public function orderDetails()
-    {
-
-        $cat_data['cat_data'] = $this->Vquery->cat_list();
-        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
-        $this->load->view('orderDetails', $cat_data);
-    }
-
     public function term_and_condition()
     {
         $this->load->database();
@@ -1072,10 +1105,51 @@ class Home extends CI_Controller
 
         $this->load->view('privacy_policy', $cat_data);
     }
+    public function shipping_policy()
+    {
+
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+
+        $this->load->view('shipping', $cat_data);
+    }
+    public function contactus()
+    {
+
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+
+        $this->load->view('contactus', $cat_data);
+    }
+    public function cancel_and_modification()
+    {
+
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+
+        $this->load->view('cancel_&_modification', $cat_data);
+    }
+    public function return_and_refund()
+    {
+
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+
+        $this->load->view('return_&_refund', $cat_data);
+    }
+    public function blog()
+    {
+
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+        $cat_data['blog_data'] = $this->Vquery->blog_list();
+
+        $this->load->view('blog', $cat_data);
+    }
     public function login_and_registration()
     {
         if ((!$this->session->userdata('isUserLoggedIn') &&
-            !$this->session->userdata('userId')) || $this->session->userdata('guest')) {
+            !$this->session->userdata('userId')) && !$this->session->userdata('guest')) {
 
             $cat_data['cat_data'] = $this->Vquery->cat_list();
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();
@@ -1097,9 +1171,6 @@ class Home extends CI_Controller
                 $this->form_validation->set_rules('fname', 'First Name', 'trim|alpha|required');
                 $this->form_validation->set_rules('lname', 'Last Name', 'trim|alpha|required');
                 $this->form_validation->set_rules('cemail', 'Email', 'trim|required|valid_email|callback_email_check');
-                $this->form_validation->set_rules('pass', 'Password', 'trim|required|callback_valid_password');
-                $this->form_validation->set_rules('cpass', 'confirm password', 'trim|required|matches[pass]');
-
                 $userData = array(
                     'fname' => strip_tags($this->input->post('fname')),
                     'lname' => strip_tags($this->input->post('lname')),
@@ -1113,13 +1184,12 @@ class Home extends CI_Controller
                     $insert = $this->Vquery->insert_user($userData);
                     if ($insert) {
                         $senderemail = 'gajendray9@gmail.com';
-                        $msg = "<h4>Welcome To Zumeyes<h4>You Have Successfully Registered Zumeyes Account";
+                        $msg = 'Welcome To Zumeyes You Have Successfully Registered Zumeyes Account';
                         $headers = 'From: ' . $senderemail . "\r\n" .
                         'Reply-To: ' . $senderemail . "\r\n" .
                         'cc: ' . $senderemail . "\r\n" .
                         'bcc: ' . $senderemail . "\r\n" .
                         'X-Mailer: PHP/' . phpversion();
-
                         mail($this->input->post('cemail'), "Successfully Registered Your Zumeyes Account", $msg, $headers);
 
                         $msg = $this->session->set_flashdata('rsuccess_msg', 'Registered successfully. Please login to your account.');
@@ -1148,6 +1218,7 @@ class Home extends CI_Controller
                     if ($checkLogin) {
                         $this->session->set_userdata('isUserLoggedIn', true);
                         $this->session->set_userdata('userId', $checkLogin['id']);
+                        $cart_countt = $this->Vquery->cart_countdata($this->input->post('email'));
                         if (count($this->cart->contents()) > 0) {
                             $datae1 = array(
                                 'email' => $this->input->post('email'),
@@ -1160,13 +1231,19 @@ class Home extends CI_Controller
                                     'qty' => $items['qty'],
                                     'pro_image' => $items['pro_image'],
                                     'prescription_type' => $items['prescription_type'],
+                                    'order_status' => 1,
                                 );
                                 $dataa = array_merge($data, $datae1);
                                 $this->Vquery->cart_insert($dataa);
                             }
                         }
 
-                        redirect('shoppingCart');
+                        if ($cart_countt > 0) {
+                            redirect('shoppingCart');
+                        } else {
+                            redirect('index');
+
+                        }
                     } else {
 
                         $this->session->set_flashdata('error_msg', 'Wrong email or password, please try again.');
@@ -1203,6 +1280,19 @@ class Home extends CI_Controller
             return false;
         } else {
             return true;
+        }
+    }
+    public function authajax_password()
+    {
+        $password = $this->input->post('cpass');
+        $useremail = $this->session->userdata('user_email');
+        $auth = $this->Vquery->authpass($password, $useremail);
+        if ($auth == false) {
+
+            echo 'Your Current Password Is Wrong.';
+
+        } else {
+            echo '';
         }
     }
     public function valid_password($password = '')
@@ -1255,6 +1345,7 @@ class Home extends CI_Controller
     {
 
         $this->session->unset_userdata('guest');
+        $this->session->unset_userdata('guest_email');
         $this->session->sess_destroy();
         redirect('index');
     }
@@ -1327,19 +1418,22 @@ class Home extends CI_Controller
     public function comment()
     {
         if ($this->input->post('uemail')) {
+            date_default_timezone_set('Asia/Kolkata');
             $data = array(
                 'email' => $this->input->post('uemail'),
                 'name' => $this->input->post('uname'),
                 'comment' => $this->input->post('comment'),
+                'blog_title' => $this->input->post('title'),
+                'date' => date("M d Y"),
                 'status' => '1',
             );
 
             $result = $this->Vquery->comment($data);
             if ($result == true) {
-                echo 'Yow comment will appear with in 24hr';
+                echo 'Yow comment Successfully Posted';
             }
         } else {
-            echo 'Something gone wrong...';
+            echo 'You Did not filled details ...';
         }
     }
     public function resetpassword()
@@ -1469,5 +1563,183 @@ class Home extends CI_Controller
         } else {
             redirect('index');
         }
+    }
+    public function review()
+    {
+        if ($this->input->post('reviewemail')) {
+            date_default_timezone_set('Asia/Kolkata');
+            $data = array(
+                'name' => $this->input->post('reviewname'),
+                'email' => $this->input->post('reviewemail'),
+                'title' => $this->input->post('reviewtitle'),
+                'message' => $this->input->post('reviewmessage'),
+                'pro_id' => $this->input->post('pro_id'),
+                'date' => date("M d Y"),
+                'status' => 1,
+            );
+
+            $id = $this->Vquery->insert_review($data);
+
+        } else {
+            echo 'no';
+        }
+    }
+    public function card_save()
+    {
+        if ($this->input->post('email')) {
+            $cardno = $this->input->post('cardno');
+            // $cardno='1234 5678 9011 2233';
+            date_default_timezone_set('Asia/Kolkata');
+            $data = array(
+                'card1' => substr($cardno, 0, -14),
+                'card2' => substr($cardno, 4, -9),
+                'card3' => substr($cardno, 9, -4),
+                'card4' => substr($cardno, 14),
+                'name_oncard' => $this->input->post('name_oncard'),
+                'user_email' => $this->input->post('email'),
+                'cardtype' => $this->input->post('cardtype'),
+                'exp_month' => $this->input->post('exp_month'),
+                'exp_year' => $this->input->post('exp_year'),
+                'date' => date("M d Y"),
+                'status' => 1,
+
+            );
+
+            $id = $this->Vquery->insert_carddata($data);
+
+        }
+        redirect('myAccount');
+    }
+    public function card_remove()
+    {
+        if ($this->input->get('id')) {
+            $cardid = $this->input->get('id');
+            $data = array(
+                'status' => 0,
+            );
+            $this->Vquery->remove_carddata($data, $cardid);
+        }
+        redirect('myAccount');
+    }
+    public function paysuccess()
+    {
+        if ($_POST["hash"]) {
+            $status = $_POST["status"];
+            $firstname = $_POST["firstname"];
+            $amount = $_POST["amount"];
+            $txnid = $_POST["txnid"];
+            $posted_hash = $_POST["hash"];
+            $key = $_POST["key"];
+            $productinfo = $_POST["productinfo"];
+            $email = $_POST["email"];
+            $orderid = $_POST["udf1"];
+            $deliverydata = $_POST["udf2"];
+            $orderdata = $_POST["udf3"];
+            $udf1 = $orderid;
+            $udf2 = $deliverydata;
+            $udf3 = $orderdata;
+            $udf4 = '';
+            $udf5 = '';
+            $salt = "DYRIJdQp46";
+
+            if (isset($_POST["additionalCharges"])) {
+                $additionalCharges = $_POST["additionalCharges"];
+                $retHashSeq = $additionalCharges . '|' . $salt . '|' . $status . '||||||||' . $udf3 . '|' . $udf2 . '|' . $udf1 . '|' . $email . '|' . $firstname . '|' . $udf1 . '|' . $productinfo . '|' . $amount . '|' . $txnid . '|' . $key;
+            } else {
+                $retHashSeq = $salt . '|' . $status . '||||||||' . $udf3 . '|' . $udf2 . '|' . $udf1 . '|' . $email . '|' . $firstname . '|' . $productinfo . '|' . $amount . '|' . $txnid . '|' . $key;
+
+            }
+            $hash = hash("sha512", $retHashSeq);
+            if ($hash != $posted_hash) {
+                echo "<script>alert('Invalid Transaction. Please try again')</script>";
+                redirect('myAccount');
+
+            } else {
+
+                $useraddress_id = $_POST['address2'];
+                $useraddress['useraddress'] = $this->Vquery->user_addressbyid($useraddress_id, $_POST["email"]);
+                foreach ($useraddress as $key => $useraddres) {
+
+                    $user_address = array(
+                        'username' => $useraddres->name,
+                        'phone' => $useraddres->phone,
+                        'altphone' => $useraddres->alternatephone,
+                        'address' => $useraddres->address,
+                        'pincode' => $useraddres->pincode,
+                        'locality' => $useraddres->locality,
+                        'landmark' => $useraddres->landmark,
+                        'city' => $useraddres->city,
+                        'state' => $useraddres->state,
+                        'address_type' => $useraddres->addresstype,
+                    );
+                }
+                $email = $_POST["email"];
+                $data1 = array(
+                    'email' => $_POST["email"],
+                    'amount' => $_POST["amount"],
+                    'txnid' => $_POST["txnid"],
+                    'cart_id' => $_POST["productinfo"],
+                    'order_id' => $_POST['udf1'],
+                    'deliverydate' => $deliverydata,
+                    'order_date' => $orderdata,
+                );
+                $data = array_merge($user_address, $data1);
+                $this->Vquery->userorder($data);
+
+                //update cart status that order has done and do not show in user cart//
+                $order_status = array(
+                    'order_status' => 0);
+                $email = $_POST["email"];
+
+                $cart_id = explode(',', $_POST["productinfo"]);
+                $count = count($cart_id);
+
+                for ($i = 0; $i < $count; $i++) {
+                    $cartid = $cart_id[$i];
+                    $cat_data['cat_data'] = $this->Vquery->cat_list();
+                    $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+                    $cat_data['status'] = $status;
+                    $cat_data['orderid'] = $_POST['udf1'];
+                    $cat_data['amount'] = $amount;
+                    $this->Vquery->orderaftercart($order_status, $email, $cartid);}
+                //update cart status that order has done and do not show in user cart//
+                /*   $senderemail='gajendray9@gmail.com';
+                $msg= "<h3>Thank You. Your order status is ". $status .".</h3>";
+                $msg.="<h4>Your Transaction ID for this transaction is ".$txnid.".</h4>";
+                $msg.= "<h4>We have received a payment of Rs. " . $amount . ". Your order will soon be shipped.</h4>";
+                $msg.= "<h4>Your OrderId is " . $_POST['orderid'] . ". Your order will soon be shipped.</h4>";
+                $headers = 'From: '.$senderemail."\r\n" .
+                'Reply-To: '.$senderemail."\r\n" .
+                'cc: '.$senderemail."\r\n" .
+                'bcc: '.$senderemail."\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+                mail($this->input->post('email'),"Your Zumeyes Order",$msg,$headers);      */
+
+                $this->load->view('success', $cat_data);
+
+            }} else {redirect('myAccount');}
+
+    }
+
+    public function orderDetails()
+    {
+        $id = $this->input->get('id');
+        if ($this->input->get('id')) {
+
+            $this->load->model('Order');
+            $cat_data['user_order'] = $this->Order->user_orderbyid($id);
+            $userorder = $this->Order->userorderbyid($id);
+
+            foreach ($userorder as $key => $userorderr) {
+                $cart_id = $userorderr->cart_id;
+            }
+            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id);
+            $cat_data['cat_data'] = $this->Vquery->cat_list();
+            $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+            $this->load->view('orderDetails', $cat_data);
+        } else {
+            redirect('login_and_registration');
+        }
+
     }
 }

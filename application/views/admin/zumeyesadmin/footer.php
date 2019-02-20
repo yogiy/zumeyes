@@ -1,6 +1,6 @@
   <footer class="footer">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© 2018 Zumeyes. All rights resereved</span>
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© <?php echo date('Y') ?> Zumeyes. All rights resereved</span>
 
           </div>
         </footer>
@@ -22,6 +22,7 @@
   <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/icheck/icheck.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/typeahead.js/dist/typeahead.bundle.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/select2/dist/js/select2.min.js"></script>
+
   <!-- End plugin js for this page-->
   <!-- inject:js -->
   <script src="<?php echo base_url(); ?>assets/zumeyes/js/off-canvas.js"></script>
@@ -31,6 +32,8 @@
   <script src="<?php echo base_url(); ?>assets/zumeyes/js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
+   <script src="<?php echo base_url(); ?>assets/zumeyes/js/data-table.js"></script>
+
   <script src="<?php echo base_url(); ?>assets/zumeyes/js/file-upload.js"></script>
   <script src="<?php echo base_url(); ?>assets/zumeyes/js/iCheck.js"></script>
   <script src="<?php echo base_url(); ?>assets/zumeyes/js/typeahead.js"></script>

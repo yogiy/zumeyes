@@ -227,6 +227,26 @@ foreach ($material_name as $key => $material) {
                       </div>
                       </div>
                       <div class="form-group" style="margin-top: 1rem;">
+                           <h4 class="card-title">Prescription Type</h4>
+                          <div class="form-group row" style="margin-top: 1rem;">
+
+                           <?php
+
+foreach ($prescription as $key => $prescription_type) {
+    ?>
+                                       <div class="col-sm-4">
+                                      <div class="form-check form-check-flat">
+                            <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input" name="prescription[]" value="<?php echo $prescription_type->id; ?>">
+                               <?php echo $prescription_type->prescription_type; ?>
+                            </label>
+                            <?php echo form_error('prescription_type'); ?>
+                            </div>
+                          </div>
+                          <?php }?>
+                      </div>
+                      </div>
+                      <div class="form-group" style="margin-top: 1rem;">
                          <h4 class="card-title">Weight</h4>
                         <div class="input-group">
                           <div class="input-group-prepend">
@@ -412,19 +432,38 @@ foreach ($material_name as $key => $material) {
                           <?php echo form_error('product_quantity'); ?>
                         </div>
                       </div>
-                         <div class="form-group" style="margin-top: 1rem;">
-                           <h4 class="card-title">Offer On Product</h4>
-                           <div class="input-group" >
 
-                          <div class="input-group-prepend">
-                            <span class="input-group-text bg-info bg-info" id="colored-addon1">
-                              <i class="mdi mdi-shield-outline text-white"></i>
-                            </span>
-                          </div>
-                          <input type="text" class="form-control"  placeholder="Offer In Percentage(Don't put % sign)" aria-label="Category" name="offer" id="offer" aria-describedby="colored-addon1">
-                          <?php echo form_error('offer'); ?>
-                        </div>
-                      </div>
+                       <div class="form-group" style="margin-top: 1rem;">
+                    <h4 for="exampleSelectPrimary">Offer On Product</h4>
+                    <select class="form-control border-primary" id="offer" name="offer">
+                      <?php if (!empty($offer)) {
+    foreach ($offer as $offer_list) {?>
+                      <option value="<?php echo $offer_list->offer; ?>"><?php echo $offer_list->offer; ?>%</option>
+                      <?php }}?>
+                    </select>
+                  </div>
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <h4 for="exampleSelectPrimary">Discount On Product</h4>
+                    <select class="form-control border-primary" id="discount" name="discount">
+                      <?php if (!empty($discount)) {
+    foreach ($discount as $discount_list) {?>
+                      <option value="<?php echo $discount_list->discount; ?>"><?php echo $discount_list->discount; ?>%</option>
+                      <?php }}?>
+                    </select>
+                  </div>
+                   <div class="form-group" style="margin-top: 1rem;">
+                    <h4 for="exampleSelectPrimary">Tax Slab</h4>
+                    <select class="form-control border-primary" id="tax" name="tax_slab">
+                      <option value="0">0.0</option>
+                      <?php if (!empty($tax)) {
+    foreach ($tax as $tax_slab) {?>
+                      <option value="<?php echo $tax_slab->tax_slab; ?>"><?php echo $tax_slab->tax_slab; ?>%</option>
+                      <?php }}?>
+                    </select>
+                  </div> <div class="form-group" style="margin-top: 1rem;display:none" id="prescription">
+                    <h4 for="exampleSelectPrimary">Product Prescription</h4>
+
+                  </div>
                         <div class="form-group" style="margin-top: 1rem;">
 
                       <?php echo form_upload(['name' => 'userfile', 'class' => 'file-upload-default', 'id' => 'userfile1']) ?>
@@ -506,6 +545,7 @@ $(document).ready(function(){
 
           document.getElementById('fit').style.display = "";
         document.getElementById('shape').style.display = "";
+        document.getElementById('prescription').style.display = "";
          document.getElementById('purpose').style.display = "";
          document.getElementById('framewidth').style.display = "";
         document.getElementById('lensewidth').style.display = "";
@@ -530,6 +570,7 @@ $(document).ready(function(){
         document.getElementById('lenseheight').style.display = "none";
         document.getElementById('features').style.display = "none";
         document.getElementById('tag').style.display = "none";
+         document.getElementById('prescription').style.display = "none";
         document.getElementById('framestyle').style.display = "none";
         document.getElementById('allhide').style.display = "";
 

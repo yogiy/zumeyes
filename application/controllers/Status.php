@@ -1,35 +1,46 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
-class Admin extends CI_Controller
+class Status extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('form_validation');
-        $this->load->database();
-        $this->load->model('Aquery');
-        if ($this->session->userdata('isUserLoggedIn') == true &&
-            $this->session->userdata('userId')) {
-            $user = "admin@gmail.com";
-            $profile['profile'] = $this->Aquery->get_profilerow($user);
-            foreach ($profile as $key => $profiledataa) {
-                $email = $profiledataa->email;
-                $usrname = $profiledataa->name;
-                $imgg = $profiledataa->user_image;
-                $this->session->set_userdata('user_nname', $usrname);
+        $this->load->helper('url');
+    }
+    public function index()
+    {
+        $status = $this->input->post('status');
+        if (empty($status)) {
+            redirect('My_controller');
+        }
 
-                $this->session->set_userdata('userimg', $imgg);
+        $firstname = $this->input->post('firstname');
+        $amount = $this->input->post('amount');
+        $txnid = $this->input->post('txnid');
+        $posted_hash = $this->input->post('hash');
+        $key = $this->input->post('key');
+        $productinfo = $this->input->post('productinfo');
+        $email = $this->input->post('email');
+        $salt = "dxmk9SZZ9y"; //  Your salt
+        $add = $this->input->post('additionalCharges');
+        if (isset($add)) {
+            $additionalCharges = $this->input->post('additionalCharges');
+            $retHashSeq = $additionalCharges . '|' . $salt . '|' . $status . '|||||||||||' . $email . '|' . $firstname . '|' . $productinfo . '|' . $amount . '|' . $txnid . '|' . $key;
+        } else {
 
-            }
+            $retHashSeq = $salt . '|' . $status . '|||||||||||' . $email . '|' . $firstname . '|' . $productinfo . '|' . $amount . '|' . $txnid . '|' . $key;
+        }
+        $data['hash'] = hash("sha512", $retHashSeq);
+        $data['amount'] = $amount;
+        $data['txnid'] = $txnid;
+        $data['posted_hash'] = $posted_hash;
+        $data['status'] = $status;
+        if ($status == 'success') {
+            $this->load->view('success', $data);
+        } else {
+            $this->load->view('fail', $data);
         }
 
     }
-    public function status_category()
-    {
-        $status = $this->input->post('status');
-        $id = $this->input->post('id');
-        $this->Aquery->status_category($status, $id);
-        redirect('admin/category');
-    }
+
 }

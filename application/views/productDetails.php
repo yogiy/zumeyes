@@ -23,9 +23,11 @@
         $featuredimage = explode("|", $pro_dat->featuredimage);
         $pro_colors = explode("|", $pro_dat->color);
         $procolor = $pro_dat->color;
+        $pro_idr = $pro_dat->id;
         $tags = $pro_dat->tags;
         $features = $pro_dat->features;
         $weight = $pro_dat->weight;
+        $tax = $pro_dat->tax;
         $frame_width = $pro_dat->frame_width;
         $lense_height = $pro_dat->lense_height;
         $lense_width = $pro_dat->lense_width;
@@ -53,11 +55,12 @@
     <div class="colorBlock clearfix">
       <div class="colorList clearfix">
       	<?php foreach ($pro_colors as $key => $color) {?>
-        <label>
+        <label class="colorclick" color="<?php echo $color; ?>">
         <div class="circle">
           <div class="color" style="background-color:<?php echo $color; ?>"></div>
         </div>
         <a><?php echo $color; ?></a>
+
         </label>
     <?php }?>
       </div>
@@ -129,7 +132,7 @@
 								<em>(Select Product)</em>
 							   <!--<input type="radio" required value="<?php echo $packages->id; ?>" name="prescription_id">-->
 							   <input hidden type="radio" required value="<?php echo $packages->id; ?>" name="prescription_id">
-						</div>
+							  </div>
 
 					</div>
 
@@ -254,8 +257,11 @@
   	  <input type="hidden" name="pro_name" value="<?php echo $pro_dat->product_name; ?>">
   	   <input type="hidden" name="pro_image" value="<?php echo $pro_dat->pro_image; ?>">
   	 <input type="hidden" name="sale_price" value="<?php echo $pro_dat->sale_price; ?>">
+     <input type="hidden" name="tax" value="<?php echo $tax; ?>">
   	 <input type="hidden" name="lense_price" value="<?php echo $pro_dat->sale_price; ?>">
   	 <input type="hidden" name="id" value="<?php echo $pro_dat->id; ?>">
+     <input  type="hidden" value="" name="color_name" class="color_name1">
+
 
     <button class="hvr-wobble-top singleVision" type="submit" name="singleVision" value="singleVision"> <i class="icon icon-shopping-cart"></i> <span>Add to Cart</span> </button>
     <div class="whislistIcon"> <i class="icon icon-heart"></i> </div>
@@ -299,7 +305,7 @@
 							<a href="#">
 								<span>Add to Cart</span>
 								<em>(Submit power post checkout)</em>
-                <input hidden type="radio" required value="<?php echo $packages->lense_name; ?>" name="prescription_id">
+                <input hidden type="radio" required value="<?php echo $packages->id; ?>" name="prescription_id">
 
 							</a>
 
@@ -477,7 +483,7 @@
 				<div class="textBar clearfix">
 
 					<label>Additional comment about your prescription?</label>
-					<textarea name="prescComment" id="prescComment" name="description" placeholder=""></textarea>
+					<textarea id="prescComment" name="description" placeholder=""></textarea>
 
 				</div>
 
@@ -487,7 +493,10 @@
        <input type="hidden" name="pro_image" value="<?php echo $pro_dat->pro_image; ?>">
      <input type="hidden" name="sale_price" value="<?php echo $pro_dat->sale_price; ?>">
      <input type="hidden" name="lense_price" value="<?php echo $pro_dat->sale_price; ?>">
+      <input type="hidden" name="tax" value="<?php echo $tax; ?>">
+
      <input type="hidden" name="id" value="<?php echo $pro_dat->id; ?>">
+     <input  type="hidden" value="" name="color_name" class="color_name1">
 
 
     <button class="hvr-wobble-top bifocal" type="submit" value="bifocal" name="bifocal"> <i class="icon icon-shopping-cart"></i> <span>Add to Cart</span> </button>
@@ -646,7 +655,11 @@
        <input type="hidden" name="pro_image" value="<?php echo $pro_dat->pro_image; ?>">
      <input type="hidden" name="sale_price" value="<?php echo $pro_dat->sale_price; ?>">
      <input type="hidden" name="lense_price" value="<?php echo $pro_dat->sale_price; ?>">
+      <input type="hidden" name="tax" value="<?php echo $tax; ?>">
+
      <input type="hidden" name="id" value="<?php echo $pro_dat->id; ?>">
+      <input  type="hidden" value="" name="color_name" class="color_name1">
+
      <div class="buttonBlock clearfix">
 
     <button class="hvr-wobble-top zeroPower" type="submit" value="zeroPower" name="zeroPower"> <i class="icon icon-shopping-cart"></i> <span>Add to Cart</span> </button>
@@ -657,16 +670,18 @@
       </div>
 </form>
           <div class="valueBlock clearfix" id="frameContent" >
-         <form action="frameOnly" method="post" id="form1">
+         <form action="frameOnly" method="post" name="frameOnlyform">
 
              <div class="buttonBlock clearfix">
       <input type="hidden" name="pro_name" value="<?php echo $pro_dat->product_name; ?>">
        <input type="hidden" name="pro_image" value="<?php echo $pro_dat->pro_image; ?>">
      <input type="hidden" name="sale_price" value="<?php echo $pro_dat->sale_price; ?>">
      <input type="hidden" name="lense_price" value="<?php echo $pro_dat->sale_price; ?>">
+       <input type="hidden" name="tax" value="<?php echo $tax; ?>">
      <input type="hidden" name="pro_id" value="<?php echo $pro_dat->id; ?>">
+     <input  type="hidden" value="" name="color_name" class="color_name1">
 
-    <button class="hvr-wobble-top" type="submit" name="frameOnly" value="frameOnly "> <i class="icon icon-shopping-cart"></i> <span>Add to Cart</span> </button>
+    <button class="hvr-wobble-top frameOnly" type="submit" name="frameOnly" value="frameOnly"> <i class="icon icon-shopping-cart"></i> <span>Add to Cart</span> </button>
     <div class="whislistIcon"><i class="icon icon-heart class"></i> </div>
   </div>
 </form>
@@ -786,7 +801,118 @@
                 <a href="#">View All Reviews</a> </div>
               <div class="col-sm-6 writeReviewBtnBlock clearfix">
                 <p>Share your thoughts with other customers</p>
-                <button>Write a Review</button>
+                   <div class="text-center">
+  <a href="" class="btn btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm"><button>Write a Review</button></a>
+</div>
+
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Write a Review</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body mx-3" style="text-align: left">
+        <div class="md-form mb-5">
+          <i class="fa fa-user prefix grey-text"></i>
+           <label data-error="wrong" data-success="right"  for="orangeForm-name">Your name</label>
+          <input type="text" name="name" id="reviewname" required class="form-control validate">
+
+        </div>
+        <div class="md-form mb-5">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
+          <input type="email"  id="reviewemail" name="email" required class="form-control validate">
+          <input type="hidden" name="pro_id"  id="reviewid" value="<?php echo $pro_idr ?>">
+
+        </div>
+            <div class="md-form mb-5">
+          <i class="fa fa-user prefix grey-text"></i>
+           <label data-error="wrong" data-success="right" for="orangeForm-name">Title</label>
+          <input type="text" id="reviewtitle" name="title" required class="form-control validate">
+
+        </div>
+         <div class="md-form">
+          <i class="fa fa-pencil prefix grey-text"></i>
+           <label data-error="wrong" data-success="right" for="form8">Your message</label>
+          <textarea type="text" id="reviewmessage" name="description" class="md-textarea form-control" rows="4"></textarea>
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <button id="review" name="reviewemail" value="">Submit</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+
+  /* 1. Visualizing things on Hover - See next part for action on click */
+  $('#stars li').on('mouseover', function(){
+    var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+
+    // Now highlight all the stars that's not after the current hovered star
+    $(this).parent().children('li.star').each(function(e){
+      if (e < onStar) {
+        $(this).addClass('hover');
+      }
+      else {
+        $(this).removeClass('hover');
+      }
+    });
+
+  }).on('mouseout', function(){
+    $(this).parent().children('li.star').each(function(e){
+      $(this).removeClass('hover');
+    });
+  });
+
+
+  /* 2. Action to perform on click */
+  $('#stars li').on('click', function(){
+    var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+    var stars = $(this).parent().children('li.star');
+
+    for (i = 0; i < stars.length; i++) {
+      $(stars[i]).removeClass('selected');
+    }
+
+    for (i = 0; i < onStar; i++) {
+      $(stars[i]).addClass('selected');
+    }
+
+    // JUST RESPONSE (Not needed)
+    var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+    var msg = "";
+    if (ratingValue > 1) {
+        msg = "Thanks! You rated this " + ratingValue + " stars.";
+    }
+    else {
+        msg = "We will improve ourselves. You rated this " + ratingValue + " stars.";
+    }
+    responseMessage(msg);
+
+  });
+
+
+});
+
+
+function responseMessage(msg) {
+  $('.success-box').fadeIn(200);
+  $('.success-box div.text-message').html("<span>" + msg + "</span>");
+}
+</script>
+
               </div>
             </div>
             <div class="chooseType clearfix"> <span>Sort By :</span>
@@ -1116,7 +1242,7 @@
           <div class="itemBottom">
             <h3> <a class="productName" href="#"><?php echo $relate->product_name ?></a> </h3>
             <div class="priceBox"> <span>Rs <?php echo $relate->sale_price ?></span> </div>
-            <div class="productAction" stype="padding-left:23px">
+            <div class="productAction" style="padding-left:23px">
 
               <div class="wishlist icon class"> <i class="icon-heart"></i> </div>
             </div>
@@ -1132,32 +1258,55 @@
 
 <?php include 'footer.php';?>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url('assets/js/owl.carousel.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/slick.js'); ?>"></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $(".singleVision").click(function(){
 		var pres_id=document.forms["singleVisionform"]["prescription_id"].value;
+			var color_name=document.forms["singleVisionform"]["color_name"].value;
     if (pres_id== "") {
     alert("Please select the Single vision package");
     return false;
   }
+  if(color_name== ""){
+       alert("Please select the product color");
+       return false;
+  }
 });
      $(".bifocal").click(function(){
     var pres_id=document.forms["bifocalform"]["prescription_id"].value;
+    var color_name=document.forms["bifocalform"]["color_name"].value;
     if (pres_id== "") {
     alert("Please select the BiFocal package");
     return false;
   }
+    if(color_name== ""){
+       alert("Please select the product color");
+       return false;
+  }
 });
       $(".zeroPower").click(function(){
     var pres_id=document.forms["zeroPowerform"]["prescription_id"].value;
+    var color_name=document.forms["zeroPowerform"]["color_name"].value;
     if (pres_id== "") {
     alert("Please select the Zero Power package");
     return false;
   }
+    if(color_name== ""){
+       alert("Please select the product color");
+       return false;
+  }
 });
+      $(".frameOnly").click(function(){
+       var color_name=document.forms["frameOnlyform"]["color_name"].value;
+       if(color_name== ""){
+       alert("Please select the product color");
+       return false;
+  }
+      });
+
   });
 	</script>
 	<script type="text/javascript">
@@ -1180,6 +1329,53 @@
             });
 
     });
+</script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+ $(".colorclick").click(function(){
+     var color=  $(this).attr("color");
+               $(".color_name1").attr("value", color);
+ });
+    $("#review").click(function(){
+     var review_name= true;
+      var review_email= true;
+       var review_title= true;
+        var review_message= true;
+      var reviewname =  document.getElementById("reviewname").value;;
+      var reviewemail=  document.getElementById("reviewemail").value;
+      var reviewtitle= document.getElementById("reviewtitle").value;
+      var reviewmessage= document.getElementById("reviewmessage").value;
+      var pro_id=  document.getElementById("reviewid").value;
+   if (reviewname== "") {
+   document.getElementById("edName").attributes["required"] = "";
+    review_name = false;
+   }
+    if (reviewemail== "") {
+    document.getElementById("edName").attributes["required"] = "";
+    review_email= false;
+   }
+    if (reviewmessage== "") {
+   document.getElementById("edName").attributes["required"] = "";
+    review_message = false;
+   }
+    if (reviewtitle== "") {
+   document.getElementById("edName").attributes["required"] = "";
+    review_title = false;
+   } if(review_name ==true && review_email ==true && reviewtitle ==true){
+            $.ajax({
+                type:"POST",
+                url:"<?php echo base_url('review'); ?>",
+            data:{pro_id:pro_id,reviewname:reviewname,reviewemail:reviewemail,reviewtitle:reviewtitle,reviewmessage:reviewmessage},
+                success:function(data){
+                   window.location.reload();
+
+                }
+            });
+}
+    });
+});
 </script>
 </body>
 </html>
