@@ -20,9 +20,7 @@
 			<div class="carousel-inner">
 
 				<?php $active = 1;
-foreach ($slider_data as $key => $slider) {
-
-    ?>
+				foreach ($slider_data as $key => $slider) {?>
 				<div class="item <?php if ($active == 1) {?>active<?php }?>">
 					<div class="mask"></div>
 					<div class="fill">
@@ -30,7 +28,7 @@ foreach ($slider_data as $key => $slider) {
 					</div>
 
 				</div>
-			<?php $active++;}?>
+				<?php $active++;}?>
 
 			</div>
 
@@ -228,7 +226,7 @@ foreach ($pro_data as $key => $produc_dat) {
 								</div>
 								<div class="itemImg">
 									<a href="productDetails.html">
-										<img src="<?php echo base_url('assets/images/frame_4.png') ?>" alt="Frame">
+										<img src="<?php /* echo base_url('assets/images/frame_4.png') */?>" alt="Frame">
 									</a>
 								</div>
 								<div class="itemBottom">

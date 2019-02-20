@@ -1,3 +1,53 @@
+FrontEnd Bugs:
+--------------
+1. FAQ footer with 4 section is not like other pages:: Style is different.
+2. Wishlist is still not working. Check error in console. Without login state.
+3. URL is showing the ids, url path need to be informative like "Category/product_name", presently like: (http://127.0.0.1/CI_Z/blogDetails?id=5)
+4. Blog page is showing the static comments, Comments should be fetched from db.
+5. On Clicking the Post Comment button at the blog page without filling out the details shows error : (Something gone wrong...) it should not have been posted for not filling out the details. 
+6. There are no validation for comments as any values can work in email field. Fields are not even clearing on submit. 
+7. Share button are present but doesn't work. 
+8. No validation on subsciption field. Show Popup alert msg to confirm submission and clear out the field. 
+9. Social Network link are present but not directed anywhere. 
+10. Contact us, Blog, Shipping, Cancel and Refund pages links are not working in footer section. 
+
+Product Detail Page For Contact Lenses:
+1. Share button not working below the image. 
+2. Wishlist icon not working near add_to_cart button.
+3. Prescription power dropdown should show "SELECT" by default as "0.0" and "1 Box" can be valid prescription entry, but currently not allowed. User need to delebrately select 1 box. 
+4. On Shopping cart page no. of boxes for particular eye need to shown, not showing currently. 
+5. On clicking checkout as guest. Secure Checkout screen shows Login "admin@gmail.com". User should be asked about his/her email, Please look into its flow. This need work. 
+
+On Login presented with Shopping Cart event when I want to login on the home page and presented with Sh opping cart with 0 items. 
+
+My Account Section After login:
+-------------------------------
+1. Only showing first name as name. Should show both first and last name combined.
+2. Change password textbox are plaintext box. make them password textboxes. Doesn't seems to be working. 
+3. On Clicking cancel button on change password not going back to details. 
+4. On Edit personal details section, DOB and Phone no. are already filled with some text. Should not be there as i have not provided and not showing also in the My account landing.
+5. My Orders still showing static data. Please remove it.
+6. Manage Addresses Section showing errors.
+7. Save Cards section is filled with static data.
+8. Phone pe and gift card section are filled with static data.
+9. On clicking My Account in "Home/My Account/Personal Information" section error page is displayed. 
+
+
+
+Admin Bugs
+---------------
+List of Registered User is still not present. 
+Tax/Discount/Offers section is missing.
+Orders section is missing. 
+Payments Mgmt section is missing. 
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------
 Admin Bugs
 --------------------
 1. About page : 
@@ -17,23 +67,18 @@ Admin Bugs
       submit the values are getting updated on clicking CANCEL.
 
 4. Blog
-   -> Blog update page has unwanted icons in the toolbar which are not working, no back button to go back to blog list
-      screen. 
-   -> On clicking the donut menu button on top left the side panel minimizes and the logo changes to V on clicking this
-      logo the page redirects to index page which is not available and error is shown.
-   -> On clicking the Submit button on blog listing page in the top section for adding new blog, the url redirects to 
-      "http://127.0.0.1/CI_Z/admin/blog_insertData" and white screen is presented without any error or activity. 
+   -> Blog update page has unwanted icons in the toolbar which are not working, no back button to go back to blog list screen. 
+   -> On clicking the donut menu button on top left the side panel minimizes and the logo changes to V on clicking this logo the page redirects to index page which is not available and error is shown.
+   -> On clicking the Submit button on blog listing page in the top section for adding new blog, the url redirects to "http://127.0.0.1/CI_Z/admin/blog_insertData" and white screen is presented without any error or activity. 
    
 5. Product filter page
-   -> No validation in forms working, able to submit on clicking the button without providing any value and the parameter is shown 
-      as blank in the below lists.
+   -> No validation in forms working, able to submit on clicking the button without providing any value and the parameter is shown as blank in the below lists.
    -> Color list update button ::> Update the name of color value:: Nothing happens. Values not getting updated. 
    -> On updating item in filters submit can be pressed without any value in textfields and its updated in the list as well.
 
 6. Product page
    -> Product listing is missing from the admin section
-   -> How is Lens prescription package associated with Frames product. Frame need to also add the type of lens package 
-      can be part of while selling. Sunglasses can/cannot have powered lens.
+   -> How is Lens prescription package associated with Frames product. Frame need to also add the type of lens package can be part of while selling. Sunglasses can/cannot have powered lens.
 
 7. Add prescription page
    -> Form getting submitted without values. 
