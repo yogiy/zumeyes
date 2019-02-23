@@ -270,7 +270,7 @@ if (isset($cart_data) && !empty($cart_data)) {
 
 						<div class="bar bar1 clearfix">
 
-						<?php if (isset($items->prescription_type)) {?>	<div class="left clearfix"><span>Select Prescription Type </span></div>
+						<?php if (isset($items->prescription_type) && !empty($items->prescription_type)) {?>	<div class="left clearfix"><span>Select Prescription Type </span></div>
 							<div class="right"><em><?php echo $items->prescription_type; ?></em> <?php if ($items->prescription_type == 'Frame Only') {
             echo "You Did not select Lense Package(Optional)";
         }?></div><?php }?>
@@ -377,12 +377,13 @@ if (isset($cart_data) && !empty($cart_data)) {
 							<div class="col-sm-2 col-xs-12 boxThird clearfix"><span><!--Rs 5--></span></div>
 
 						</div>
+						<?php if ($items->prescription_name) {?>
 						<div class="bar clearfix">
 							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Prescription Name</span></div>
 							<div class="col-sm-6 col-xs-12 boxSecond clearfix"><span><?php echo $items->prescription_name; ?></span></div>
 							<div class="col-sm-2 col-xs-12 boxThird clearfix"><span></span></div>
 						</div>
-
+						<?php }?>
 						<div class="bar clearfix">
 
 							<div class="col-sm-4 col-xs-12 boxFirst clearfix"><span>Tax</span></div>
@@ -483,7 +484,7 @@ $tax_rate = (($items->price * $items->qty) * $items->tax) / 100;
 
 				<div class="buttonBlock clearfix">
 
-					<a href="<?php echo base_url('productList'); ?>"><button class="continue">Continue Shopping</button>
+					<a href="<?php echo base_url('index'); ?>"><button class="continue">Continue Shopping</button>
 				<?php if ($total_product > 0 || !empty($cart_data)) {?>
 					<a href="<?php echo base_url('checkout'); ?>">
 					<button class="checkout">Checkout</button></a>

@@ -21,10 +21,10 @@
 
 	<div class="aboutContent clearfix">
 
-		<?php foreach ($about_data as $key => $value) {
-    			$description = $value->description;
-    			echo $description;
-		}?>
+			<?php foreach ($about_data as $key => $value) {
+    $description = $value->description;
+    echo $description;
+}?>
 
 
 		</div>
@@ -35,7 +35,7 @@
 
 
 	<?php include 'footer.php';?>
-	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 </body>
 

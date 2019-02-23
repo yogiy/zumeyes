@@ -39,14 +39,14 @@ $ii = 0?>
 
 							<div id="newCheckoutLoginDetails" class="field" style="display: none;"><input type="text" id="email" placeholder="useremail@gmail.com"></div>
 
-							<button id="changeLoginBtn" >Change</button>
+							<button id="changeLoginBtn" style="display: none;">Change</button>
 							<button id="saveLoginBtn" style="display: none;">Next</button>
 						<?php }?>
 						</div>
 
 					</div>
 
-					<div class="bar <?php if (!$this->session->userdata('guest')) {?>active<?php }?> clearfix" id="chooseAddressBar">
+					<div class="bar active clearfix" id="chooseAddressBar">
 
 						<span>Delivery Address</span>
 
@@ -140,7 +140,7 @@ $ii = 0?>
 
 						<span>Add New Address</span>
 
-						<form method="post" <?php if ($this->session->userdata('guest')) {?>action="guest"<?php } else {?> action="myAccount" <?php }?> >
+						<form method="post" <?php if ($this->session->userdata('guest_email')) {?>action="guest"<?php } else {?> action="myAccount" <?php }?> >
 
 								<div class="addrsDetails clearfix">
 
@@ -239,7 +239,7 @@ if (!isset($cart_data)) {
 								<div class="itemInfoBlock clearfix">
 
 									<h4><?php echo $items['name']; ?></h4>
-									<span><?php echo $items['prescription_type'] ?></span>
+									<span><?php echo @$items['prescription_type'] ?></span>
 									<em>Delivery By: <strong><?php date_default_timezone_set('Asia/Kolkata');
     $date = date("M d Y");
     echo date('M d Y', strtotime($date . ' + 7 days'));?></strong></em>
@@ -403,8 +403,7 @@ $today = date("Ymd");
 $rand = strtoupper(substr(uniqid(sha1(time())), 0, 4));
 $orderid = '402' . '-' . $today . '-' . $rand;
 
-$name = $username;
-$mailid = $this->session->userdata('user_email');
+$name = $username;if ($this->session->userdata('user_email')) {$mailid = $this->session->userdata('user_email');} elseif ($this->session->userdata('guest_email')) {$mailid = $this->session->userdata('guest_email');}
 $phoneno = 1234567890;
 $productinfo = $cart_id;
 $address = $address;
@@ -793,7 +792,7 @@ $action = $PAYU_BASE_URL . '/_payment';
 
 								</div>
 
-								<span class="option codOption">Cash on Delivery</span>
+							<!--	<span class="option codOption">Cash on Delivery</span>
 
 								<div class="paymentDetails clearfix" id="codContent">
 
@@ -992,7 +991,7 @@ $action = $PAYU_BASE_URL . '/_payment';
 
 									</div>
 
-								</div>
+								</div>-->
 
 							</div>
 
@@ -1030,7 +1029,7 @@ $action = $PAYU_BASE_URL . '/_payment';
 
 <?php include 'footer.php';?>
 
-	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 	<script type="text/javascript">
 
@@ -1050,9 +1049,7 @@ $action = $PAYU_BASE_URL . '/_payment';
           $("#check_email").click(function(){
           	check_email();
           });
-          $("#c_email").focusout(function(){
-          	check_email();
-          });
+
           function check_email(){
 
           	var pattern= /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;

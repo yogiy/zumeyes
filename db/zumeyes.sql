@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2019 at 04:24 AM
+-- Generation Time: Feb 21, 2019 at 10:59 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 5.6.37
 
@@ -1013,7 +1013,8 @@ INSERT INTO `user` (`id`, `email`, `password`, `status`, `fname`, `lname`, `phon
 (21, 'ravi@gmail.com', 'Nadeem@1234', 1, 'Ravi', 'Kumar', '', '', '', ''),
 (22, 'yogesh21india@gmail.com', 'Yogesh@12', 1, 'yogesh', 'yadav', '', '', '', ''),
 (23, 'gajendray9@gmail.com', 'Admin@1234', 1, 'szx', 'asdfs', '', '', '', ''),
-(27, 'gajendray100@gmail.com', 'Admin@123', 1, 'Gajendra', 'yadav', '2134567890', 'Male', '15/08/1993', '');
+(27, 'gajendray100@gmail.com', 'Admin@123', 1, 'Gajendra', 'yadav', '2134567890', 'Male', '15/08/1993', ''),
+(28, 'nadeemali918@gmail.com', 'Nadeem@1234', 1, 'Nadeem', 'Ali', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -1047,8 +1048,16 @@ INSERT INTO `useraddress` (`id`, `email`, `user_email`, `name`, `phone`, `addres
 (3, 'admin@gmail.com', 'admin@gmail.com', 'Gajendra', '04225356467', 'B Block 205, Ground Floor, Gali No.1West Dawarka', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '04225356467', 'Home (All day delivery)', '', '1'),
 (4, 'ravi@gmail.com', 'admin@gmail.com', 'Ravi', '9875642153', 'laxmi nagar', '110095', 'metro station', 'delhi', 'delhi', 'pilor no 43', '7854697123', 'Home (All day delivery)', '', '1'),
 (7, 'gajendray9@gmail.com', '', 'Gajendra', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', '', '1'),
-(9, 'gajendray100@gmail.com', '', 'Gajendra', '8755024556', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', '', '1'),
-(10, 'rajatsharma@gmail.com', '', 'Rajat', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1');
+(10, 'rajatsharma@gmail.com', '', 'Rajat', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1'),
+(11, 'nadeemali918@gmail.com', '', 'Nadeem', '8750025951', 'laxmi nagar', '110092', 'new delhi', 'laxmi nagar', 'delhi', 'near laxmi nagar metro', '8549625423', 'Office (Delivery Between 10am - 7pm)', '', '1'),
+(12, 'bchg@hf.com', '', 'Gajendra', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1'),
+(16, 'govind@gmail.com', '', 'Gajendra', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1'),
+(17, 'govind@gmail.com', '', 'Rajat', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1'),
+(18, 'gajendray101@gmail.com', '', 'Gajendra', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1'),
+(19, 'dileep@gmail.com', '', 'Dileep', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1'),
+(20, 'bchg@1hf.com', '', 'Gajendra', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1'),
+(21, 'bchg@2hf.com', '', 'Gajendra', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', 'guest', '1'),
+(22, 'gajendray100@gmail.com', '', 'Gajendra', '4225356467', 'njhyfhnjgkihkih', '245101', 'Hapur', 'Hapur', 'Uttar Pradesh', 'Uttar Pradesh', '4225356467', 'Home (All day delivery)', '', '1');
 
 -- --------------------------------------------------------
 
@@ -1084,25 +1093,47 @@ CREATE TABLE `usercart` (
   `color` varchar(10) NOT NULL,
   `tax` varchar(225) NOT NULL,
   `discount` varchar(225) NOT NULL,
-  `order_status` int(1) NOT NULL
+  `order_status` int(1) NOT NULL,
+  `order_id` varchar(225) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usercart`
 --
 
-INSERT INTO `usercart` (`pro_id`, `id`, `email`, `name`, `price`, `pro_image`, `prescription_type`, `lense_name`, `lense_price`, `lsphere`, `rsphere`, `lcylinder`, `rcylinder`, `laxis`, `raxis`, `nearpdsphere`, `pdsphere`, `description`, `prescription_name`, `rbox`, `lbox`, `leftlnearAddi`, `rightlnearAddi`, `qty`, `color`, `tax`, `discount`, `order_status`) VALUES
-(113, 82, 'ravi@gmail.com', 'Chamberlain', '400', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 4, '', '', '', 1),
-(143, 91, 'gajendray9@gmail.com', 'Chamberlain', '665', 'frame_4.png', 'Single Vision', 'None Anti Glare4', '90', '1.25', '1.25', '1.50', '1.25', '1.25', '1.50', '', '', '', 'dfch', '', '', '', '', 1, 'PURPLE', '0', '', 1),
-(144, 75, 'admin@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 2, 'PINK', '5', '', 0),
-(146, 83, 'gajendray9@gmail.com', 'Success', '375', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (10).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'BLUE', '5', '', 1),
-(147, 73, 'gajendray9@gmail.com', 'Chamberlain', '400', 'WhatsApp Image 2018-02-13 at 12.43.53 PM (1).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'TORTOISE ', '5', '', 1),
-(148, 73, 'admin@gmail.com', 'Chamberlain', '400', 'WhatsApp Image 2018-02-13 at 12.43.53 PM (1).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'GREEN ', '5', '', 0),
-(149, 75, 'admin@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Single Vision', 'None Anti Glare2', '79', '1.25', '1.25', '1.25', '1.50', '1', '1', '', '', '', 'Test', '', '', '', '', 1, 'PINK', '5', '', 1),
-(150, 75, 'gajendray100@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'PINK', '5', '', 0),
-(151, 75, 'gajendray100@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'TWO-TONE', '5', '', 0),
-(152, 74, 'gajendray100@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 2, 'TWO-TONE', '5', '', 0),
-(153, 75, 'gajendray100@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Single Vision', 'None Anti Glare4', '90', '1.75', '1', '1.75', '1.25', '1.50', '1.25', '', '', '', 'Test', '', '', '', '', 1, 'PINK', '5', '', 1);
+INSERT INTO `usercart` (`pro_id`, `id`, `email`, `name`, `price`, `pro_image`, `prescription_type`, `lense_name`, `lense_price`, `lsphere`, `rsphere`, `lcylinder`, `rcylinder`, `laxis`, `raxis`, `nearpdsphere`, `pdsphere`, `description`, `prescription_name`, `rbox`, `lbox`, `leftlnearAddi`, `rightlnearAddi`, `qty`, `color`, `tax`, `discount`, `order_status`, `order_id`) VALUES
+(113, 82, 'ravi@gmail.com', 'Chamberlain', '400', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 4, '', '', '', 1, ''),
+(143, 91, 'gajendray9@gmail.com', 'Chamberlain', '665', 'frame_4.png', 'Single Vision', 'None Anti Glare4', '90', '1.25', '1.25', '1.50', '1.25', '1.25', '1.50', '', '', '', 'dfch', '', '', '', '', 1, 'PURPLE', '0', '', 1, ''),
+(146, 83, 'gajendray9@gmail.com', 'Success', '375', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (10).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'BLUE', '5', '', 1, ''),
+(147, 73, 'gajendray9@gmail.com', 'Chamberlain', '400', 'WhatsApp Image 2018-02-13 at 12.43.53 PM (1).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'TORTOISE ', '5', '', 1, ''),
+(148, 73, 'admin@gmail.com', 'Chamberlain', '400', 'WhatsApp Image 2018-02-13 at 12.43.53 PM (1).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'GREEN ', '5', '', 0, ''),
+(152, 74, 'gajendray100@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 2, 'TWO-TONE', '5', '', 0, '402-20190219-7E24'),
+(161, 73, 'nadeemali918@gmail.com', 'Chamberlain', '400', 'WhatsApp Image 2018-02-13 at 12.43.53 PM (1).jpeg', 'Zero Power', 'None Anti Glare', '90', '1', '1', '1', '1', '1', '1', '', '', '', 'Nadeem', '', '', '', '', 1, 'GREEN ', '5', '', 0, ''),
+(164, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(165, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(166, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(167, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(168, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(169, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(170, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(171, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(172, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(173, 74, 'govind@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Bifocal', 'None Anti Glare3', '90', '1.25', '1.25', '1.25', '1.25', '1.50', '1', '1.25', '1.25', 'jjkfgmkldmglksd', 'Test', '', '', '1.50', '1', 1, 'TWO-TONE', '5', '', 1, ''),
+(180, 75, 'bchg@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'TWO-TONE', '5', '', 1, ''),
+(181, 74, 'gajendray100@gmail.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Zero Power', 'None Anti Glare5', '90', '1.25', '1.25', '1.25', '1.25', '1.25', '1.50', '', '', '', 'Test', '', '', '', '', 1, 'BROWN', '5', '', 0, '402-20190221-A027'),
+(182, 75, 'gajendray101@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'TWO-TONE', '5', '', 1, ''),
+(183, 75, 'gajendray101@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'TWO-TONE', '5', '', 1, ''),
+(184, 75, 'gajendray101@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'TWO-TONE', '5', '', 1, ''),
+(185, 75, 'dileep@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'PINK', '5', '', 1, ''),
+(186, 75, 'dileep@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'PINK', '5', '', 1, ''),
+(187, 73, 'gajendray100@gmail.com', 'Chamberlain', '400', 'WhatsApp Image 2018-02-13 at 12.43.53 PM (1).jpeg', 'Single Vision', 'None Anti Glare3', '90', '1.75', '1.75', '1.50', '1', '1.50', '1.50', '', '', '', 'Test', '', '', '', '', 1, 'GREEN ', '5', '', 0, '402-20190221-A027'),
+(188, 74, 'bchg@1hf.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'BROWN', '5', '', 1, ''),
+(189, 74, 'bchg@1hf.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'BROWN', '5', '', 1, ''),
+(190, 74, 'bchg@1hf.com', 'Weikely', '360', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (2).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'BROWN', '5', '', 1, ''),
+(191, 75, 'bchg@2hf.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'BROWN', '5', '', 1, ''),
+(192, 75, 'bchg@2hf.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'BROWN', '5', '', 1, ''),
+(193, 75, 'gajendray100@gmail.com', 'Chamberlain', '640', 'WhatsApp Image 2018-02-13 at 12.43.54 PM (7).jpeg', 'Frame Only', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 1, 'BROWN', '5', '', 1, ''),
+(194, 90, 'bchg@h5f.com', 'Chamberlain', '665', 'lens_6.png', '', '', '', '1.25', '1', '1.25', '1.50', '1.25', '1.25', '', '', '', 'Test', '0', '1', '', '', 1, 'BROWN', '5', '', 1, '');
 
 -- --------------------------------------------------------
 
@@ -1154,9 +1185,11 @@ CREATE TABLE `userorder` (
 --
 
 INSERT INTO `userorder` (`id`, `order_id`, `email`, `address`, `address_type`, `phone`, `altphone`, `city`, `state`, `locality`, `landmark`, `pincode`, `username`, `status`, `cart_id`, `txnid`, `amount`, `deliverydate`, `order_date`) VALUES
-(7, '402-20190219-615B', 'gajendray100@gmail.com', 'njhyfhnjgkihkih', '', '8755024556', '4225356467', 'Hapur', 'Uttar Pradesh', 'Hapur', 'Uttar Pradesh', '245101', 'Gajendra', 0, '150', '169549bd0f1f788d39bc', '672.00', 'Feb 26 2019', 'Feb 19 2019'),
-(8, '402-20190220-615B', 'gajendray100@gmail.com', 'njhyfhnjgkihkih', '', '8755024556', '4225356467', 'Hapur', 'Uttar Pradesh', 'Hapur', 'Uttar Pradesh', '245101', 'Gajendra', 0, '150', '169549bd0f1f788d39bc', '672.00', 'Feb 26 2019', 'Feb 19 2019'),
-(22, '402-20190219-7E24', 'gajendray100@gmail.com', 'njhyfhnjgkihkih', 'Home (All day delivery)', '8755024556', '4225356467', 'Hapur', 'Uttar Pradesh', 'Hapur', 'Uttar Pradesh', '245101', 'Gajendra', 0, '152', 'a77f23d4cd2160e0340d', '756.00', 'Feb 26 2019', 'Feb 19 2019');
+(22, '402-20190219-7E24', 'gajendray100@gmail.com', 'njhyfhnjgkihkih', 'Home (All day delivery)', '8755024556', '4225356467', 'Hapur', 'Uttar Pradesh', 'Hapur', 'Uttar Pradesh', '245101', 'Gajendra', 0, '152', 'a77f23d4cd2160e0340d', '756.00', 'Feb 26 2019', 'Feb 19 2019'),
+(24, '402-20190220-BF28', 'nadeemali918@gmail.com', 'laxmi nagar', 'Office (Delivery Between 10am - 7pm)', '8750025951', '8549625423', 'laxmi nagar', 'delhi', 'new delhi', 'near laxmi nagar metro', '110092', 'Nadeem', 0, '161', '22a3b6ce6c6a48c52b57', '514.50', 'Feb 27 2019', 'Feb 20 2019'),
+(25, '402-20190220-2642', 'bchg@hf.com', 'njhyfhnjgkihkih', 'Home (All day delivery)', '4225356467', '4225356467', 'Hapur', 'Uttar Pradesh', 'Hapur', 'Uttar Pradesh', '245101', 'Gajendra', 0, '75', '63a7198b91290623c0d7', '672.00', 'Feb 27 2019', 'Feb 20 2019'),
+(26, '402-20190221-914A', 'dileep@gmail.com', 'njhyfhnjgkihkih', 'Home (All day delivery)', '4225356467', '4225356467', 'Hapur', 'Uttar Pradesh', 'Hapur', 'Uttar Pradesh', '245101', 'Dileep', 0, '75', '3e4e9a1ef65f580668f5', '672.00', 'Feb 28 2019', 'Feb 21 2019'),
+(27, '402-20190221-A027', 'gajendray100@gmail.com', 'njhyfhnjgkihkih', 'Home (All day delivery)', '8755024556', '4225356467', 'Hapur', 'Uttar Pradesh', 'Hapur', 'Uttar Pradesh', '245101', 'Gajendra', 0, '181,187', 'd4c322310bec346e32e2', '987.00', 'Feb 28 2019', 'Feb 21 2019');
 
 -- --------------------------------------------------------
 
@@ -1770,19 +1803,19 @@ ALTER TABLE `twitter`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `useraddress`
 --
 ALTER TABLE `useraddress`
-  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `usercart`
 --
 ALTER TABLE `usercart`
-  MODIFY `pro_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+  MODIFY `pro_id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
 
 --
 -- AUTO_INCREMENT for table `usercomments_onproduct`
@@ -1794,7 +1827,7 @@ ALTER TABLE `usercomments_onproduct`
 -- AUTO_INCREMENT for table `userorder`
 --
 ALTER TABLE `userorder`
-  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `userreview`

@@ -120,13 +120,15 @@
 									<button>Order Details</button>
                                     </a>
 									<button>Invoice</button>
-									<button>Track</button>
-
+									<a href="<?php echo base_url('orderDetails'); ?>?id=<?php echo $userorder->id; ?>"><button>Track</button>
+								</a>
 								</div>
 
 							</div>
 								<?php if (!empty($order_cart_data)) {
-        foreach ($order_cart_data as $order_cartdata) {?>
+        foreach ($order_cart_data as $order_cartdata) {
+            if ($order_cartdata->order_id == $userorder->order_id) {
+                ?>
 							<div class="itemBar clearfix">
 
 								<div class="itemImg"><img src="<?php echo base_url() ?>assets/upload/product/<?php echo str_replace(" ", '_', $order_cartdata->pro_image) ?>" alt="Item One"></div>
@@ -137,30 +139,31 @@
 									<div class="info clearfix">
 										<span><?php echo $order_cartdata->prescription_type ?></span>
 										<span>Quantity <strong><?php echo $order_cartdata->qty ?></strong></span>
-										<em>Rs <?php if (!empty($order_cart_data)) {$qty = 0;
-            $taxx = 0;
-            foreach ($order_cart_data as $order_cartdata) {
-                $qty = $order_cartdata->qty + $qty;
+										<em>Rs <?php
+if ($order_cartdata->order_id == $userorder->order_id) {
+                    $qty = 0;
+                    $taxx = 0;
+                    $qty = $order_cartdata->qty + $qty;
 
-                if (empty($order_cartdata->lense_price)) {
-                    if ($order_cartdata->tax != 0) {
-                        $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->tax / 100;}
-                    echo $order_cartdata->price * $order_cartdata->qty + $taxx;
+                    if (empty($order_cartdata->lense_price)) {
+                        if ($order_cartdata->tax != 0) {
+                            $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->tax / 100;}
+                        echo $order_cartdata->price * $order_cartdata->qty + $taxx;
 
-                } else {
-                    if ($order_cartdata->tax != 0) {
-                        $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price * $order_cartdata->tax / 100;
+                    } else {
+                        if ($order_cartdata->tax != 0) {
+                            $taxx = ($order_cartdata->price + $order_cartdata->lense_price) * $order_cartdata->qty * $order_cartdata->tax / 100;
+                        }
+                        echo (($order_cartdata->price + $order_cartdata->lense_price) * $order_cartdata->qty) + $taxx;
                     }
-                    echo $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price + $taxx;
-                }
-            }}?>
+                }?>
 										</em>
 									</div>
 
 								</div>
 
 							</div>
-							<?php }}?>
+							<?php }}}?>
 
 							<div class="barFoot clearfix">
 

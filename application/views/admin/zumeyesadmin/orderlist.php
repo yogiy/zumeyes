@@ -55,8 +55,8 @@
                                 <th>Order Id #</th>
                                 <th>Customer</th>
                                 <th>Ship to</th>
-                                <th>Total Price</th>
                                 <th>Phone</th>
+                                 <th>Total Price</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -99,7 +99,7 @@
         <!-- partial:../../partials/_footer.html -->
         <?php include 'footer.php';?>
         <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
-  <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+        <script src="<?php echo base_url(); ?>assets/zumeyes/node_modules/datatables.net/js/jquery.dataTables.js"></script>
 
 </body>
 

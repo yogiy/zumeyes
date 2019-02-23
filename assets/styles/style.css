@@ -2372,7 +2372,7 @@ footer .copyrightBlock span{
 }
 .shoppingCartSection .cartList .itemInfo em.mode{
 	font-size: 1.2em;
-	width: 33.33%;
+	width: 25%;
 	float: left;
 }
 .shoppingCartSection .cartList .itemPrice{
@@ -2540,7 +2540,7 @@ footer .copyrightBlock span{
 .secureCheckout .checkoutList .bar .userId{
 	float: left;
 	background: #f5f5f5;
-	padding: 9px 15px;
+	padding: 13px 15px;
 	border-left: 1px solid #dddddd;
 	width: 74%;
 }

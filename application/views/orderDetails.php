@@ -41,32 +41,33 @@
 				</div>
 				<?php }}?>
 				<div class="col-sm-6 orderSummary  clearfix">
-				<?php if (!empty($order_cart_data)) {$qty = 0;
+				<?php if (!empty($order_cart_data)) {$subtotal = 0;
+    $qty = 0;
     $taxx = 0;
     foreach ($order_cart_data as $order_cartdata) {
+
         $qty = $order_cartdata->qty + $qty;
 
         if (empty($order_cartdata->lense_price)) {
             if ($order_cartdata->tax != 0) {
-                $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->tax / 100;}
-            $subtotal = $order_cartdata->price * $order_cartdata->qty;
-            $total = $order_cartdata->price * $order_cartdata->qty + $taxx;
+                $tax_x = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->tax / 100;}
+            $sub_total = $order_cartdata->price * $order_cartdata->qty;
 
         } else {
             if ($order_cartdata->tax != 0) {
-                $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price * $order_cartdata->tax / 100;
+                $tax_x = ($order_cartdata->price + $order_cartdata->lense_price) * $order_cartdata->qty * $order_cartdata->tax / 100;
             }
-            $subtotal = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price;
-            $total = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price + $taxx;
+            $sub_total = (($order_cartdata->price + $order_cartdata->lense_price) * $order_cartdata->qty);
         }
-    }}?>
+        $subtotal = $sub_total + $subtotal;
+        $taxx = $tax_x + $taxx;}}?>
 					<h3>Order Summary</h3>
-					<div class="amount clearfix"><span>Item Count</span><em><?php echo $qty; ?></em></div>
-					<div class="amount clearfix"><span>Sub Total</span><em>Rs <?php echo $subtotal; ?></em></div>
-					<div class="amount clearfix"><span>Tax</span><em>Rs <?php echo $taxx; ?></em></div>
+					<div class="amount clearfix"><span>Item Count</span><em><?php echo @$qty; ?></em></div>
+					<div class="amount clearfix"><span>Sub Total</span><em>Rs <?php echo @$subtotal; ?></em></div>
+					<div class="amount clearfix"><span>Tax</span><em>Rs <?php echo @$taxx; ?></em></div>
 					<div class="amount clearfix"><span>Shipping</span><em>Rs 0.00</em></div>
 					<div class="amount clearfix"><span>Coupon</span><em>Rs 0.00</em></div>
-					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs <?php echo $total ?></em></div>
+					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs <?php echo @$subtotal + $taxx; ?></em></div>
 
 				</div>
 
@@ -167,13 +168,14 @@
 
 			<div class="bar clearfix">
 
-				<h3><?php echo $qty; ?> Item Shipments</h3>
+				<h3><?php echo @$qty; ?> Item Shipments</h3>
 
 			</div>
 
 			<div class="itemsList clearfix">
 			<?php if (!empty($order_cart_data)) {
-    foreach ($order_cart_data as $order_cartdata) {?>
+    foreach ($order_cart_data as $order_cartdata) {
+        ?>
 
 				<div class="col-sm-6 col-xs-12 clearfix item">
 
@@ -187,9 +189,10 @@
 								<span>Quantity <strong><?php echo $order_cartdata->qty ?></strong></span>
 								</div>
 								<em>Rs
-									<?php if (!empty($order_cart_data)) {$qty = 0;
-        $taxx = 0;
-        foreach ($order_cart_data as $order_cartdata) {
+									<?php
+if ($order_cartdata->order_id == $userorder->order_id) {
+            $qty = 0;
+            $taxx = 0;
             $qty = $order_cartdata->qty + $qty;
 
             if (empty($order_cartdata->lense_price)) {
@@ -199,11 +202,11 @@
 
             } else {
                 if ($order_cartdata->tax != 0) {
-                    $taxx = $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price * $order_cartdata->tax / 100;
+                    $taxx = ($order_cartdata->price + $order_cartdata->lense_price) * $order_cartdata->qty * $order_cartdata->tax / 100;
                 }
-                echo $order_cartdata->price * $order_cartdata->qty * $order_cartdata->lense_price + $taxx;
+                echo (($order_cartdata->price + $order_cartdata->lense_price) * $order_cartdata->qty) + $taxx;
             }
-        }}?>
+        }?>
 								</em>
 							</div>
 						</div>

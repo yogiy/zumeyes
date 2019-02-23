@@ -100,16 +100,16 @@
 
 		<script type="text/javascript">
 		$(document).ready(function(){
-		    var error_email=false;
-		     var error_name=false;
+		  var error_email=false;
+		  var error_name=false;
 			$('#email_error_message').hide();
-          	$('#name_error_message').hide();
-          $("#uemail").focusout(function(){
-          	check_email();
-          });
- $("#uname").focusout(function(){
-          	check_name();
-          });
+      $('#name_error_message').hide();
+      $("#uemail").focusout(function(){
+          check_email();
+      });
+ 			$("#uname").focusout(function(){
+        check_name();
+      });
 
           function check_email(){
           	var pattern= /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;

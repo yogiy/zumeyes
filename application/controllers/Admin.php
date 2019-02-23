@@ -2335,7 +2335,7 @@ class Admin extends CI_Controller
             foreach ($userorder as $key => $userorderr) {
                 $cart_id = $userorderr->cart_id;
             }
-            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id);
+            $cat_data['order_cart_data'] = $this->Order->cartorderdata($cart_id);
             $this->load->view('admin/zumeyesadmin/orderDetail', $cat_data);
         } else {
             redirect('admin/homepage');

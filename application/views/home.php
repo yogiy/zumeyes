@@ -15,6 +15,7 @@
 
 				<?php $active = 1;
 foreach ($slider_data as $key => $slider) {
+
     ?>
 				<div class="item <?php if ($active == 1) {?>active<?php }?>">
 					<div class="mask"></div>
@@ -102,7 +103,7 @@ foreach ($product_data as $key => $product_dat) {
 						</div>
 						<div class="itemBottom">
 							<h3>
-								<a class="productName" href="#"><?php echo $product_dat->product_name ?></a>
+								<a class="productName" href="<?php echo site_url('lenseDetails') ?>?id=<?php echo $product_dat->id ?>"><?php echo $product_dat->product_name ?></a>
 							</h3>
 							<div class="itemOffer clearfix">
 
@@ -115,7 +116,7 @@ foreach ($product_data as $key => $product_dat) {
 							</div>
 							<div class="productAction productActionHome">
 								<div class="wishlist icon">
-									<i style="cursor: pointer" class="icon-favorite-heart-button class" proprice="<?php echo $product_dat->sale_price; ?>" pro_id="<?php echo $product_dat->id ?>" pro_name="<?php echo $product_dat->product_name ?>"pro_image="<?php echo $product_dat->pro_image ?>"></i>
+								<i style="cursor: pointer" class="icon-favorite-heart-button class" proprice="<?php echo $product_dat->sale_price; ?>" pro_id="<?php echo $product_dat->id ?>" pro_name="<?php echo $product_dat->product_name ?>"pro_image="<?php echo $product_dat->pro_image ?>"></i>
 								</div>
 							</div>
 

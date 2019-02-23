@@ -52,9 +52,9 @@
 	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 	<?php if ($this->session->flashdata('wrong_otp')) {?>
-		<script type="text/javascript">
-			alert('You otp is incorrect');
-		</script>
+	<script type="text/javascript">
+		alert('You otp is incorrect');
+	</script>
 	<?php }?>
 </body>
 

@@ -15,7 +15,6 @@ class Vquery extends CI_Model
         $this->db->from('product');
         return $this->db->get();
     }
-
     public function make_query($pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid)
     {
         $sid = 3;
@@ -76,14 +75,12 @@ class Vquery extends CI_Model
 
         return $query;
     }
-
     public function count_all($pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_query($pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid);
         $data = $this->db->query($query);
         return $data->num_rows();
     }
-
     public function fetch_data($limit, $start, $pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_query($pageid, $brand, $fit, $color, $material, $shape, $purpose, $byPrize, $shortby, $subsubid);
@@ -196,7 +193,6 @@ $(document).ready(function(){
         }
         return $output;
     }
-
     public function make_lensequery($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid)
     {
         $sid = 3;
@@ -245,14 +241,12 @@ $(document).ready(function(){
 
         return $query;
     }
-
     public function count_lenseall($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_lensequery($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid);
         $data = $this->db->query($query);
         return $data->num_rows();
     }
-    
     public function fetch_lensedata($limit, $start, $pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid)
     {
         $query = $this->make_lensequery($pageid, $brand, $color, $lense_uses, $byPrize, $shortby, $subsubid);

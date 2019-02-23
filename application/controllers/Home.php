@@ -303,6 +303,15 @@ class Home extends CI_Controller
             $this->Vquery->cart_insert($dataa);
 
         }
+        if ($this->session->userdata('guest_email')) {
+            $email = $this->session->userdata('guest_email');
+            $datae1 = array(
+                'email' => $email,
+            );
+            $dataa = array_merge($data, $datae1);
+            $this->Vquery->cart_insert($dataa);
+
+        }
         redirect('shoppingCart');
     }
 
@@ -347,6 +356,15 @@ class Home extends CI_Controller
         if (($this->session->userdata('isUserLoggedIn') &&
             $this->session->userdata('userId'))) {
             $email = $this->session->userdata('user_email');
+            $datae1 = array(
+                'email' => $email,
+            );
+            $dataa = array_merge($data, $datae1);
+            $this->Vquery->cart_insert($dataa);
+
+        }
+        if ($this->session->userdata('guest_email')) {
+            $email = $this->session->userdata('guest_email');
             $datae1 = array(
                 'email' => $email,
             );
@@ -400,6 +418,16 @@ class Home extends CI_Controller
             $this->Vquery->cart_insert($dataa);
 
         }
+        if ($this->session->userdata('guest_email')) {
+            $email = $this->session->userdata('guest_email');
+            $datae1 = array(
+                'email' => $email,
+            );
+            $dataa = array_merge($data, $datae1);
+            $this->Vquery->cart_insert($dataa);
+
+        }
+
         redirect('shoppingCart');
     }
 
@@ -483,6 +511,15 @@ class Home extends CI_Controller
                 $this->Vquery->cart_insert($dataa);
 
             }
+            if ($this->session->userdata('guest_email')) {
+                $email = $this->session->userdata('guest_email');
+                $datae1 = array(
+                    'email' => $email,
+                );
+                $dataa = array_merge($data, $datae1);
+                $this->Vquery->cart_insert($dataa);
+
+            }
             $i = 1;
             $total_product = 0;
             foreach ($this->cart->contents() as $items) {
@@ -511,6 +548,7 @@ class Home extends CI_Controller
         if (($this->session->userdata('isUserLoggedIn') &&
             $this->session->userdata('userId')) || $this->session->userdata('guest')) {
             $email = $this->session->userdata('user_email');
+
             $datae1 = array(
                 'email' => $email,
             );
@@ -847,9 +885,11 @@ class Home extends CI_Controller
     public function guest()
     {
 
-        if ($this->session->userdata('guest_email')) {
-            $guest = $this->input->post('guest');
-            $this->session->set_userdata('guest', $guest);
+        if ($this->session->userdata('guest_email') || $this->input->post('guest')) {
+            if ($this->input->post('guest')) {
+                $guest = $this->input->post('guest');
+                $this->session->set_userdata('guest', $guest);
+            }
             $email = $this->session->userdata('guest_email');
             if ($email) {
 
@@ -860,7 +900,7 @@ class Home extends CI_Controller
                 $this->form_validation->set_rules('address', 'Address', 'trim|required');
                 $this->form_validation->set_rules('city', 'City', 'trim|required');
                 $this->form_validation->set_rules('state', 'State', 'trim|required');
-                $this->form_validation->set_rules('alternatephone', 'City', 'trim|required');
+                $this->form_validation->set_rules('alternatephone', 'Alternate Phone Number', 'trim|required');
                 $this->form_validation->set_rules('cpin', 'Pin Code', 'trim|required');
                 $this->form_validation->set_rules('locality', 'Locality', 'trim|required');
 
@@ -895,16 +935,18 @@ class Home extends CI_Controller
                 }
             }
 
-            redirect('checkout');
-        } else {
-            redirect('login_and_registration');
+            if ($this->cart->contents()) {
+                redirect('checkout');
+            } else {
+                redirect('index');
+            }
+
         }
     }
 
     public function checkout()
     {
 
-        $count = count($this->cart->contents());
         if ($this->session->userdata('isUserLoggedIn') && $this->session->userdata('userId')) {
             $email = $this->session->userdata('user_email');
             $cat_data['cart_data'] = $this->Vquery->get_cart($email);
@@ -915,23 +957,31 @@ class Home extends CI_Controller
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();
             $this->load->view('checkout', $cat_data);
 
-        } elseif ($this->session->userdata('guest')) {
-            if ($count > 0) {
-                $this->load->database();
-                $this->load->model('Vquery');
-                $cat_data['cat_data'] = $this->Vquery->cat_list();
-                if ($this->session->userdata('guest_email')) {
-                    $cat_data['useraddress'] = $this->Vquery->useraddressguest($this->session->userdata('guest_email'));
-                }
-                $cat_data['subcat_data'] = $this->Vquery->subcat_list();
-                if ($this->input->post('guest_email')) {
-                    $this->session->set_userdata('guest_email', $this->input->post('guest_email'));
-                }
-                $this->load->view('checkout', $cat_data);
-            } else {
-                echo '<script>alert("Your Cart Is Empty")</script>';
-                redirect('productList');
+        } elseif ($this->session->userdata('guest') || $this->session->userdata('guest_email')) {
+
+            $this->load->database();
+            $this->load->model('Vquery');
+            $cat_data['cat_data'] = $this->Vquery->cat_list();
+            if ($this->session->userdata('guest_email')) {
+                $cat_data['useraddress'] = $this->Vquery->useraddressguest($this->session->userdata('guest_email'));
+
             }
+            $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+            if ($this->input->post('guest_email')) {
+                $this->session->set_userdata('guest_email', $this->input->post('guest_email'));
+                $datae1 = array(
+                    'email' => $this->input->post('guest_email'),
+                );
+
+                if ($this->session->userdata('cdata')) {
+                    $datae = $this->session->userdata('cdata');
+                    $dataa = array_merge($datae, $datae1);
+                    $this->Vquery->cart_insert($dataa);
+                }
+
+            }
+            $this->load->view('checkout', $cat_data);
+
         } else {
             redirect('login_and_registration');
         }
@@ -1046,10 +1096,19 @@ class Home extends CI_Controller
             $cat_data['user_order'] = $this->Order->user_order($user_email);
             $userorder = $this->Order->userorder($user_email);
 
+            $cart_id1 = array();
+
             foreach ($userorder as $key => $userorderr) {
-                $cart_id = $userorderr->cart_id;
+
+                $userorderr->cart_id;
+                $cart_id11 = $userorderr->cart_id;
+                array_push($cart_id1, $cart_id11);
+
             }
-            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id);
+
+            $cart_id = implode(',', $cart_id1);
+            $cart_id = str_replace(",", "','", $cart_id);
+            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id, $user_email);
             $cat_data['card_info'] = $this->Vquery->usercardinfo($user_email);
             $cat_data['cat_data'] = $this->Vquery->cat_list();
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();
@@ -1223,17 +1282,10 @@ class Home extends CI_Controller
                             $datae1 = array(
                                 'email' => $this->input->post('email'),
                             );
-                            foreach ($this->cart->contents() as $items) {
-                                $data = array(
-                                    'id' => $items['id'],
-                                    'name' => $items['name'],
-                                    'price' => $items['price'],
-                                    'qty' => $items['qty'],
-                                    'pro_image' => $items['pro_image'],
-                                    'prescription_type' => $items['prescription_type'],
-                                    'order_status' => 1,
-                                );
-                                $dataa = array_merge($data, $datae1);
+                            if ($this->session->userdata('cdata')) {
+                                $datae = $this->session->userdata('cdata');
+
+                                $dataa = array_merge($datae, $datae1);
                                 $this->Vquery->cart_insert($dataa);
                             }
                         }
@@ -1688,7 +1740,8 @@ class Home extends CI_Controller
 
                 //update cart status that order has done and do not show in user cart//
                 $order_status = array(
-                    'order_status' => 0);
+                    'order_status' => 0,
+                    'order_id' => $orderid);
                 $email = $_POST["email"];
 
                 $cart_id = explode(',', $_POST["productinfo"]);
@@ -1716,7 +1769,14 @@ class Home extends CI_Controller
                 mail($this->input->post('email'),"Your Zumeyes Order",$msg,$headers);      */
 
                 $this->load->view('success', $cat_data);
+                $this->session->unset_userdata('guest');
+                $this->session->unset_userdata('guest_email');
+                $this->load->library('cart');
+                $data = array(
+                    'qty' => 0,
+                );
 
+                $this->cart->update($data);
             }} else {redirect('myAccount');}
 
     }
@@ -1727,15 +1787,27 @@ class Home extends CI_Controller
         if ($this->input->get('id')) {
 
             $this->load->model('Order');
+            $gemail = $this->session->userdata('user_email');
             $cat_data['user_order'] = $this->Order->user_orderbyid($id);
             $userorder = $this->Order->userorderbyid($id);
 
+            $cart_id1 = array();
+
             foreach ($userorder as $key => $userorderr) {
-                $cart_id = $userorderr->cart_id;
+
+                $userorderr->cart_id;
+                $cart_id11 = $userorderr->cart_id;
+                array_push($cart_id1, $cart_id11);
+
             }
-            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id);
+
+            $cart_id = implode(',', $cart_id1);
+            $cart_id = str_replace(",", "','", $cart_id);
+
+            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id, $gemail);
             $cat_data['cat_data'] = $this->Vquery->cat_list();
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+
             $this->load->view('orderDetails', $cat_data);
         } else {
             redirect('login_and_registration');

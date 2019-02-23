@@ -1095,7 +1095,7 @@
 <?php include('footer.php');?>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/slick.js'); ?>"></script>
 <script type="text/javascript">
 		

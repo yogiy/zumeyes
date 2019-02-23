@@ -26,13 +26,14 @@ class Order extends CI_Model
     public function userorder($email)
     {
 
-        $query = $this->db->query("SELECT * FROM `userorder` where `email`='" . $email . "'");
+        $query = $this->db->query("SELECT cart_id FROM `userorder` where `email`='" . $email . "'");
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
             return false;
         }
     }
+
     public function userorderbyid($id)
     {
 
@@ -53,10 +54,20 @@ class Order extends CI_Model
             return false;
         }
     }
-    public function cart_orderdata($cart_id)
+    public function cart_orderdata($cart_id, $email)
     {
 
-        $query = $this->db->query("SELECT * FROM `usercart` where `pro_id` IN ('" . $cart_id . "')");
+        $query = $this->db->query("SELECT * FROM `usercart` where `pro_id` IN ('" . $cart_id . "') AND `email`='" . $email . "'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
+    public function cartorderdata($cart_id)
+    {
+
+        $query = $this->db->query("SELECT * FROM `usercart` where `pro_id` IN ('" . $cart_id . "') ");
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {
