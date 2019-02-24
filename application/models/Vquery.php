@@ -1029,6 +1029,17 @@ $(document).ready(function(){
             return false;
         }
     }
+    public function update_addressinfo($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('useraddress', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function update_product_of_usercart($data, $email, $rowid)
     {
         $this->db->where('email', $email);

@@ -12,6 +12,16 @@ class Order extends CI_Model
             return false;
         }
     }
+    public function user_ordercount($email)
+    {
+
+        $query = $this->db->query("SELECT * FROM `userorder` where `email`='" . $email . "'");
+        if ($query->num_rows() > 0) {
+            return $query->num_rows();
+        } else {
+            return false;
+        }
+    }
     public function user_orderbyid($id)
     {
 

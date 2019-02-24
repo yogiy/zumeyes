@@ -115,16 +115,23 @@ foreach ($product_data as $key => $product_dat) {
 								<span>Rs <?php echo $product_dat->sale_price ?></span>
 							</div>
 							<div class="productAction productActionHome">
-								<div class="wishlist icon">
-								<i style="cursor: pointer" class="icon-favorite-heart-button class" proprice="<?php echo $product_dat->sale_price; ?>" pro_id="<?php echo $product_dat->id ?>" pro_name="<?php echo $product_dat->product_name ?>"pro_image="<?php echo $product_dat->pro_image ?>"></i>
-								</div>
-							</div>
+
+										<div class="wishlist icon">
+
+
+                                        <i style="cursor: pointer" class="icon-favorite-heart-button class" proprice="<?php echo $product_dat->sale_price; ?>" pro_id="<?php echo $product_dat->id ?>" pro_name="<?php echo $product_dat->product_name ?>"pro_image="<?php echo $product_dat->pro_image ?>"></i>
+										</div>
+
+									</div>
 
 						</div>
 					</div>
 				</div>
                 <?php $variable++;}?>
 				<div class="col-sm-6 col-xs-12 proBox noPadding">
+
+
+
                         <div class="row probar clearfix">
                         	               <?php $row_image = 1;
 foreach ($pro_data as $key => $produc_dat) {

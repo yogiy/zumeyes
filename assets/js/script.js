@@ -284,7 +284,7 @@ $(function () {
 	});
 
 	// THIS IS THE METHOD FOR HANDLING THE RADIO BTN CLICKING ON DESCRIPTION	
-	$('.lenseAddBlock  div.button').on('click', function (event) {
+	$('.lenseAddBlock  div.button').on('click', function(event){
 		event.preventDefault();
 		$('.lenseAddBlock  div.button').removeClass('active');
 		$(this).addClass('active');
@@ -400,31 +400,31 @@ $(function () {
 		}
 	});
 
-
+	
 	var carouselMine = $('.owl-carousel').owlCarousel({
-		loop: true,
-		margin: 10,
-		// responsiveClass: true,
-		autoWidth: true,
-		responsive: {
-			0: {
-				items: 1,
-				nav: true
-			},
-			600: {
-				items: 3,
-				nav: false
-			},
-			1000: {
-				items: 3,
-				nav: true,
-				loop: false,
-				margin: 20
+			loop: true,
+			margin: 10,
+			// responsiveClass: true,
+			autoWidth:true,
+			responsive: {
+				0: {
+					items: 1,
+					nav: true
+				},
+				600: {
+					items: 3,
+					nav: false
+				},
+				1000: {
+					items: 3,
+					nav: true,
+					loop: false,
+					margin: 20
+				}
 			}
-		}
-	}).trigger('refresh.owl.carousel');
-
-
+		}).trigger('refresh.owl.carousel');
+		
+	
 
 });
 

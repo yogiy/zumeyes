@@ -263,6 +263,16 @@ class Aquery extends CI_Model
             return false;
         }
     }
+    public function box_entry($data)
+    {
+        $query = $this->db->insert('eye_box', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function nearaddition_entry($data)
     {
         $query = $this->db->insert('nearaddition', $data);
@@ -296,6 +306,14 @@ class Aquery extends CI_Model
     public function axis_data()
     {
         $query = $this->db->query("SELECT * FROM `axis`");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        }
+    }
+    public function box_data()
+    {
+        $query = $this->db->query("SELECT * FROM `eye_box`");
         if ($query->num_rows() > 0) {
             return $query->result();
 
@@ -783,6 +801,16 @@ class Aquery extends CI_Model
             return false;
         }
     }
+    public function get_boxbyid($id)
+    {
+        $query = $this->db->query("SELECT * FROM `eye_box` where `id`='" . $id . "'");
+        if ($query->num_rows() > 0) {
+            return $query->result();
+
+        } else {
+            return false;
+        }
+    }
     public function get_nearadditionbyid($id)
     {
         $query = $this->db->query("SELECT * FROM `nearaddition` where `id`='" . $id . "'");
@@ -1059,6 +1087,17 @@ class Aquery extends CI_Model
     {
         $this->db->where('id', $id);
         $query = $this->db->update('nearaddition', $data);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function update_boxbyid($data, $id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->update('eye_box', $data);
 
         if (isset($query)) {
             return true;
@@ -1717,15 +1756,14 @@ class Aquery extends CI_Model
             return false;
         }
     }
-    /*  public function userorder_list()
-{
-$query = $this->db->query("SELECT * FROM `userorder`");
-if($query->num_rows() >0){
-return $query->result();
+    public function userorder_list()
+    {
+        $query = $this->db->query("SELECT * FROM `userorder` ORDER BY `id` desc");
+        if ($query->num_rows() > 0) {
+            return $query->result();
 
-}
-else{
-return false;
-}
-}*/
+        } else {
+            return false;
+        }
+    }
 }

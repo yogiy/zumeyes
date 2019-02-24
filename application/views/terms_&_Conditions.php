@@ -18,9 +18,9 @@
 
 			<div class="content clearfix">
 			<?php foreach ($term_get as $key => $value) {
-				$description = $value->description;
-				echo $description;
-			}?>
+    $description = $value->description;
+    echo $description;
+}?>
 
 
 			</div>

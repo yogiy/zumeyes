@@ -37,7 +37,7 @@ $ii = 0?>
 						<?php } else {?>
 							<h3 id="checkoutLoginDetails" ><?php echo $this->session->userdata('user_name'); ?> <em><?php echo $this->session->userdata('user_email'); ?></em></h3>
 
-							<div id="newCheckoutLoginDetails" class="field" style="display: none;"><input type="text" id="email" placeholder="useremail@gmail.com"></div>
+							<div id="newCheckoutLoginDetails" class="field" style="display: none;"><input type="text" id="c_email" value="<?php echo $this->session->userdata('user_email'); ?>" placeholder="useremail@gmail.com"></div>
 
 							<button id="changeLoginBtn" style="display: none;">Change</button>
 							<button id="saveLoginBtn" style="display: none;">Next</button>
@@ -62,7 +62,7 @@ $ii = 0?>
 
 									<div class="userName">
 
-										<h3><?php echo $user_address->name; ?><?php if ($i <= 1) {?> (Default Address)<?php $i++;}?></h3>
+										<h3><?php echo $username = $user_address->name; ?><?php if ($i <= 1) {?> (Default Address)<?php $i++;}?></h3>
 										<div class="buttonBlock">
 
 											<button><i class="icon icon-pencil-edit-button"></i><em>Edit Address</em></button>
@@ -111,36 +111,29 @@ $ii = 0?>
 
 					</div>
 
-					<?php if (isset($useraddress) && !empty($useraddress)) {
-    $i = 1;if ($i <= 1) {
-        foreach ($useraddress as $user_address) {?>
 
 					<div class="bar active clearfix changeAddrsBar">
 
 						<span class="loginText">Delivery Address</span>
 
-
 						<div class="userId clearfix">
 
-							<p id="checkoutAddressDetails"><strong><?php echo $username = $user_address->name; ?></strong><?php echo $user_address->address; ?>,
-								<?php echo $user_address->city; ?>,
-								<?php echo $user_address->pincode; ?>,
-								<?php echo $user_address->state; ?>,
-								<?php echo $user_address->phone;
-            ?></p>
+							<p id="checkoutAddressDetails" class="select_DeliveryAddress">
 
 
-							<button id="changeDeliveryBtn">Change</button>
 
+						</p>
+     <button id="changeDeliveryBtn">Change</button>
 						</div>
 
 					</div>
-					<?php }}}?>
+
+
 					<div class="bar clearfix addAddrsBar">
 
 						<span>Add New Address</span>
 
-						<form method="post" <?php if ($this->session->userdata('guest_email')) {?>action="guest"<?php } else {?> action="myAccount" <?php }?> >
+						<form method="post" <?php if ($this->session->userdata('guest')) {?>action="guest"<?php } else {?> action="myAccount" <?php }?> >
 
 								<div class="addrsDetails clearfix">
 
@@ -177,7 +170,7 @@ $ii = 0?>
 
 									<div class="field"><input type="text" required name="landmark" id="clandm" placeholder="Landmark"></div>
 									<?php echo form_error('landmark'); ?>
-									<div class="field right"><input name="alternatephone" required type="text" pattern="^[0-9]+$" placeholder="Phone Number" minlength="10" maxlength="10" id="caltnum" placeholder="Alternate Number"></div>
+									<div class="field right"><input name="alternatephone" required type="text" pattern="^[0-9]+$" minlength="10" maxlength="10" id="caltnum" placeholder="Alternate Number"></div>
 								<?php echo form_error('alternatephone'); ?>
 								</div>
 
@@ -199,10 +192,14 @@ $ii = 0?>
 									</div>
 
 								</div>
+								<div class="guest_emailarea">
 
+                                    </div>
 								<div class="buttonBlock clearfix">
 								<input type="hidden" name="addnewaddresscheckout" value="addnewaddresscheckout">
-									<div class="button"><input name="addnewaddress" <?php if ($this->session->userdata('guest')) {?>value="Next" <?php } else {?> value="Save" <?php }?>type="submit"></div>
+									<div class="button">
+
+										<input name="addnewaddress" <?php if ($this->session->userdata('guest')) {?>value="Next" <?php } else {?> value="Save" <?php }?>type="submit"></div>
 									<button class="cancelBtn">Cancel</button>
 
 								</div>
@@ -1060,9 +1057,12 @@ $action = $PAYU_BASE_URL . '/_payment';
           		 $.ajax({
 				type:'POST',
 				data:{guest_email:c_email},
-				url:"<?php echo base_url('checkout') ?>",
+				url:"<?php echo base_url('setguest_email') ?>",
 				success:function(data){
-
+					 $(".guest_emailarea").html(data);
+				},
+				error:function(){
+					alert('failure');
 				}
 
 			});
@@ -1074,6 +1074,27 @@ $action = $PAYU_BASE_URL . '/_payment';
           }
       });
      </script>
+     <script type="text/javascript">
+
+		$(document).ready(function(){
+            $(".selectDeliveryAddress").click(function(){
+        var address_id=	$(this).attr('address');
+         var email =$("#c_email").val();
+
+            	$.ajax({
+                type:"POST",
+                url:"<?php echo base_url('getselectedaddress'); ?>",
+            data:{address_id:address_id,email:email},
+                success:function(data){
+                  $(".select_DeliveryAddress").html(data);
+
+                }
+            });
+
+            });
+
+		});
+	</script>
 	<script src="<?php echo base_url('assets/js/jquery.payform.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/paycheckout_script.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/paydebitcard_script.js'); ?>"></script>

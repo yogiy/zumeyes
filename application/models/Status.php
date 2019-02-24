@@ -236,6 +236,19 @@ class Status extends CI_Model
         }
 
     }
+    public function status_box($status, $proid)
+    {
+
+        $this->db->where('id', $proid);
+        $query = $this->db->update('eye_box', $status);
+
+        if (isset($query)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     public function status_sphere($status, $proid)
     {
 

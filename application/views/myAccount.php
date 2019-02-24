@@ -173,7 +173,16 @@ if ($order_cartdata->order_id == $userorder->order_id) {
 							</div>
 
 						</div>
-					<?php }}?>
+					<?php }} else {?><div class="returnOContent clearfix">
+
+						<div class="nothingAddedBox clearfix">
+
+							<h3>No  order</h3>
+							<p>There is no item has been Order to Zumeyes</p>
+
+						</div>
+
+					</div><?php }?>
 					</div>
 
 				</div>
@@ -436,7 +445,7 @@ if ($order_cartdata->order_id == $userorder->order_id) {
 
 								<span>Edit Address</span>
 
-								<div class="addrsDetails clearfix">
+								<div class="addrsDetails clearfix" id="addrDetail">
 
 							<form method="post" action="myAccount">
 
@@ -479,11 +488,11 @@ if ($order_cartdata->order_id == $userorder->order_id) {
 
 									<div class="addrsType clearfix">
 
-										<div class="radioBlock">
+										<div class="type clearfix">
 										<input id="homeED" class="radio-custom" name="radio-group" type="radio" checked>
             							<span for="homeED" class="radio-custom-label"><em>Home (All day delivery)</em></span>
 										</div>
-										<div class="radioBlock">
+										<div class="type clearfix">
 										<input id="officeED" class="radio-custom" name="radio-group" type="radio">
             							<span for="officeED" class="radio-custom-label"><em>Office (Delivery Between 10am - 7pm)</em></span>
 										</div>
@@ -495,7 +504,8 @@ if ($order_cartdata->order_id == $userorder->order_id) {
 
 								<div class="buttonBlock clearfix">
 
-									<div class="button selectAndDeliveryAddress"><input name="addressupdate" value="Save" type="submit"></div>
+									<div class="button selectAndDeliveryAddress">
+                                     	<input name="addressupdate" value="Save" type="submit"></div>
 									<button class="cancelBtn">Cancel</button>
 
 								</div>
@@ -595,7 +605,7 @@ if ($order_cartdata->order_id == $userorder->order_id) {
 										<h3><?php echo $user_address->name; ?>  (Default Address)</h3>
 										<div class="buttonBlock clearfix">
 
-											<button class="editClass"><i class="icon icon-pencil-edit-button"></i><em>Edit Address</em></button>
+											<button class="editClass" email="<?php echo $this->session->userdata('user_email'); ?>" value="<?php echo $user_address->id; ?>"><i class="icon icon-pencil-edit-button"></i><em>Edit Address</em></button>
 
 
 
@@ -1393,11 +1403,29 @@ $("#reloadfrompass").focusin(function(){
                 }
           	}
             });
-
-
-
  }
 
+
+		});
+	</script>
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+            $(".editClass").click(function(){
+        var address_id=	$(this).attr('value');
+          var email=$(this).attr('email');
+
+            	$.ajax({
+                type:"POST",
+                url:"<?php echo base_url('getaddress'); ?>",
+            data:{address_id:address_id,email:email},
+                success:function(data){
+                  $("#addrDetail").html(data);
+
+                }
+            });
+
+            });
 
 		});
 	</script>

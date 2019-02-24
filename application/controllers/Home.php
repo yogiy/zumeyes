@@ -890,7 +890,7 @@ class Home extends CI_Controller
                 $guest = $this->input->post('guest');
                 $this->session->set_userdata('guest', $guest);
             }
-            $email = $this->session->userdata('guest_email');
+            $email = $this->input->post('guest_email');
             if ($email) {
 
                 $this->form_validation->set_rules('name', 'Name', 'trim|alpha|required');
@@ -967,10 +967,9 @@ class Home extends CI_Controller
 
             }
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();
-            if ($this->input->post('guest_email')) {
-                $this->session->set_userdata('guest_email', $this->input->post('guest_email'));
+            if ($this->session->userdata('guest_email')) {
                 $datae1 = array(
-                    'email' => $this->input->post('guest_email'),
+                    'email' => $this->session->userdata('guest_email'),
                 );
 
                 if ($this->session->userdata('cdata')) {
@@ -985,6 +984,14 @@ class Home extends CI_Controller
         } else {
             redirect('login_and_registration');
         }
+    }
+    public function setguest_email()
+    {
+
+        $this->session->set_userdata('guest_email', $this->input->post('guest_email'));
+
+        echo '<input type="hidden" name="guest_email" value="' . $this->input->post('guest_email') . '" >';
+
     }
 
     public function myAccount()
@@ -1086,6 +1093,49 @@ class Home extends CI_Controller
                     }
 
                 }
+            } elseif ($this->input->post('addressupdate')) {
+
+                $this->form_validation->set_rules('name', 'Name', 'trim|alpha|required');
+                $this->form_validation->set_rules('radio-group', 'Address Type', 'trim|required');
+                $this->form_validation->set_rules('phone', 'Phone No', 'trim|required');
+                $this->form_validation->set_rules('landmark', 'Landmark', 'trim|required');
+                $this->form_validation->set_rules('address', 'Address', 'trim|required');
+                $this->form_validation->set_rules('city', 'City', 'trim|required');
+                $this->form_validation->set_rules('state', 'State', 'trim|required');
+                $this->form_validation->set_rules('alternatephone', 'City', 'trim|required');
+                $this->form_validation->set_rules('pincode', 'Pin Code', 'trim|required');
+                $this->form_validation->set_rules('locality', 'Locality', 'trim|required');
+
+                if ($this->form_validation->run()) {
+
+                    $data = array(
+                        'name' => $this->input->post('name'),
+                        'addresstype' => $this->input->post('radio-group'),
+                        'phone' => $this->input->post('phone'),
+                        'landmark' => $this->input->post('landmark'),
+                        'address' => $this->input->post('address'),
+                        'city' => $this->input->post('city'),
+                        'state' => $this->input->post('state'),
+                        'alternatephone' => $this->input->post('alternatephone'),
+                        'pincode' => $this->input->post('pincode'),
+                        'locality' => $this->input->post('locality'),
+                        'status' => '1',
+
+                    );
+                    $id = $this->input->post('id');
+                    $data = $this->Vquery->update_addressinfo($data, $id);
+                    if ($data) {
+
+                        $this->session->set_flashdata('success_address', 'Your Address Information Has Been Updated');
+                        redirect('myAccount');
+
+                    } else {
+                        $this->session->set_flashdata('success_address', 'Something Went Wrong...');
+                        redirect('myAccount');
+
+                    }
+
+                }
             }
 
             $user_email = $gemail;
@@ -1095,20 +1145,23 @@ class Home extends CI_Controller
             $this->load->model('Order');
             $cat_data['user_order'] = $this->Order->user_order($user_email);
             $userorder = $this->Order->userorder($user_email);
+            $count = $this->Order->user_ordercount($user_email);
 
             $cart_id1 = array();
 
-            foreach ($userorder as $key => $userorderr) {
+            if ($count > 0) {
+                foreach ($userorder as $key => $userorderr) {
 
-                $userorderr->cart_id;
-                $cart_id11 = $userorderr->cart_id;
-                array_push($cart_id1, $cart_id11);
+                    $userorderr->cart_id;
+                    $cart_id11 = $userorderr->cart_id;
+                    array_push($cart_id1, $cart_id11);
 
+                }
+
+                $cart_id = implode(',', $cart_id1);
+                $cart_id = str_replace(",", "','", $cart_id);
+                $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id, $user_email);
             }
-
-            $cart_id = implode(',', $cart_id1);
-            $cart_id = str_replace(",", "','", $cart_id);
-            $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id, $user_email);
             $cat_data['card_info'] = $this->Vquery->usercardinfo($user_email);
             $cat_data['cat_data'] = $this->Vquery->cat_list();
             $cat_data['subcat_data'] = $this->Vquery->subcat_list();
@@ -1812,6 +1865,118 @@ class Home extends CI_Controller
         } else {
             redirect('login_and_registration');
         }
+
+    }
+    public function getaddress()
+    {
+        $id = $this->input->post('address_id');
+        $email = $this->input->post('email');
+        $useraddress['useraddress'] = $this->Vquery->user_addressbyid($id, $email);
+        foreach ($useraddress as $value) {
+            $name = $value->name;
+            $phone = $value->phone;
+            $address = $value->address;
+            $pincode = $value->pincode;
+            $city = $value->city;
+            $state = $value->state;
+            $landmark = $value->landmark;
+            $locality = $value->locality;
+            $address_type = $value->addresstype;
+            $altphone = $value->alternatephone;
+        }
+
+        echo '<form method="post" action="myAccount">
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" name="name" id="cfname" value="' . $name . '"></div>
+									<div class="field right"><input type="text" value="' . $phone . '" name="phone" id="cnum" placeholder="+91 2875469872"></div>
+
+								</div>
+								<div class="detailsBar clearfix">
+
+									<div class="field full"><textarea name="address" id="caddrs" placeholder="D Block 201, Ground Floor, Gali No.1,West Dawarka">' . $address . '</textarea></div>
+
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" name="pincode" value="' . $pincode . '" id="cpin" placeholder="110048"></div>
+									<div class="field right"><input type="text" value="' . $locality . '" id="clocality" name="locality" placeholder="South Delhi"></div>
+
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" name="city" value="' . $city . '" id="ccity" placeholder="New Delhi"></div>
+									<div class="field right"><input type="text" value="' . $state . '" name="state" id="cstate" placeholder="New Delhi"></div>
+
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<div class="field"><input type="text" value="' . $landmark . '" name="landmark" id="clandm" placeholder="Near DAV School"></div>
+									<div class="field right"><input type="text" value="' . $altphone . '" name="alternatephone" id="caltnum" placeholder="+91 8745000036"></div>
+								   <input type="hidden" value="' . $id . '" name="id">
+								</div>
+
+								<div class="detailsBar clearfix">
+
+									<label>Addresss Type</label>
+
+									<div class="addrsType clearfix">
+
+										<div class="type clearfix">
+										<input id="homeED" value="Home (All day delivery)" class="radio-custom" name="radio-group" type="radio" checked>
+            							<span for="homeED" class="radio-custom-label"><em>Home (All day delivery)</em></span>
+										</div>
+										<div class="type clearfix">
+										<input id="officeED" value="Office (Delivery Between 10am - 7pm)" class="radio-custom" name="radio-group" type="radio">
+            							<span for="officeED" class="radio-custom-label"><em>Office (Delivery Between 10am - 7pm)</em></span>
+										</div>
+
+									</div>
+
+								</div>
+
+
+								<div class="buttonBlock clearfix">
+
+									<div class="button selectAndDeliveryAddress">
+                                     	<input name="addressupdate" value="Save" type="submit"></div>
+									<button class="cancelBtn">Cancel</button>
+
+								</div>
+
+							</form>
+						';
+
+    }
+    public function getselectedaddress()
+    {
+        $id = $this->input->post('address_id');
+        $email = $this->input->post('email');
+        $useraddress['useraddress'] = $this->Vquery->user_addressbyid($id, $email);
+        foreach ($useraddress as $value) {
+            $name = $value->name;
+            $phone = $value->phone;
+            $address = $value->address;
+            $pincode = $value->pincode;
+            $city = $value->city;
+            $state = $value->state;
+            $landmark = $value->landmark;
+            $locality = $value->locality;
+            $address_type = $value->addresstype;
+            $altphone = $value->alternatephone;
+        }
+
+        echo '<strong>' . $name . '
+							</strong>' . $address . ',
+								' . $city . ',
+								' . $pincode . ',
+								' . $state . ',
+								' . $phone . '
+                                ';
 
     }
 }

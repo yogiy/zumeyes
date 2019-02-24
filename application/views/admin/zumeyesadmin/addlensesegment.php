@@ -154,9 +154,39 @@ echo form_open_multipart('admin/lenseinfo', $attributes);
                 </form>
               </div>
             </div>
-
           </div>
+<div class="col-md-6 d-flex align-items-stretch grid-margin">
+              <div class="row flex-grow">
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Add Number Of Box For Lense
+                      <span style="color:blue;padding-left:70px">
+              <?php echo $this->session->flashdata('form_succ_msg5'); ?></span></h4>
+                      <?php $attributes = array('class' => 'forms-sample');
+echo form_open_multipart('admin/lenseinfo', $attributes);
+?>
 
+ <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text bg-info bg-info" id="colored-addon1">
+                              <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                          </div>
+                          <input type="text" required class="form-control" placeholder="Number of Box For Lense" aria-label="Category" name="box" aria-describedby="colored-addon1">
+                        </div>
+                        <?php echo form_error('box'); ?>
+                      </div>
+
+                      <button type="submit" name="boxinfo" value="box" class="btn btn-success mr-2">Submit</button>
+                    <button type="reset" class="btn btn-light">Cancel</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
 <div class="card">
@@ -344,7 +374,53 @@ if ($nearaddition_data) {
               </div>
             </div>
           </div>
+<div class="card">
+            <div class="card-body">
+              <h4 class="card-title"> Available Lense Box For Product List</h4>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                      <thead>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Sphere</th>
 
+                            <th>Status</th>
+                            <th>Update</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+$sr_no = 1;
+if (@$box_data) {
+    foreach ($box_data as $key => $box_dat) {
+        $id = $box_dat->id;
+        ?>
+                        <tr>
+                            <td><?php echo $sr_no; ?></td>
+                            <td><?php echo $box_dat->box ?></td>
+                            <td>
+
+                             <form method="post" action="status_box" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $box_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $box_dat->status ?>" <?php if ($box_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                 <label for="flat-checkbox-2">Active</label>
+                </form>
+
+                            </td>
+                            <td>
+                              <a href="<?php echo site_url() ?>admin/update_lensebox?id=<?php echo $id ?>" class="btn btn-outline-primary">Update</a>
+                            </td>
+                        </tr><?php $sr_no++;}}?>
+                              </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           </div>
 

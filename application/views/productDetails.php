@@ -11,6 +11,8 @@
 	<link href="<?php echo base_url(); ?>/assets/styles/font.css" rel="stylesheet" type="text/css">
 	<script src="<?php echo base_url(); ?>/assets/js/jquery-3.2.1.min.js"></script>
 	<script src="<?php echo base_url(); ?>/assets/js/bootstrap.min.js"></script>
+  <script src="//platform-api.sharethis.com/js/sharethis.js#property=5c5f1ef883748d001131544f&product=inline-share-buttons"></script>
+
 </head>
 
 <body>
@@ -51,7 +53,8 @@
     <div class="reviewRatingBar clearfix">
       <div class="rating clearfix"> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full active"></i> <i class="icon icon-star-full"></i> <i class="icon icon-star-full"></i> </div>
       <a href="#" class="reviewLink">99 Review</a> </div>
-    <div class="shareBlock clearfix"> <span class="shareText">Share</span> <i class="icon icon-facebook"></i> <i class="icon icon-twitter"></i> <i class="icon icon-google-plus"></i> </div>
+    <div class="shareBlock clearfix"> <span class="shareText">Share</span><div class="sharethis-inline-share-buttons"></div>
+         </div>
     <div class="colorBlock clearfix">
       <div class="colorList clearfix">
       	<?php foreach ($pro_colors as $key => $color) {?>
@@ -1244,7 +1247,7 @@ function responseMessage(msg) {
             <div class="priceBox"> <span>Rs <?php echo $relate->sale_price ?></span> </div>
             <div class="productAction" style="padding-left:23px">
 
-              <div class="wishlist icon class"> <i class="icon-heart"></i> </div>
+              <div class="wishlist icon" style="padding-left: 23px;"> <i class="icon-favorite-heart-button class" style="cursor: pointer"></i> </div>
             </div>
           </div>
         </div>
@@ -1376,6 +1379,13 @@ $(document).ready(function(){
 }
     });
 });
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+   $(".class").click(function(){
+        $(this).toggleClass("active");
+        });
+        });
 </script>
 </body>
 </html>

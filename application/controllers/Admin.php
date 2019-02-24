@@ -363,12 +363,23 @@ class Admin extends CI_Controller
             $this->Aquery->nearaddition_entry($data);
             $this->session->set_flashdata('form_succ_msg4', 'Form Submited');
             redirect('admin/lenseinfo');
+        } elseif ($this->input->post('boxinfo')) {
+            $data = array(
+                'box' => $this->input->post('box'),
+                'status' => 1,
+            );
+            $this->load->database();
+            $this->load->model('Aquery');
+            $this->Aquery->box_entry($data);
+            $this->session->set_flashdata('form_succ_msg5', 'Form Submited');
+            redirect('admin/lenseinfo');
         } else {
             $this->load->database();
             $this->load->model('Aquery');
             $filter['cylinder_data'] = $this->Aquery->cylinder_data();
             $filter['sphere_data'] = $this->Aquery->sphere_data();
             $filter['axis_data'] = $this->Aquery->axis_data();
+            $filter['box_data'] = $this->Aquery->box_data();
             $filter['nearaddition_data'] = $this->Aquery->nearaddition_data();
             $this->load->view('admin/zumeyesadmin/addlensesegment', $filter);
         }
@@ -424,6 +435,19 @@ class Admin extends CI_Controller
                 'nearaddition' => $this->input->post('nearaddition'));
             $nid = $this->input->post('id');
             $this->Aquery->update_nearadditionbyid($nearaddition, $nid);
+            redirect('admin/lenseinfo');
+        }
+    }
+    public function update_lensebox()
+    {
+        $id = $this->input->get('id');
+        $sph['box'] = $this->Aquery->get_boxbyid($id);
+        $this->load->view('admin/zumeyesadmin/update_box', $sph);
+        if ($this->input->post('boxupdate')) {
+            $sphere = array(
+                'box' => $this->input->post('box'));
+            $sid = $this->input->post('id');
+            $this->Aquery->update_boxbyid($sphere, $sid);
             redirect('admin/lenseinfo');
         }
     }
@@ -2072,6 +2096,23 @@ class Admin extends CI_Controller
 
         redirect('admin/lenseinfo');
     }
+    public function status_box()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_box($status, $id);
+
+        redirect('admin/lenseinfo');
+    }
     public function status_sphere()
     {
         if ($this->input->post('status') == 1) {
@@ -2318,7 +2359,7 @@ class Admin extends CI_Controller
         $this->load->model('Order');
         $pro_list['cat_list'] = $this->Aquery->cat_list();
         $pro_list['subcat_list'] = $this->Aquery->subcat_list();
-        $pro_list['user_order'] = $this->Order->userorder_list();
+        $pro_list['user_order'] = $this->Aquery->userorder_list();
 
         $this->load->view('admin/zumeyesadmin/orderlist', $pro_list);
 

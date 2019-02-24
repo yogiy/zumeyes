@@ -209,13 +209,13 @@
 		<input type="hidden" id="sid" value="<?php echo $this->session->userdata('last_subid'); ?>">
 <?php include 'footer.php';?>
 </body>
-	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 <style>
 #loading
 {
  text-align:center;
- background: url('http://demo.webslesson.info/codeigniter-demo/asset/loader.gif') no-repeat center;
+ background: url('assets/images/loader.gif') no-repeat center;
  height: 150px;
 }
 </style>

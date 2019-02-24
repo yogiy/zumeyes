@@ -627,9 +627,8 @@
           <div class="itemBottom">
             <h3> <a class="productName" href="#"><?php echo $relate->product_name ?></a> </h3>
             <div class="priceBox"> <span>Rs <?php echo $relate->sale_price ?></span> </div>
-            <div class="productAction">
-              <div class="cart icon"> <i class="icon-shopping-cart"></i> </div>
-              <div class="wishlist icon"> <i class="icon-heart"></i> </div>
+              <div class="productAction">
+              <div class="wishlist icon" style="padding-left: 23px;"> <i class="icon-favorite-heart-button class"></i> </div>
             </div>
           </div>
         </div>
@@ -676,14 +675,18 @@
     });
     });
 </script>
-  <script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 
-  <script src="<?php echo base_url('assets/js/slick.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/slick.js'); ?>"></script>
 
 
 <script type="text/javascript">
-
+		$(document).ready(function(){
+   $(".class").click(function(){
+        $(this).toggleClass("active");
+        });
+        });
 	</script>
 
 </body>

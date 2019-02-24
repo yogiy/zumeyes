@@ -292,17 +292,17 @@
 		<input type="hidden" id="sid" value="<?php echo @$sid; ?>">
 <?php include 'footer.php';?>
 </body>
-	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 <style>
 #loading
 {
  text-align:center;
- background: url('http://demo.webslesson.info/codeigniter-demo/asset/loader.gif') no-repeat center;
+ background: url('assets/images/loader.gif') no-repeat center;
  height: 150px;
 }
 </style>
-<script type="text/javascript">
+<script type="text/javascript" async="async">
 		$(document).ready(function(){
 
 			filter_data(1);
