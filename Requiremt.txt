@@ -98,3 +98,20 @@ Client Bugs
 -> Once selected Guest User, user can't change his type. Login can't be accessed again.
 -> Login Screen error doesn't gets disappear on entering credentails in the textboxes and the button are hidden. 
 -> Register Button also doesn't show once error are visible.
+
+
+
+
+
+
+
+
+
+
+
+-23/02/2019----------
+1. for guest user also other user while adding address the radio button for selecting home/office address is
+   not working.
+   REASON:: the position of input and radio button is not same. 
+2. While moving forward the page redirect to index page(HOMEPAGE) and review order is never opened. 
+
