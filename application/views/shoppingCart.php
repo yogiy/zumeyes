@@ -464,11 +464,11 @@ $tax_rate = (($items->price * $items->qty) * $items->tax) / 100;
 				<span>Have a promo code? <em>(One promo code per order)</em></span>
 				<div class="fieldBar clearfix">
 
-					<div class="field"><input type="text" id="promoCode"></div>
-					<button>Apply</button>
+					<div class="field"><input type="text" id="promoCode" value="<?php echo $this->session->userdata('promocode'); ?>"></div>
+					<button id="applypromo">Apply</button>
 
 				</div>
-
+			<span><?php echo $this->session->userdata('promocodelimit'); ?></span>
 			</div>
 		<?php }?>
 			<div class="col-sm-7 col-xs-12 totalAmount clearfix">
@@ -478,8 +478,12 @@ $tax_rate = (($items->price * $items->qty) * $items->tax) / 100;
 					<div class="amount clearfix"><span>Sub Total</span><em>Rs <?php echo $Total; ?></em></div>
 					<div class="amount clearfix"><span>Tax</span><em>Rs 0.00</em></div>
 					<div class="amount clearfix"><span>Shipping</span><em>Rs 0.00</em></div>
-					<div class="amount clearfix"><span>Coupon</span><em>Rs 0.00</em></div>
-					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs <?php echo $Total; ?></em></div>
+					<div class="amount clearfix"><span>Coupon</span><em id="offerprice"><?php
+$cupon_price = 0;
+
+if ($this->session->userdata('cupon_code')) {$cupon_price = $Total * $this->session->userdata('cupon_code') / 100;?>
+					Rs <?php echo $cupon_price;} else { ?>Rs 0.00<?php }?></em></div>
+					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs <?php echo $Total - $cupon_price; ?></em></div>
 				</div>
 
 				<div class="buttonBlock clearfix">
@@ -500,8 +504,28 @@ $tax_rate = (($items->price * $items->qty) * $items->tax) / 100;
 
 
 <?php include 'footer.php';?>
-	<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
+	<script type="text/javascript">
+		$('#applypromo').click(function(){
+
+          var promocode =document.getElementById("promoCode").value;
+
+          if(promocode)
+			{
+           $.ajax({
+
+				type:'POST',
+				data:{promocode:promocode},
+				url:"<?php echo base_url('promocode') ?>",
+				success:function(data){
+					 window.location.reload();
+				}
+
+			});
+       }
+			});
+	</script>
 
 </body>
 </html>

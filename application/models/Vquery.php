@@ -1209,4 +1209,36 @@ $(document).ready(function(){
             return false;
         }
     }
+    public function promocode($promocode)
+    {
+        $query = $this->db->query("SELECT * FROM `offer` where `offer_name`='" . $promocode . "' AND `status`='1' ");
+        if ($query->num_rows() > 0) {
+            return $query->row();
+
+        } else {
+            return false;
+        }
+    }
+    public function promocode_limit($promocode)
+    {
+        $query = $this->db->query("SELECT * FROM `userorder` where `cupon_code`='" . $promocode . "' ");
+        if ($query) {
+            return $query->num_rows();
+
+        } else {
+            return false;
+        }
+
+    }
+    public function promocode_maxlimit($promocode)
+    {
+        $query = $this->db->query("SELECT * FROM `offer` where `offer_name`='" . $promocode . "' ");
+        if ($query->num_rows() > 0) {
+            return $count = $query->row();
+
+        } else {
+            return false;
+        }
+
+    }
 }

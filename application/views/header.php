@@ -9,14 +9,14 @@
 			<div class="menu">
 
 				<ul class="parent clearfix">
-                  <?php if ($cat_data) {
+                  <?php if (!empty($cat_data)) {
     foreach ($cat_data as $key => $cat_dat) {
         ?>
 					<li>
 						<a href="#"><?php echo $cat_dat->cat_name ?></a>
 
 						<ul class="child clearfix">
-                         <?php foreach ($subcat_data as $key => $subcat_dat) {
+                         <?php if (!empty($subcat_data)) {foreach ($subcat_data as $key => $subcat_dat) {
             if ($cat_dat->id == $subcat_dat->cat_name && empty($subcat_dat->sub_sub_cat)) {
                 ?>
 							<li>
@@ -26,7 +26,7 @@
 								</a>
 
 							</li>
-						<?php }}?>
+						<?php }}}?>
 
 
 						</ul>

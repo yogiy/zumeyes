@@ -244,7 +244,7 @@ if ($cat_data) {
                       <tbody>
                         <?php
 $sr_no = 1;
-if ($subcat_data) {
+if (!empty($subcat_data)) {
     foreach ($subcat_data as $key => $subcat_dat) {
         $id = $subcat_dat->id;
         ?>
@@ -295,27 +295,27 @@ if ($subcat_data) {
                       <tbody>
                         <?php
 $sr_no = 1;
-if ($sub_subcat_data) {
+if (!empty($sub_subcat_data)) {
     foreach ($sub_subcat_data as $key => $sub_subcat_dat) {
         $id = $sub_subcat_dat->id;
         ?>
                         <tr>
                             <td><?php echo $sr_no; ?></td>
-                            <?php foreach ($cat_data as $key => $cat_dat) {
+                            <?php if (!empty($cat_data)) {foreach ($cat_data as $key => $cat_dat) {
             if ($cat_dat->id == $sub_subcat_dat->cat_name) {?>
                             <td><?php echo $cat_dat->cat_name ?></td>
-                          <?php }}?>
+                          <?php }}}?>
 
-                            <td> <?php foreach ($subcat_data as $key => $subcat_dataa) {
+                            <td> <?php if (!empty($subcat_data)) {foreach ($subcat_data as $key => $subcat_dataa) {
             if ($sub_subcat_dat->sub_cat_name == $subcat_dataa->id) {?><?php echo $subcat_dataa->sub_cat_name ?>
-                               <?php }}?>
+                               <?php }}}?>
                             </td>
 
                             <td><?php echo $sub_subcat_dat->sub_sub_cat ?></td>
-                            <td><form method="post" action="status_subcategory" class="cartupdate">
-                  <input type="hidden" name="id"  value="<?php echo $subcat_dat->id ?>">
-                  <input type="hidden" name="status"  value="<?php echo $subcat_dat->status ?>">
-                <input type="checkbox" name="status" value="<?php echo $subcat_dat->status ?>" <?php if ($subcat_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
+                            <td><form method="post" action="status_sub_subcategory" class="cartupdate">
+                  <input type="hidden" name="id"  value="<?php echo $sub_subcat_dat->id ?>">
+                  <input type="hidden" name="status"  value="<?php echo $sub_subcat_dat->status ?>">
+                <input type="checkbox" name="status" value="<?php echo $sub_subcat_dat->status ?>" <?php if ($sub_subcat_dat->status == 1) {?> checked <?php }?> id="cylL" placeholder="01" onchange="this.form.submit()">
                  <label for="flat-checkbox-2">Active</label>
                 </form>
 
@@ -339,7 +339,7 @@ if ($sub_subcat_data) {
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© 2018 Zumeyes. All rights resereved</span>
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© <?php echo date('Y') ?> Zumeyes. All rights resereved</span>
 
           </div>
         </footer>

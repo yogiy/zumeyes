@@ -199,7 +199,7 @@ $ii = 0?>
 								<input type="hidden" name="addnewaddresscheckout" value="addnewaddresscheckout">
 									<div class="button">
 
-										<input name="addnewaddress" <?php if ($this->session->userdata('guest')) {?>value="Next" <?php } else {?> value="Save" <?php }?>type="submit"></div>
+										<input  <?php if ($this->session->userdata('guest')) {?>value="Next" name="addnewaddresscheckout" <?php } else {?> value="Save" name="addnewaddress"<?php }?>type="submit"></div>
 									<button class="cancelBtn">Cancel</button>
 
 								</div>
@@ -394,7 +394,12 @@ if ($this->cart->contents()) {
 							<div class="paymentOptionContent clearfix">
 
 								<span class="option creditCardOption">Credit Card</span>
-								<?php $amount = $Total + $taxrate;
+								<?php
+
+$cupon_price = 0;
+
+if ($this->session->userdata('cupon_code')) {$cupon_price = ($Total + $taxrate) * $this->session->userdata('cupon_code') / 100;}
+$amount = $Total + $taxrate - $cupon_price;
 $cart_id = implode(',', $order_id);
 $today = date("Ymd");
 $rand = strtoupper(substr(uniqid(sha1(time())), 0, 4));
@@ -495,10 +500,8 @@ $action = $PAYU_BASE_URL . '/_payment';
 
 									<div class="detailsBar clearfix">
 
-										<div class="field">
-											<input type="text" id="cvv" placeholder="CVV Number">
-										</div>
-										<div class="field right">
+
+										<div class="field left">
 											<select style="background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #E5E5E5;
     border-radius: 5px 5px 5px 5px;
@@ -528,7 +531,8 @@ $action = $PAYU_BASE_URL . '/_payment';
 
 									<div class="detailsBar clearfix">
 
-										<div class="checkbox check"><i class="checkIcon icon-tick"></i></div>
+										<div class="checkbox check"><i class="checkIcon icon-tick"></i>
+											<input type="checkbox" name=""></div>
 										<em class="saveCard">Save this card for future faster checkout</em>
 
 									</div>
@@ -634,10 +638,8 @@ $action = $PAYU_BASE_URL . '/_payment';
 
 									<div class="detailsBar clearfix">
 
-										<div class="field">
-											<input type="text" id="cvvd" placeholder="CVV Number">
-										</div>
-										<div class="field right">
+
+										<div class="field left">
 											<select style="background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #E5E5E5;
     border-radius: 5px 5px 5px 5px;
@@ -1013,8 +1015,12 @@ $action = $PAYU_BASE_URL . '/_payment';
 					<div class="amount clearfix"><span>Tax</span><em>Rs <?php echo $taxrate;
 ?></em></div>
 					<div class="amount clearfix"><span>Shipping</span><em>0.00</em></div>
-					<div class="amount clearfix"><span>Coupon</span><em>0.00</em></div>
-					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs <?php echo $Total + $taxrate; ?></em></div>
+					<div class="amount clearfix"><span>Coupon</span><em><?php
+$cupon_price = 0;
+
+if ($this->session->userdata('cupon_code')) {$cupon_price = ($Total + $taxrate) * $this->session->userdata('cupon_code') / 100;?>
+					Rs <?php echo $cupon_price;} else { ?>Rs 0.00<?php }?></em></div>
+					<div class="amount clearfix"><span class="total">Total Amount</span><em class="total">Rs <?php echo $Total + $taxrate - $cupon_price; ?></em></div>
 
 			</div>
 

@@ -170,23 +170,29 @@ class Admin extends CI_Controller
     {
         $this->load->database();
         $this->load->model('Vquery');
-        $cat_data['cat_data'] = $this->Vquery->cat_list();
-        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
-        $cat_data['sub_subcat_data'] = $this->Vquery->sub_subcat_list();
+        $cat_data['cat_data'] = $this->Aquery->cat_list();
+        $cat_data['subcat_data'] = $this->Aquery->subcat_list();
+        $cat_data['sub_subcat_data'] = $this->Aquery->sub_subcat_list();
         $this->load->view('admin/zumeyesadmin/addcategory', $cat_data);
     }
     public function category_insert()
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('cat_name', 'Category Name', 'required');
+        $this->form_validation->set_rules('cat_name', 'Category Name', 'required|trim');
+
         if ($this->form_validation->run()) {
-            $data = array(
-                'cat_name' => $this->input->post('cat_name'),
-            );
+
+            $cat_name = $this->input->post('cat_name');
+
             $this->load->database();
             $this->load->model('Aquery');
-            $this->Aquery->cat_entry($data); //Transfering data to Model
-            $this->session->set_flashdata('form_succ_msg', 'Form Submited');
+            $cat_match = $this->Aquery->cat_match($cat_name);
+            if ($cat_match == false) {
+                $this->Aquery->cat_entry($cat_name); //Transfering data to Model
+                $this->session->set_flashdata('form_succ_msg', 'Form Submited');
+            } else {
+                $this->session->set_flashdata('form_succ_msg', 'This category name is exist');
+            }
             redirect('admin/category');
         } else {
             redirect('admin/category');
@@ -801,7 +807,6 @@ class Admin extends CI_Controller
 
             }
 
-            $this->form_validation->set_rules('offer', 'offer', 'trim|required');
             $this->form_validation->set_rules('product_quantity', 'product quantity', 'trim|required|numeric');
             $this->form_validation->set_rules('product_price', 'product Price', 'trim|required');
             $this->form_validation->set_rules('weight', 'Product weight', 'trim|required');
@@ -822,7 +827,7 @@ class Admin extends CI_Controller
                     'sale_price' => $sale_price,
                     'pro_description' => $this->input->post('content'),
                     'quantity' => $this->input->post('product_quantity'),
-                    'offer' => $this->input->post('offer'),
+
                     'discount' => $this->input->post('discount'),
                     'tax' => $this->input->post('tax_slab'),
                     'brand' => implode("|", $this->input->post('brand_name')),
@@ -863,8 +868,8 @@ class Admin extends CI_Controller
         $this->load->database();
         $this->load->model('Aquery');
         $cat_data['cat_data'] = $this->Aquery->cat_list();
-        $cat_data['offer'] = $this->Aquery->offer_list();
         $cat_data['tax'] = $this->Aquery->tax_list();
+
         $cat_data['discount'] = $this->Aquery->discount_list();
         $cat_data['prescription'] = $this->Aquery->prescription_type();
         $cat_data['subcat_data'] = $this->Aquery->subcat_list();
@@ -884,7 +889,7 @@ class Admin extends CI_Controller
         $this->load->database();
         $this->load->model('Aquery');
         $cat_data['cat_data'] = $this->Aquery->cat_list();
-
+        $cat_data['prescription'] = $this->Aquery->prescription_type();
         $cat_data['subcat_data'] = $this->Aquery->subcat_list();
         $cat_data['sub_subcat_data'] = $this->Aquery->sub_subcat_list();
         $cat_data['brand_name'] = $this->Aquery->brand_data();
@@ -1813,6 +1818,23 @@ class Admin extends CI_Controller
 
         redirect('admin/category');
     }
+    public function status_sub_subcategory()
+    {
+        if ($this->input->post('status') == 1) {
+            $cstatus = 0;
+        } elseif ($this->input->post('status') == 0) {
+            $cstatus = 1;
+        }
+        $status = array(
+            'status' => $cstatus,
+        );
+        $id = $this->input->post('id');
+        $this->load->model('Status');
+
+        $this->Status->status_sub_subcategory($status, $id);
+
+        redirect('admin/category');
+    }
     public function status_slider()
     {
         if ($this->input->post('status') == 1) {
@@ -2227,6 +2249,7 @@ class Admin extends CI_Controller
         if ($this->input->post('taxinfo')) {
             $data = array(
                 'tax_slab' => $this->input->post('tax_slab'),
+                'tax_slab_name' => $this->input->post('tax_slab_name'),
                 'status' => 1,
             );
             $query = $this->Aquery->insert_tax($data);
@@ -2238,6 +2261,7 @@ class Admin extends CI_Controller
         if ($this->input->post('offer_info')) {
             $data = array(
                 'offer' => $this->input->post('offer'),
+                'offer_name' => $this->input->post('offer_name'),
                 'status' => 1,
             );
             $query2 = $this->Aquery->insert_offer($data);
@@ -2249,6 +2273,7 @@ class Admin extends CI_Controller
         if ($this->input->post('discount_info')) {
             $data = array(
                 'discount' => $this->input->post('discount'),
+                'discount_name' => $this->input->post('discount_name'),
                 'status' => 1,
             );
             $query = $this->Aquery->insert_discount($data);
@@ -2321,7 +2346,8 @@ class Admin extends CI_Controller
         $this->load->view('admin/zumeyesadmin/update_pro_offer', $sph);
         if ($this->input->post('update_offer')) {
             $offer = array(
-                'offer' => $this->input->post('offer'));
+                'offer' => $this->input->post('offer'),
+                'offer_name' => $this->input->post('offer_name'));
             $sid = $this->input->post('id');
             $this->Aquery->update_offerbyid($offer, $sid);
             redirect('admin/tax_and_offer');
@@ -2334,7 +2360,8 @@ class Admin extends CI_Controller
         $this->load->view('admin/zumeyesadmin/update_discount', $sph);
         if ($this->input->post('discountupdate')) {
             $discount = array(
-                'discount' => $this->input->post('discount'));
+                'discount' => $this->input->post('discount'),
+                'discount_name' => $this->input->post('discount_name'));
             $sid = $this->input->post('id');
             $this->Aquery->update_discountbyid($discount, $sid);
             redirect('admin/tax_and_offer');
@@ -2347,7 +2374,8 @@ class Admin extends CI_Controller
         $this->load->view('admin/zumeyesadmin/update_taxslab', $sph);
         if ($this->input->post('update_tax_slab')) {
             $tax_slab = array(
-                'tax_slab' => $this->input->post('tax_slab'));
+                'tax_slab' => $this->input->post('tax_slab'),
+                'tax_slab_name' => $this->input->post('tax_slab_name'));
             $sid = $this->input->post('id');
             $this->Aquery->update_taxbyid($tax_slab, $sid);
             redirect('admin/tax_and_offer');
@@ -2360,6 +2388,7 @@ class Admin extends CI_Controller
         $pro_list['cat_list'] = $this->Aquery->cat_list();
         $pro_list['subcat_list'] = $this->Aquery->subcat_list();
         $pro_list['user_order'] = $this->Aquery->userorder_list();
+        $pro_list['orderstatus_type'] = $this->Aquery->orderstatus_list();
 
         $this->load->view('admin/zumeyesadmin/orderlist', $pro_list);
 
@@ -2373,9 +2402,19 @@ class Admin extends CI_Controller
             $cat_data['user_order'] = $this->Order->user_orderbyid($id);
             $userorder = $this->Order->userorderbyid($id);
 
+            $cart_id1 = array();
+
             foreach ($userorder as $key => $userorderr) {
-                $cart_id = $userorderr->cart_id;
+
+                $userorderr->cart_id;
+                $cart_id11 = $userorderr->cart_id;
+                array_push($cart_id1, $cart_id11);
+
             }
+
+            $cart_id = implode(',', $cart_id1);
+            $cart_id = str_replace(",", "','", $cart_id);
+
             $cat_data['order_cart_data'] = $this->Order->cartorderdata($cart_id);
             $this->load->view('admin/zumeyesadmin/orderDetail', $cat_data);
         } else {

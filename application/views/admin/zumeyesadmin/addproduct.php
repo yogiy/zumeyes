@@ -433,31 +433,23 @@ foreach ($prescription as $key => $prescription_type) {
                         </div>
                       </div>
 
-                       <div class="form-group" style="margin-top: 1rem;">
-                    <h4 for="exampleSelectPrimary">Offer On Product</h4>
-                    <select class="form-control border-primary" id="offer" name="offer">
-                      <?php if (!empty($offer)) {
-    foreach ($offer as $offer_list) {?>
-                      <option value="<?php echo $offer_list->offer; ?>"><?php echo $offer_list->offer; ?>%</option>
-                      <?php }}?>
-                    </select>
-                  </div>
+
                   <div class="form-group" style="margin-top: 1rem;">
                     <h4 for="exampleSelectPrimary">Discount On Product</h4>
                     <select class="form-control border-primary" id="discount" name="discount">
                       <?php if (!empty($discount)) {
     foreach ($discount as $discount_list) {?>
-                      <option value="<?php echo $discount_list->discount; ?>"><?php echo $discount_list->discount; ?>%</option>
+                      <option value="<?php echo $discount_list->discount; ?>"><?php echo $discount_list->discount_name; ?></option>
                       <?php }}?>
                     </select>
                   </div>
                    <div class="form-group" style="margin-top: 1rem;">
                     <h4 for="exampleSelectPrimary">Tax Slab</h4>
                     <select class="form-control border-primary" id="tax" name="tax_slab">
-                      <option value="0">0.0</option>
+                      <option value="0">Tax Free</option>
                       <?php if (!empty($tax)) {
     foreach ($tax as $tax_slab) {?>
-                      <option value="<?php echo $tax_slab->tax_slab; ?>"><?php echo $tax_slab->tax_slab; ?>%</option>
+                      <option value="<?php echo $tax_slab->tax_slab; ?>"><?php echo $tax_slab->tax_slab_name; ?></option>
                       <?php }}?>
                     </select>
                   </div> <div class="form-group" style="margin-top: 1rem;display:none" id="prescription">
@@ -517,7 +509,7 @@ if (isset($fupload_error)) {
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© 2018 Zumeyes. All rights resereved</span>
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">© <?php echo date('Y') ?> Zumeyes. All rights resereved</span>
 
           </div>
         </footer>

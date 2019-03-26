@@ -890,49 +890,34 @@ class Home extends CI_Controller
                 $guest = $this->input->post('guest');
                 $this->session->set_userdata('guest', $guest);
             }
-            $email = $this->input->post('guest_email');
-            if ($email) {
+            echo $guest_email = $this->input->post('guest_email');
+            if (!empty($this->input->post('guest_email'))) {
+                $data = array(
+                    'email' => $this->input->post('guest_email'),
+                    'name' => $this->input->post('name'),
+                    'addresstype' => $this->input->post('radio-group'),
+                    'phone' => $this->input->post('phone'),
+                    'landmark' => $this->input->post('landmark'),
+                    'address' => $this->input->post('address'),
+                    'city' => $this->input->post('city'),
+                    'state' => $this->input->post('state'),
+                    'alternatephone' => $this->input->post('alternatephone'),
+                    'pincode' => $this->input->post('cpin'),
+                    'locality' => $this->input->post('locality'),
+                    'usertype' => 'guest',
+                    'status' => '1',
 
-                $this->form_validation->set_rules('name', 'Name', 'trim|alpha|required');
-                $this->form_validation->set_rules('radio-group', 'Address Type', 'trim|required');
-                $this->form_validation->set_rules('phone', 'Phone No', 'trim|required');
-                $this->form_validation->set_rules('landmark', 'Landmark', 'trim|required');
-                $this->form_validation->set_rules('address', 'Address', 'trim|required');
-                $this->form_validation->set_rules('city', 'City', 'trim|required');
-                $this->form_validation->set_rules('state', 'State', 'trim|required');
-                $this->form_validation->set_rules('alternatephone', 'Alternate Phone Number', 'trim|required');
-                $this->form_validation->set_rules('cpin', 'Pin Code', 'trim|required');
-                $this->form_validation->set_rules('locality', 'Locality', 'trim|required');
-
-                if ($this->form_validation->run()) {
-
-                    $data = array(
-                        'email' => $email,
-                        'name' => $this->input->post('name'),
-                        'addresstype' => $this->input->post('radio-group'),
-                        'phone' => $this->input->post('phone'),
-                        'landmark' => $this->input->post('landmark'),
-                        'address' => $this->input->post('address'),
-                        'city' => $this->input->post('city'),
-                        'state' => $this->input->post('state'),
-                        'alternatephone' => $this->input->post('alternatephone'),
-                        'pincode' => $this->input->post('cpin'),
-                        'locality' => $this->input->post('locality'),
-                        'usertype' => 'guest',
-                        'status' => '1',
-
-                    );
-                    $data = $this->Vquery->entry_addressinfo($data);
-                    if ($data) {
-                        $this->session->set_flashdata('success_address', 'Your Address Information Has Been Added');
-                        redirect('checkout');
-                    } else {
-                        $this->session->set_flashdata('success_address', 'Something Went Wrong...');
-                        redirect('checkout');
-
-                    }
+                );
+                $data = $this->Vquery->entry_addressinfo($data);
+                if ($data) {
+                    $this->session->set_flashdata('success_address', 'Your Address Information Has Been Added');
+                    redirect('checkout');
+                } else {
+                    $this->session->set_flashdata('success_address', 'Something Went Wrong...');
+                    redirect('checkout');
 
                 }
+
             }
 
             if ($this->cart->contents()) {
@@ -1144,10 +1129,14 @@ class Home extends CI_Controller
             $cat_data['user'] = $this->Vquery->userdata($user_email);
             $this->load->model('Order');
             $cat_data['user_order'] = $this->Order->user_order($user_email);
+
             $userorder = $this->Order->userorder($user_email);
+            $cuserorder = $this->Order->cancel_userorder($user_email);
             $count = $this->Order->user_ordercount($user_email);
+            $ccount = $this->Order->user_cancelordercount($user_email);
 
             $cart_id1 = array();
+            $cart_id2 = array();
 
             if ($count > 0) {
                 foreach ($userorder as $key => $userorderr) {
@@ -1161,6 +1150,25 @@ class Home extends CI_Controller
                 $cart_id = implode(',', $cart_id1);
                 $cart_id = str_replace(",", "','", $cart_id);
                 $cat_data['order_cart_data'] = $this->Order->cart_orderdata($cart_id, $user_email);
+                $cat_data['cuser_order'] = $this->Order->cuser_order($user_email);
+
+            }
+            if ($ccount > 0) {
+                foreach ($cuserorder as $key => $cuserorderr) {
+
+                    $cuserorderr->cart_id;
+                    $cart_id11 = $cuserorderr->cart_id;
+                    array_push($cart_id2, $cart_id11);
+
+                }
+
+                $cart_id = implode(',', $cart_id2);
+                $cart_id = str_replace(",", "','", $cart_id);
+
+                $cat_data['corder_cart_data'] = $this->Order->cart_corderdata($cart_id, $user_email);
+
+                $cat_data['cuser_order'] = $this->Order->cuser_order($user_email);
+
             }
             $cat_data['card_info'] = $this->Vquery->usercardinfo($user_email);
             $cat_data['cat_data'] = $this->Vquery->cat_list();
@@ -1978,5 +1986,38 @@ class Home extends CI_Controller
 								' . $phone . '
                                 ';
 
+    }
+    public function order_cancel()
+    {
+        $order_id = $this->input->post('id');
+        if ($order_id) {
+            date_default_timezone_set('Asia/Kolkata');
+            $data = array('cancel_order' => 1,
+            );
+            $data1 = array('cancel_order' => 1,
+                'canceldate' => date("M d Y"));
+            $this->load->model('Order');
+            $this->Order->order_cancel($data1, $order_id);
+            $this->Order->order_cancel_from_cart($data, $order_id);
+        }
+
+        redirect("myAccount");
+
+    }
+    public function promocode()
+    {
+        $promocode = $this->input->post('promocode');
+        $promocode = trim($promocode);
+        if ($promocode) {
+
+            $offer['offer'] = $this->Vquery->promocode($promocode);
+
+            foreach ($offer as $key => $value) {
+                $offer_price = $value->offer;
+            }
+            $this->session->set_userdata('promocode', $promocode);
+            $this->session->set_userdata('cupon_code', $offer_price);
+
+        }
     }
 }

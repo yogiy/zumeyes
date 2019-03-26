@@ -44,7 +44,17 @@
                       <?php $attributes = array('class' => 'forms-sample');
 echo form_open_multipart('admin/tax_and_offer', $attributes);
 ?>
-
+  <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text bg-info bg-info" id="colored-addon1">
+                              <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                          </div>
+                          <input type="text" required class="form-control" placeholder="Tax Slab Name" aria-label="Category" pattern="^[A-Za-z\s]+$" name="tax_slab_name" aria-describedby="colored-addon1">
+                        </div>
+                        <?php echo form_error('tax_slab_name'); ?>
+                      </div>
  <div class="form-group">
                         <div class="input-group">
                           <div class="input-group-prepend">
@@ -74,6 +84,17 @@ echo form_open_multipart('admin/tax_and_offer', $attributes);
                       <?php $attributes = array('class' => 'forms-sample');
 echo form_open_multipart('admin/tax_and_offer', $attributes);
 ?>
+<div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text bg-info bg-info" id="colored-addon1">
+                              <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                          </div>
+                          <input type="text" required class="form-control" placeholder="Offer Name" aria-label="Category" name="offer_name" aria-describedby="colored-addon1">
+                        </div>
+                        <?php echo form_error('offer_name'); ?>
+                      </div>
  <div class="form-group">
 
 
@@ -103,6 +124,17 @@ echo form_open_multipart('admin/tax_and_offer', $attributes);
                       <?php $attributes = array('class' => 'forms-sample');
 echo form_open_multipart('admin/tax_and_offer', $attributes);
 ?>
+<div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text bg-info bg-info" id="colored-addon1">
+                              <i class="mdi mdi-shield-outline text-white"></i>
+                            </span>
+                          </div>
+                          <input type="text" required class="form-control" placeholder="Discount Name" aria-label="Category" pattern="^[A-Za-z\s]+$" name="discount_name" aria-describedby="colored-addon1">
+                        </div>
+                        <?php echo form_error('discount_name'); ?>
+                      </div>
  <div class="form-group">
 
 
@@ -136,6 +168,7 @@ echo form_open_multipart('admin/tax_and_offer', $attributes);
                       <thead>
                         <tr>
                             <th>Sr No.</th>
+                            <th>Tax Slab Name</th>
                             <th>Tax(IN %)</th>
 
                             <th>Status</th>
@@ -151,6 +184,7 @@ if (@$tax_list) {
         ?>
                         <tr>
                             <td><?php echo $sr_no; ?></td>
+                            <td><?php echo $tax_listt->tax_slab_name; ?></td>
                             <td><?php echo $tax_listt->tax_slab ?></td>
                             <td>
 
@@ -183,6 +217,7 @@ if (@$tax_list) {
                       <thead>
                         <tr>
                             <th>Sr No.</th>
+                            <th>Discount Name</th>
                             <th>Discount(IN %)</th>
 
                             <th>Status</th>
@@ -198,6 +233,7 @@ if (@$discount_list) {
         ?>
                         <tr>
                             <td><?php echo $sr_no; ?></td>
+                             <td><?php echo $discount_listt->discount_name; ?></td>
                             <td><?php echo $discount_listt->discount ?></td>
                             <td>
 
@@ -231,6 +267,7 @@ if (@$discount_list) {
                       <thead>
                         <tr>
                             <th>Sr No.</th>
+                             <th>Offer Name</th>
                             <th>Offer List(IN %)</th>
 
                             <th>Status</th>
@@ -246,6 +283,7 @@ if ($offer_list) {
         ?>
                         <tr>
                             <td><?php echo $sr_no; ?></td>
+                            <td><?php echo $offer_listt->offer_name ?></td>
                             <td><?php echo $offer_listt->offer ?></td>
                             <td>
                                <form method="post" action="status_pro_offer" class="cartupdate">

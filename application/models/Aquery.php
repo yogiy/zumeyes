@@ -132,9 +132,10 @@ class Aquery extends CI_Model
         return $result;
     }
 
-    public function cat_entry($data)
+    public function cat_entry($cat_name)
     {
-        $query = $this->db->insert('category', $data);
+
+        $query = $this->db->query('INSERT IGNORE INTO `category`(`cat_name`) VALUES("' . $cat_name . '")');
 
         if (isset($query)) {
             return true;
@@ -1761,6 +1762,16 @@ class Aquery extends CI_Model
         $query = $this->db->query("SELECT * FROM `userorder` ORDER BY `id` desc");
         if ($query->num_rows() > 0) {
             return $query->result();
+
+        } else {
+            return false;
+        }
+    }
+    public function cat_match($cat_name)
+    {
+        $query = $this->db->query("SELECT * FROM `category` where `cat_name`='" . $cat_name . "' ");
+        if ($query->num_rows() > 0) {
+            return true;
 
         } else {
             return false;
