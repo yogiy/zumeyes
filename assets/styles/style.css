@@ -4070,7 +4070,112 @@ header .hideField input {
     margin: 30px 0;
 }
 }
+.locationSection{
+	padding: 40px 0;
+}
+.locationSection h2{
+	text-align: center;
+	font-size: 2.2em;
+	font-family: 'robotobold';	
+}
+.locationSection .content{
+	padding: 50px 0 0;
+}
+.locationSection .content .locBox{
+	padding: 10px 40px;
+}
+.locationSection .content .locBox a{
+	font-size: 2.2em;
+	font-family: 'robotobold';
+	margin: 0 0 10px 0;
+	color: #0179b5;
+	letter-spacing: 1.2px;
+	display: block;
+}
+.locationSection .content .locBox span{
+	font-size: 1em;
+	letter-spacing: 1.2px;
+	color: #5A5A5A;
+	float: left;
+	margin-right: 10px;
+	font-style: italic;
+}
+.locationSection .content .locBox p{
+	font-size: 1.2em;
+	letter-spacing: 1.2px;
+	float: left;
+	width: 70%;
+}
 
+.shopInfoSection{
+	position: relative;
+}
+.shopInfoSection .shopBanner{
+	width: 50%;
+	float: left;
+}
+.shopBanner .mask{
+	position: absolute;
+	background:rgba(0,0,0,0.4);
+	height: 100%;
+	width: 100%;
+	top: 0;
+	z-index: 1;
+	left: 0;
+}
+.shopBanner .carousel .carousel-control.right .icon {
+    left: 88%;
+}
+.shopInfoSection .shopDetails{
+	width: 50%;
+	position: absolute;
+	background: #000;
+	height: 100%;
+	right: 0;
+	top: 0;
+	padding: 40px;
+	color: #fff;
+	text-align: center;
+}
+.shopInfoSection .shopDetails h1{
+	font-size: 2.3em;
+	font-family: 'robotobold';
+}
+.shopInfoSection .shopDetails a{
+	font-size: 1.4em;
+	font-family: 'robotomedium';
+	width: 90%;
+	margin: 10px auto;
+	display: block;
+	color: #39BBFB;
+	letter-spacing: 1.2px;
+}
+.shopInfoSection .shopDetails p{
+	font-size: 1.1em;
+	width: 90%;
+	margin: 10px auto;
+	letter-spacing: 1.2px;
+	font-family: 'robotolight';
+	padding: 10px 0;
+}
+.shopInfoSection .shopDetails span{
+	font-size: 0.938em;
+	width: 90%;
+	margin: 10px auto;
+	letter-spacing: 1.2px;
+	padding: 10px 0;
+	text-transform: uppercase;
+	font-family: 'robotomedium';
+}
+.shopInfoSection .shopDetails .timingBar .box{
+	padding: 10px;
+}
+.shopInfoSection .shopDetails .timingBar .box em,
+.shopInfoSection .shopDetails .timingBar .box small{
+	display: block;
+	text-transform: uppercase;
+	padding: 2px 0;
+}
 @media only screen and (max-width: 768px) {
 header .logo {
     width: 27vw;

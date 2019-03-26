@@ -1230,6 +1230,17 @@ $(document).ready(function(){
         }
 
     }
+    public function promocode_valid($promocode)
+    {
+        $query = $this->db->query("SELECT * FROM `offer` where `offer_name`='" . $promocode . "' ");
+        if ($query->num_rows() > 0) {
+            return true;
+
+        } else {
+            return false;
+        }
+
+    }
     public function promocode_maxlimit($promocode)
     {
         $query = $this->db->query("SELECT * FROM `offer` where `offer_name`='" . $promocode . "' ");
@@ -1240,5 +1251,26 @@ $(document).ready(function(){
             return false;
         }
 
+    }
+    public function location_list()
+    {
+        $query = $this->db->query("SELECT * FROM `locations` WHERE `status`='1' ");
+
+        if (isset($query)) {
+            return $query->result();
+        } else {
+            return false;
+        }
+    }
+    
+    public function get_location_data($shop)
+    {
+        $query = $this->db->query("SELECT * FROM `locations` WHERE `shop_name`='" . $shop . "' AND `status`='1' ");
+
+        if (isset($query)) {
+            return $query->result();
+        } else {
+            return false;
+        }
     }
 }

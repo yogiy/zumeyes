@@ -40,20 +40,21 @@
               </a>
               <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
-                   <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/homepage'); ?>">Home Page</a></li>
+                  <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/homepage'); ?>">Home Page</a></li>
                   <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/addabout'); ?>">About Page</a></li>
                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/category'); ?>">Category Page</a></li>
                   <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/addblog'); ?>">Blog Page</a></li>
                   <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="<?php echo site_url('admin/filter'); ?>">Product Filter Page</a></li>
-                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/addproduct'); ?>">Product Page</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/lenseinfo'); ?>">Lense Info</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/addproduct'); ?>">Product Page</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/lenseinfo'); ?>">Lense Info</a></li>
 
                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/addprescription'); ?>">Add Product Prescription</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/product_list'); ?>">Product List</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/product_list'); ?>">Product List</a></li>
                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/register_users'); ?>">Registered Users</a></li>
-                   <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/tax_and_offer'); ?>">Tax,Offer And Discount</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/orderlist'); ?>">Order List</a></li>
-                 <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/order_status_type'); ?>">Order Status Type</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/tax_and_offer'); ?>">Tax,Offer And Discount</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/orderlist'); ?>">Order List</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('admin/order_status_type'); ?>">Order Status Type</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="<?php echo site_url('locations/addLocation'); ?>">Add Shop Location</a></li>
 
                 </ul>
               </div>

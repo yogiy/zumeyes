@@ -194,6 +194,7 @@ class Home extends CI_Controller
         $cat_data['cat_data'] = $this->Vquery->cat_list();
         $cat_data['subcat_data'] = $this->Vquery->subcat_list();
         $cat_data['pro_data'] = $this->Vquery->pro_data_byid($id);
+
         $cat_data['related'] = $this->Vquery->relateddata();
         $cat_data['prescription_type'] = $this->Vquery->prescription();
         $cat_data['sphere_data'] = $this->Vquery->sphere_list();
@@ -2010,14 +2011,53 @@ class Home extends CI_Controller
         $promocode = trim($promocode);
         if ($promocode) {
 
-            $offer['offer'] = $this->Vquery->promocode($promocode);
+            $offer_limit['offer_limit'] = $this->Vquery->promocode_maxlimit($promocode);
+            $offer_valid = $this->Vquery->promocode_valid($promocode);
+            if ($offer_valid != false) {
+                $offer_used['offer_used'] = $this->Vquery->promocode_limit($promocode);
+                foreach ($offer_limit as $key => $offer_maxlimit) {
+                    $offer_maxlimit = $offer_maxlimit->offer_limit;
+                }
+                foreach ($offer_used as $key => $offer_upto_used) {
+                    $offer_upto_used = $offer_upto_used->cupon_code;
+                }
+                if ($offer_maxlimit >= $offer_upto_used && $offer_maxlimit > 0) {
+                    $offer['offer'] = $this->Vquery->promocode($promocode);
 
-            foreach ($offer as $key => $value) {
-                $offer_price = $value->offer;
+                    foreach ($offer as $key => $value) {
+                        $offer_price = $value->offer;
+                    }
+                    $this->session->set_userdata('promocode', $promocode);
+                    $this->session->set_flashdata('promocode', $promocode);
+                    $this->session->set_userdata('cupon_code', $offer_price);
+                    $this->session->set_flashdata('expire', 'You Got a Great Deal.');
+                } else {
+                    $this->session->set_flashdata('expire', 'This cupon code has been expire');
+                    $this->session->set_userdata('promocode', $promocode);
+                    $this->session->unset_userdata('cupon_code');
+                }
+
+            } else {
+                $this->session->set_flashdata('expire', 'Invalid Cupon Code.');
+                $this->session->set_userdata('promocode', $promocode);
+                $this->session->unset_userdata('cupon_code');
             }
-            $this->session->set_userdata('promocode', $promocode);
-            $this->session->set_userdata('cupon_code', $offer_price);
-
         }
     }
+    public function locations()
+    {
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+        $cat_data['location_data'] = $this->Vquery->location_list();
+        $this->load->view('locations', $cat_data);
+    }
+    public function locationDetails()
+    {
+        $cat_data['cat_data'] = $this->Vquery->cat_list();
+        $cat_data['subcat_data'] = $this->Vquery->subcat_list();
+        $shop_name = $this->input->get('shop');
+        $cat_data['shop_data'] = $this->Vquery->get_location_data($shop_name);
+        $this->load->view('locationDetails', $cat_data);
+    }
+
 }

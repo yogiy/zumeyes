@@ -1,4 +1,3 @@
-<?php echo form_open('path/to/controller/update/method'); ?>
 <!doctype html>
 <html>
 <head>
@@ -464,11 +463,11 @@ $tax_rate = (($items->price * $items->qty) * $items->tax) / 100;
 				<span>Have a promo code? <em>(One promo code per order)</em></span>
 				<div class="fieldBar clearfix">
 
-					<div class="field"><input type="text" id="promoCode" value="<?php echo $this->session->userdata('promocode'); ?>"></div>
+					<div class="field"><input type="text" id="promoCode" placeholder="<?php echo $this->session->userdata('promocode'); ?>"></div>
 					<button id="applypromo">Apply</button>
 
 				</div>
-			<span><?php echo $this->session->userdata('promocodelimit'); ?></span>
+			<span><?php echo $this->session->flashdata('expire'); ?></span>
 			</div>
 		<?php }?>
 			<div class="col-sm-7 col-xs-12 totalAmount clearfix">
@@ -476,7 +475,7 @@ $tax_rate = (($items->price * $items->qty) * $items->tax) / 100;
 				<div class="amountBar clearfix">
 					<div class="amount clearfix"><span>Item Count</span><em><?php echo $total_product; ?></em></div>
 					<div class="amount clearfix"><span>Sub Total</span><em>Rs <?php echo $Total; ?></em></div>
-					<div class="amount clearfix"><span>Tax</span><em>Rs 0.00</em></div>
+				<!--	<div class="amount clearfix"><span>Tax</span><em>Rs 0.00</em></div>-->
 					<div class="amount clearfix"><span>Shipping</span><em>Rs 0.00</em></div>
 					<div class="amount clearfix"><span>Coupon</span><em id="offerprice"><?php
 $cupon_price = 0;
@@ -504,6 +503,7 @@ if ($this->session->userdata('cupon_code')) {$cupon_price = $Total * $this->sess
 
 
 <?php include 'footer.php';?>
+
 <script src="<?php echo base_url('assets/js/owl.carousel.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 	<script type="text/javascript">

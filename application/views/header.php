@@ -33,6 +33,9 @@
 
 					</li>
 				<?php }}?>
+				<li>
+						<a href="<?php echo site_url('locations'); ?>">Locations</a>
+					</li>
 				</ul>
 
 			</div>
@@ -108,7 +111,7 @@
 					</li>
 
 					<li>
-						<a href="#">Locations</a>
+						<a href="<?php echo site_url('locations'); ?>">Locations</a>
 					</li>
 
 				</ul>
